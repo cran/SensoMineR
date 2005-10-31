@@ -1,4 +1,4 @@
-"construct.axes" <- function(ktableau,coord=c(1,2),scale.unit=TRUE,centerbypanelist=FALSE,scalebypanelist=FALSE){
+"construct.axes" <- function(ktableau,coord=c(1,2),scale.unit=TRUE,centerbypanelist=FALSE,scalebypanelist=FALSE,method="coeff"){
 
   nbcoord=max(coord)
   matrice <- ktableau[[1]]
@@ -15,8 +15,7 @@
   nbprod <- length(levels(matrice[,2]))
   nbdesc <- dim(matrice)[2]-2
 
-  moy.aux=scalebypanelist(matrice,col.j=1,col.p=2,firstvar=3,center=centerbypanelist,scale=scalebypanelist)
-  
+  moy.aux=scalebypanelist(matrice,col.j=1,col.p=2,firstvar=3,center=centerbypanelist,scale=scalebypanelist,method=method)
   ###AF with active data the averages for all the panelist 
   nbactif <- nbprod
   ktable <- ktab.data.frame(moy.aux[1:nbactif,-c(1,2)],blocks=ktableau$blo[-1],tabnames=tab.names(ktableau)[-1])

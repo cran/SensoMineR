@@ -78,22 +78,27 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 \examples{
 \dontrun{
 data(chocolates)
-res<-paneliperf(chocolates, 
-  formul = "~Product+Panelist+Session+Product:Panelist+Product:Session",
+res<-paneliperf(chocolates, formul = "~Product+Panelist+Session+
+  Product:Panelist+Product:Session+Panelist:Session",
   formul.j = "~Product", col.j = 1, firstvar = 5, synthesis = TRUE)
 resprob<-magicsort(res$prob.ind, method = "median")
 coltable(resprob, level.lower = 0.05, level.upper = 1,
     main.title = "P-value of the F-test (by panelist)")
+hist(resprob,main="Histogram of the P-values",xlab="P-values")
 
 resr2<-magicsort(res$r2.ind, method = "median", ascending = FALSE)
 coltable(resr2, level.lower = 0.00, level.upper = 0.85,
     main.title = "Adjusted R-square (by panelist)")
 
-resagree<-magicsort(res$agree, method = "median", ascending = FALSE)
+resagree<-magicsort(res$agree, sort.mat = res$r2.ind, method = "median")
 coltable(resagree, level.lower = 0.00, level.upper = 0.85,
     main.title = "Agreement between panelists")
+hist(resagree,main="Histogram of the agreement between panelist and panel",
+    xlab="Correlation coefficient between the product effect for 
+    panelist and panel")
 
-coltable(magicsort(res$p.value, sort.mat = res$p.value[,1], bycol = FALSE),
+coltable(magicsort(res$p.value, sort.mat = res$p.value[,1], bycol = FALSE,
+    method = "median"),
     main.title = "Panel performance (sorted by product P-value)")
 }
 }

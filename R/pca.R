@@ -39,8 +39,9 @@ X<-dfa-un%*%t(g)
 X<-as.matrix(X)
 
 if (scale.unit==TRUE) {
-        InvV<-diag(1/sqrt(diag(t(X)%*%diag(row.w)%*%X)))
-        X<-X%*%InvV   }
+  InvV<-diag(1/sqrt(diag(t(X)%*%diag(row.w)%*%X)))
+  X<-X%*%InvV   
+}
 Y<-t(X)%*%diag(row.w)%*%X
 dec<-svd(Y)
 
@@ -119,6 +120,18 @@ if (graph){
     aaa=paste("Variables factor map: ", "comp",coord[1]," (",signif(dec$d[coord[1]]*100/sum(dec$d),4),"%) - ", "comp", coord[2]," (",signif(dec$d[coord[2]]*100/sum(dec$d),4),"%)",sep="")
     if (length(main.title)!=0) title(main = main.title,sub=aaa, cex.sub = cex,font.sub = font, col.sub = col,adj=0.5,line=1.8)
     if (length(main.title)==0) title(main = aaa, cex.sub = cex,font.sub = font, col.sub = col,adj=0.5,line=1.8)
+
+  get(getOption("device"))()
+  tab = t(rbind.data.frame(cor(coordind[,coord[1]],X),cor(coordind[,coord[2]],X)))
+    senso.corcircle(tab)
+    if (length(supvar)>0){
+      tabsup = t(rbind.data.frame(cor(coordind[,coord[1]],Xsup),cor(coordind[,coord[2]],Xsup)))
+      if (length(supvar) == 1) senso.corcircle(matrix(rbind(tabsup,tabsup),nrow=2,dimnames=list(c(" ",colnames(df)[supvar]),NULL)),col="blue",lty=2,add.plot=TRUE)
+      if (length(supvar) > 1) senso.corcircle(tabsup,col="blue",lty=2,add.plot=TRUE)
+    }
+    aaa = paste("Correlation circle: ", "comp",coord[1]," (",signif(dec$d[coord[1]]*100/sum(dec$d),4),"%) - ", "comp", coord[2]," (",signif(dec$d[coord[2]]*100/sum(dec$d),4),"%)",sep="")
+    if (length(main.title)!=0) title(main = main.title,sub=aaa, , cex.sub = cex,font.sub = font, col.sub = col,adj=0.5,line=2.8)
+    if (length(main.title)==0) title(main = aaa, cex.sub = cex,font.sub = font, col.sub = col,adj=0.5,line=2.8)
   }
 }
 

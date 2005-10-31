@@ -42,6 +42,7 @@
     r2[varendo-firstvar+1,] <- summary.lm(aux1)$r.squared
     
     if (random) {
+      row.interact=nrow(aux)
       for (i in 1:nrow(aux)){
        if (gsub(" ","",paste("C(",colnames(donnee)[col.p],",sum):C(",colnames(donnee)[col.j],",sum)")) == gsub(" ","",rownames(aux)[i])) row.interact=i
        if (gsub(" ","",paste("C(",colnames(donnee)[col.j],",sum):C(",colnames(donnee)[col.p],",sum)")) == gsub(" ","",rownames(aux)[i])) row.interact=i

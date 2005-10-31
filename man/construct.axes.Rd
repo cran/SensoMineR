@@ -14,7 +14,8 @@ Produces graphs of products and descriptors from the output of PCA or MFA.
 
 \usage{
 construct.axes(ktableau, coord = c(1,2), scale.unit = TRUE, 
-      centerbypanelist = FALSE, scalebypanelist = FALSE)
+      centerbypanelist = FALSE, scalebypanelist = FALSE,
+      method = "coeff")
 }
 
 \arguments{
@@ -26,6 +27,8 @@ construct.axes(ktableau, coord = c(1,2), scale.unit = TRUE,
   \item{scale.unit}{boolean, if \code{TRUE} the descriptors are scaled to unit variance}
   \item{centerbypanelist}{center the data by panelist before the construction of the axes}
   \item{scalebypanelist}{scale the data by panelist before the construction of the axes}
+  \item{method}{the method to replace the missing values: "average" or "coeff" 
+  (coefficients of the \emph{product} variable in the anova model)}
 }
 
 \details{

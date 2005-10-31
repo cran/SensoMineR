@@ -31,7 +31,8 @@ for (m in 0:mult) {
                 if (s==1) {
             plot(sort(moy[,nb]),sort(moyS[,nb,s]),type="o",xlab=paste("Mean on the whole ",colnames(donnee)[col.j],"s",sep=""), ylab=paste("Mean per ",colnames(donnee)[col.j],sep=""),
                      cex.lab = 0.8, asp = 1, pch = 20, xlim = c(xmin,xmax), ylim = c(ymin,ymax), col = "violetred4")
-                    senso.scatterutil.eti(sort(moy[,nb]),sort(moyS[,nb,s]),label=levels(donnee[,col.p]),clabel=1, pos = 3,offset = 0.4, font = 1)
+#                    senso.scatterutil.eti(sort(moy[,nb]),sort(moyS[,nb,s]),label=levels(donnee[,col.p]),clabel=1, pos = 3,offset = 0.4, font = 1)
+                    senso.scatterutil.eti(sort(moy[,nb]),sort(moyS[,nb,s]),label=rownames(moy[order(moy[,nb]),]),clabel=1, pos = 3,offset = 0.4, font = 1)
                 }
             else {
             points(sort(moy[,nb]),sort(moyS[,nb,s]),type="o",pch=20,col=s)

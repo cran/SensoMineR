@@ -1,4 +1,4 @@
-cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,scale.unit=FALSE,col=terrain.colors(45)[1:41]) {
+cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,scale.unit=FALSE,name.panelist=TRUE,col=terrain.colors(45)[1:41]) {
 
     if (max(coord) > (nrow(hedo)-1)) {
       print (paste("Problem with coord. Max (coord) must be less than",nrow(hedo)-1," Axes 1-2 will be taken",sep=""))
@@ -41,20 +41,13 @@ cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,sc
     par(mar = c(0,0,2,0))
     senso.label(hedo.pca$li[,coord], clabel=0, cpoint=0)
     points(hedo.pca$li[,coord], pch=20,cex=0.8,col=2+clusters)
-    text(hedo.pca$li[,coord[1]],hedo.pca$li[,coord[2]], labels = row.names(A[1:nbjuge,]),col=2+clusters, cex = 0.7, pos = 4, offset = 0.2)
+    if (name.panelist) text(hedo.pca$li[,coord[1]],hedo.pca$li[,coord[2]], labels = row.names(A[1:nbjuge,]),col=2+clusters, cex = 0.7, pos = 4, offset = 0.2)
     title(main = paste("Individuals factor map: comp",coord[1]," (",signif(100*hedo.pca$eig[coord[1]]/sum(hedo.pca$eig),4),"%)","-comp",coord[2]," (",signif(100*hedo.pca$eig[coord[2]]/sum(hedo.pca$eig),4),"%)",sep=""),cex.main = 1.1, font.main = 2, col.main = 1, adj = 0.5)
 
     points(hedo.pca$lisup[1:nb.clusters,coord], col=(3:(2+nb.clusters)),pch=15,cex=0.9)
     text(hedo.pca$lisup[1:nb.clusters,coord[1]],hedo.pca$lisup[1:nb.clusters,coord[2]], labels = row.names(A[(nbjuge+1):(nbjuge+nb.clusters),]), cex = 0.9, pos = 1, offset = 0.05, col = (3:(2+nb.clusters)))
     points(hedo.pca$lisup[(nb.clusters+1):nrow(hedo.pca$lisup),coord], col="red",pch=20,cex=0.8)
     text(hedo.pca$lisup[(nb.clusters+1):nrow(hedo.pca$lisup),coord[1]],hedo.pca$lisup[(nb.clusters+1):nrow(hedo.pca$lisup),coord[2]], labels = row.names(A[(nbjuge+nb.clusters+1):nrow(A),]), cex = 0.7, pos = 1, offset = 0.05, col = "red")
-
-#    senso.sup.classif <- suprow(hedo.pca,mat)
-#    senso.sup <- suprow(hedo.pca,t(senso))
-#    points(senso.sup.classif$lisup[,coord], col=(3:(2+nb.clusters)),pch=15,cex=0.9)
-#    text(senso.sup.classif$lisup[,coord[1]],senso.sup.classif$lisup[,coord[2]], labels = row.names(A[(nbjuge+1):(nbjuge+nb.clusters),]), cex = 0.9, pos = 1, offset = 0.05, col = (3:(2+nb.clusters)))
-#    points(senso.sup$lisup[,coord], col="red",pch=20,cex=0.8)
-#    text(senso.sup$lisup[,coord[1]],senso.sup$lisup[,coord[2]], labels = row.names(A[(nbjuge+nb.clusters+1):nrow(A),]), cex = 0.7, pos = 1, offset = 0.05, col = "red")
 
     TA <- t(A)
     coef <- matrix(0,nbjuge+nb.clusters,nbdesc)
@@ -74,7 +67,7 @@ cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,sc
       title(main = paste("Consumers' preferences analysed by",colnames(B)[nrow(hedo)+d]),cex.main = 1.1, font.main = 2)
     }
     don <- cbind.data.frame(as.factor(clusters),t(hedo))
-    colnames(don) <- c("clusters",rownames(hedo))
+    colnames(don) <- c("clusters",paste("Prod",rownames(hedo),sep="."))
     resdecat <- decat(don,formul="~clusters",firstvar=2,proba=1,graph=FALSE)
     res <- list()
     res$clusters <- clusters
@@ -98,7 +91,7 @@ colplot<-function(mat, k=0,coord, z, level=41, col = terrain.colors(level+level%
     x2 <- 1
 
     plot(mat[,abs],mat[,ord],xlab=xlab, ylab=ylab,asp=1,type="n")
-    legend(min(x)*1.15,max(y),c(1,0.75,0.5,0.25,0,-0.25,-0.5,-0.75,-1),fill=c(col[level],col[(level%/%2)+(level%/%4)+(level%/%8)+1],col[(level%/%2)+(level%/%4)+1],col[(level%/%2)+(level%/%8)+1],col[(level%/%2)+1],col[(level%/%4)+(level%/%8)+1],col[(level%/%4)+1],col[(level%/%8)+1],col[1]),cex=0.7)
+    legend("topleft",legend=c(1,0.75,0.5,0.25,0,-0.25,-0.5,-0.75,-1),fill=c(col[level],col[(level%/%2)+(level%/%4)+(level%/%8)+1],col[(level%/%2)+(level%/%4)+1],col[(level%/%2)+(level%/%8)+1],col[(level%/%2)+1],col[(level%/%4)+(level%/%8)+1],col[(level%/%4)+1],col[(level%/%8)+1],col[1]),cex=0.7)
     abline(v=0,lty=2)
     abline(h=0,lty=2)
 #    senso.label(mat[,c(abs,ord)],cpoint=0,clabel=0)

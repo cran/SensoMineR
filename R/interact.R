@@ -10,7 +10,7 @@ plotinteract<-function(tab,cex=1.1,xlegend=ncol(tab)-5,ylegend=max(tab),xlab=NUL
   abline(v = x, lty = "dotted")
   abline(h = 0)
   for (i in 1:nrow(tab)) points(x,tab[i,],col=i,cex=cex,pch=20)
-  legend(xlegend,ylegend,legend=rownames(tab),col=1:nrow(tab),pch=rep(20,nrow(tab)),cex=0.8,bg="white")
+  legend("topright",legend=rownames(tab),col=1:nrow(tab),pch=rep(20,nrow(tab)),cex=0.8,bg="white")
 }
 ############################################################################
 

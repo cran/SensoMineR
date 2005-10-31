@@ -18,7 +18,6 @@
         tabF <- matrix(0,lastvar+1-firstvar,2)
         coeff <- tabT <- matrix(0,lastvar+1-firstvar,nb.modalite)
         lab2 <- labels(don.aux)[[2]]
-
   for (varendo in firstvar:lastvar) {
     formule <- paste(lab[varendo],"~ C(")
     aux2 <- equation[2]
@@ -59,8 +58,9 @@
   dimnames(tabF) <- list(nomdescripteur,c("Vtest","P-value"))
   dimnames(coeff) <- dimnames(tabT) <- list(nomdescripteur,levels(donnee[,col.p]))
   resF <- vector("list",length=1)
-  select <- (1:nrow(tabF))[abs(tabF[rev(order(tabF))])>=level.lower]
-  resF <- cbind.data.frame(tabF[rev(order(tabF))][select],pnorm(-tabF[rev(order(tabF))][select]))
+  select <- (1:nrow(tabF))[tabF[order(tabF[,2]),2]< proba]
+  resF <- cbind.data.frame(qnorm(tabF[order(tabF[,2]),2],lower.tail=FALSE)[select],tabF[order(tabF[,2]),2][select])
+  dimnames(resF)[[1]]=rownames(tabF[order(tabF[,2]),][select,])
   dimnames(resF)[[2]]=c("Vtest","P-value")
   resT <- vector("list",length=nb.modalite)
   for (i in 1:nb.modalite) {

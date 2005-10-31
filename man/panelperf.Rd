@@ -51,11 +51,11 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 
 \examples{
 data(chocolates)
-res=panelperf(chocolates, firstvar = 5,
-    formul = "~Product+Panelist+Session+Product:Panelist+Session:Product")
+res=panelperf(chocolates, firstvar = 5, formul = "~Product+Panelist+
+    Session+Product:Panelist+Session:Product+Panelist:Session")
 ## Sort results by product p.values.
-coltable(magicsort(res$p.value, sort.mat = res$p.value[,1], bycol = FALSE),
-    main.title = "Panel performance (sorted by product P-value)")
+coltable(magicsort(res$p.value, sort.mat = res$p.value[,1], bycol = FALSE,
+    method = "median"), main.title = "Panel performance (sorted by product P-value)")
 }
 
 \keyword{models}

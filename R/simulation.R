@@ -22,13 +22,9 @@
     aux1 <- cbind(aux1,c(tab[,,k]))
     aux2 <- cbind(aux2,c(res[,,k]))
   }
-#  aux1 <- cbind.data.frame(aux1,rep(levels(axeACP[,ncol(axeACP)-1]),rep(nbjuge,nbprod)))
-#  aux2 <- cbind.data.frame(aux2,rep(levels(axeACP[,ncol(axeACP)-1]),rep(nbsimul,nbprod)))
   aux1 <- cbind.data.frame(aux1,rep(axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1],rep(nbjuge,nbprod)))
   aux2 <- cbind.data.frame(aux2,rep(axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1],rep(nbsimul,nbprod)))
-#  colnames(aux1)=colnames(aux2)=colnames(cbind.data.frame(t(moy),levels(axeACP[,ncol(axeACP)-1])))
   colnames(aux1)=colnames(aux2)=colnames(cbind.data.frame(t(moy),axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1]))
-#  donnee<-as.data.frame(rbind(cbind.data.frame(t(moy),levels(axeACP[,ncol(axeACP)-1])),aux1,aux2))
   donnee<-as.data.frame(rbind(cbind.data.frame(t(moy),axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1]),aux1,aux2))
 
   return(donnee)
@@ -40,13 +36,13 @@
   if (length(nbchoix)==0) nbchoix <- nbjuge
   print(paste("Number of panelists in the virtual panel: ",nbchoix,"  (in the real panel: ",nbjuge,")."))
   if (nbbloc==1) simul.moy<-simulate.judgement(axeAFM$moyen,nbsimul=nbsimul,nbchoix=nbchoix)
-  simul.res <- list()
+  simulres <- list()
   if (nbbloc>1){
     simul.analyse.partiel<-simulate.judgement(axeAFM$partiel,nbsimul=nbsimul,nbchoix=nbchoix)
     nom.des.prod<-simul.analyse.partiel[,ncol(simul.analyse.partiel)]
     simul.analyse.partiel[,ncol(simul.analyse.partiel)] <- as.integer(simul.analyse.partiel[,ncol(simul.analyse.partiel)])
     simul.analyse.partiel <- as.matrix(simul.analyse.partiel)
-    simul.moy<-matrix(0,nrow(simul.analyse.partiel),nbcoord)
+    simul.moy<-matrix(0,nrow(simul.analyse.partiel),nbcoord) 
     for (i in 1:nbcoord) simul.moy[,i]<-apply(simul.analyse.partiel[,i+nbcoord*(0:(nbbloc-1))],1,mean)
     simul.moy <- cbind.data.frame(simul.moy,as.factor(nom.des.prod))
     ### pour les coord des prod
@@ -61,8 +57,12 @@
     for (i in 1:nbbloc)  simul.nom.partiel <- rbind(simul.nom.partiel,t(t(as.vector(paste(nom.des.prod[(nbprod*(nbchoix+1)+1):nrow(simul.analyse.partiel)],gsub("Comp1","",colnames(axeAFM$partiel)[((i-1)*nbcoord+1)]),sep="")))))
     rownames(simul.partiel)<-NULL
     simul.partiel <- cbind.data.frame(simul.partiel,simul.nom.partiel)
-    simul.res$partiel <- simul.partiel
+    simulres$partiel$P <- simul.partiel[1:(nbprod*nbbloc),]
+    simulres$partiel$PJ <- simul.partiel[(nbprod*nbbloc+1):(nbbloc*nbprod*(1+nbjuge)),]
+    simulres$partiel$simul <- simul.partiel[(nbbloc*nbprod*(1+nbjuge)+1):nrow(simul.partiel),]
   }
-  simul.res$moy <- simul.moy
-  return(simul.res)
+  simulres$moy$P <- simul.moy[1:nbprod,]
+  simulres$moy$PJ <- simul.moy[(nbprod+1):(nbprod*(1+nbjuge)),]
+  simulres$moy$simul <- simul.moy[(1+nbprod*(nbjuge+1)):nrow(simul.moy),]
+  return(simulres)
 }

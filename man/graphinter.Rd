@@ -45,14 +45,15 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 }
 
 \author{
-Delphine Anger, François Husson, Sébastien Lê}
+François Husson, Sébastien Lê}
 
 \seealso{ \code{\link{aov}}}
 
 \examples{
 \dontrun{
 data(chocolates)
-graphinter(chocolates, col.p = 4, col.j = 2, firstvar = 5, lastvar = 12
+graphinter(chocolates, col.p = 4, col.j = 2, firstvar = 5, lastvar = 12,
+    numr = 1, numc = 1)
 }
 }
 \keyword{models}

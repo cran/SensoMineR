@@ -11,7 +11,8 @@ panellipse(donnee, col.p, col.j, firstvar, lastvar = ncol(donnee),
     alpha = 0.05, coord = c(1,2), scale.unit = TRUE, nbsimul = 500, 
     nbchoix = NULL, bloc = NULL, name.bloc = NULL, 
     level.search.desc = 0.5, centerbypanelist = TRUE, 
-    scalebypanelist = FALSE)
+    scalebypanelist = FALSE, name.panelist = FALSE, cex = 1, 
+    color = NULL)
 }
 
 \arguments{
@@ -32,6 +33,10 @@ panellipse(donnee, col.p, col.j, firstvar, lastvar = ncol(donnee),
   \item{centerbypanelist}{boolean, if T center the data by panelist before the construction of the axes}
   \item{scalebypanelist}{boolean, if T scale the data by panelist before the construction of the axes (by default, FALSE
   is assigned to that parameter)}
+  \item{name.panelist}{boolean, if T then the name of each panelist is displayed on the \code{plotpanelist} graph (by default, FALSE
+  is assigned to that parameter)}
+  \item{cex}{cf. function \code{\link{par}} in the \pkg{graphics} package}
+ \item{color}{a vector with the colors used; by default there are 35 colors defined}
 }
 
 
@@ -50,7 +55,9 @@ A list containing the following elements:
   \item{coordinates}{a list with: the coordinates of the products with respect to the panel and to each panelists
  and the coordinates of the \emph{partial} products with respect to the panel and to each panelists}
   \item{hotelling}{Returns a matrix with the P-values of the Hotelling's T2 tests for each pair of products: this matrix allows to find the
-product which are significatnly different for the 2-components sensory description}
+product which are significatnly different for the 2-components sensory description; if an MFA is done, \emph{hotelling} returns as many matrices 
+as there are group, these matrices allows to find the product which are significantly different for the 2-components sensory description of the
+group, and it returns also a \emph{global} matrix corresponding to the P-values for the tests corresponding to the mean product.}
 
 Returns a graph of the products as well as a correlation circle of the descriptors.\cr
 
@@ -63,7 +70,7 @@ When a Multiple Factor Analysis is performed, returns a graph where each partial
 
 }
 
-\seealso{ \code{\link{panellipse.session}}}
+\seealso{ \code{\link{panellipse.session}}, \code{\link{panelmatch}}}
 
 \references{
 Husson F., Le Dien S. & Pagès J.  (2005). Confidence ellipse for the sensory profiles obtained by Principal Components Analysis. \emph{Food Quality and Preference}.  16 (3), 245-250. \cr
@@ -91,7 +98,9 @@ panellipse(chocolates, col.p = 4, col.j = 1, nbchoix = 1, firstvar = 5)
 data(chocolates)
 res <- panellipse(chocolates, col.p = 4, col.j = 1, firstvar = 5, 
     bloc = c(6,8), name.bloc = c("G1","G2"))
-coltable(res$hotelling, main.title = "P-values for the Hotelling's T2 tests")
+for (i in 1:dim(res$hotelling$bygroup)[3]) coltable(res$hotelling$bygroup[,,i], 
+    main.title = paste("P-values for the Hotelling's T2 tests (",
+    dimnames(res$hotelling$bygroup)[3][[1]][i],")",sep=""))
 }
 }
 \keyword{multivariate}

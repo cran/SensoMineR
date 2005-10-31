@@ -12,7 +12,7 @@ the consumers is also very easy to obtain.
 
 \usage{
 cpa(senso, hedo, coord=c(1,2), center = TRUE, scale = TRUE, 
-    nb.clusters = 0, scale.unit = FALSE, 
+    nb.clusters = 0, scale.unit = FALSE, name.panelist = TRUE,
     col = terrain.colors(45)[1:41])
 }
 
@@ -22,10 +22,11 @@ number of sensory descriptors}
 \item{hedo}{a data frame of dimension (\emph{p,j}), where \emph{p} is the number of products and \emph{j} the
 number of consumers or panelists}
 \item{coord}{a length 2 vector specifying the components to plot}
-\item{center}{boolean, if T then data are mean centered}
-\item{scale}{boolean, if T then data are scaled to unit variance}
+\item{center}{boolean, if TRUE then data are mean centered}
+\item{scale}{boolean, if TRUE then data are scaled to unit variance}
 \item{nb.clusters}{number of clusters to use (by default, 0 and the optimal numer of clusters is calculated}
-\item{scale.unit}{boolean, if T then PCA is made on scaled data}
+\item{scale.unit}{boolean, if TRUE then PCA is made on scaled data}
+\item{name.panelist}{boolean, if TRUE then the name of the panelist is written}
 \item{col}{color palette}
 }
 
@@ -69,7 +70,7 @@ chocosenso=averagetable(chocolates, formul = "~Product", firstvar = 5)
 cpa(chocosenso, hedochoc, coord = c(1,2), center = TRUE,scale = TRUE)
 ## If you prefer a graph in black and white and with 3 clusters
 cpa(chocosenso, hedochoc, coord = c(1,2), center = TRUE, scale = TRUE, 
-    col = gray((50:1)/50), nb.clusters = 3)
+    name.panelist = FALSE, col = gray((50:1)/50), nb.clusters = 3)
 }
 }
 \keyword{multivariate}

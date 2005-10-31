@@ -71,7 +71,7 @@ X <- ktab.data.frame(XX,blocks=X$blo,colnames=col.names.ktab(X),rownames=row.nam
     afm$cw <- anaco$cw
     afm$co <- anaco$co
     afm$c1 <- anaco$c1
-#   afm$seb <- anaco
+#    afm$seb <- anaco
     projiner <- function(xk, qk, d, z) {
         w7 <- t(as.matrix(xk) * d) %*% as.matrix(z)
         iner <- apply(w7 * w7 * qk, 2, sum)

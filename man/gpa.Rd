@@ -8,7 +8,7 @@
 Performs a Generalised Procrustes Analysis (GPA) that takes into account missing values.
 }
 \usage{
-gpa(df,tolerance=10^-10,nbiteration=200,scal=TRUE,coord=c(1,2))
+gpa(df,tolerance=10^-10,nbiteration=200,scale=TRUE,coord=c(1,2))
 }
 
 \arguments{
@@ -16,7 +16,7 @@ gpa(df,tolerance=10^-10,nbiteration=200,scal=TRUE,coord=c(1,2))
   \item{tolerance}{a threshold with respect to which the algorithm stops, i.e. when the difference between 
    the GPA loss function at step \emph{n} and \emph{n+1} is less than \code{tolerance}}
   \item{nbiteration}{the maximum number of iterations until the algorithm stops}
-  \item{scal}{a boolean, if TRUE (which is the default value) scaling is required}
+  \item{scale}{a boolean, if TRUE (which is the default value) scaling is required}
   \item{coord}{a length 2 vector specifying the components to plot}
 }
 

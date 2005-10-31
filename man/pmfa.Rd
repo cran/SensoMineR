@@ -10,7 +10,7 @@ Performs Multiple Factor Analysis combined with Procrustean Analysis.
 
 \usage{
 pmfa(matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
-      graph.ind = TRUE, lim = c(60,40), coord = c(1,2))
+      graph.ind = TRUE, lim = c(60,40), coord = c(1,2), cex = 0.8)
 }
 
 \arguments{
@@ -22,6 +22,7 @@ pmfa(matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
   \item{graph.ind}{boolean, if TRUE (which is the default value) superimposes each panelist's configuration on the average configuration}  
   \item{lim}{size of the tablecothe}  
   \item{coord}{a length 2 vector specifying the components to plot}
+  \item{cex}{cf. function \code{\link{par}} in the \pkg{graphics} package}
 }
 
 \details{
