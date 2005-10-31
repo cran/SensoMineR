@@ -22,7 +22,6 @@
   ktable <- ktab.data.frame(moy.aux[1:nbactif,-c(1,2)],blocks=ktableau$blo[-1],tabnames=tab.names(ktableau)[-1])
   ktable2 <- ktab.data.frame(moy.aux[(nbactif+1):dim(moy.aux)[1],-c(1,2)],blocks=ktableau$blo[-1],tabnames=tab.names(ktableau)[-1])
   res.afm <- mfasenso(ktable,ktable2,scale.unit=scale.unit,nbcoord=nbcoord)
-
   axe <- list()
   axe$moyen <- data.frame(rbind(res.afm$moyen,res.afm$moyen.illu),as.factor(moy.aux[,2]),as.factor(moy.aux[,1]))
   dimnames(axe$moyen)[2][[1]]<-c (paste("Comp", 1:nbcoord, sep = ""),"Product","Panelist")
@@ -32,15 +31,15 @@
     dimnames(axe$partiel)[2][[1]][(dim(axe$partiel)[2]-1):dim(axe$partiel)[2]] <- c("Product","Panelist")
     for (i in 1:length(ktable$blo)) dimnames(axe$partiel)[2][[1]][((i-1)*nbcoord+1):(i*nbcoord)]<-paste("Comp", 1:nbcoord, sep = "",tab.names(ktable)[i])
   }
+  axe$eig = res.afm$eig
   aa=cor(moy.aux[1:nbprod,-(1:2)],axe$moyen[1:nbprod,coord])
-  get(getOption("device"))()
+  get(getOption("device"))(10,8)
   senso.corcircle(aa, fullcircle=TRUE)
-  title(main = paste("Correlation circle (comp ",coord[1]," - comp ",coord[2],")",sep=""))
-  get(getOption("device"))()
+  title(main = paste("Correlation circle: comp ",coord[1]," (",res.afm$eig[coord[1],2],"%) - comp ",coord[2]," (",res.afm$eig[coord[2],2],"%)",sep=""))
+  get(getOption("device"))(max(14,res.afm$eig[coord[1],1]/res.afm$eig[coord[1],2]*8),8)
   par(mar = c(0,0,2,0))
   senso.label( axe$moyen[1:nbprod,coord], clabel=0, cpoint=0.8, include.origin = FALSE)
-  text( axe$moyen[1:nbprod,coord[1]], axe$moyen[1:nbprod,coord[2]], labels = levels( axe$moyen[1:nbprod,nbcoord+1]), cex = 0.8, pos = 4, offset = 0.2)
-  title(main = paste("Individuals factor map (comp ",coord[1]," - comp",coord[2],")",sep=""))
-
+  text( axe$moyen[1:nbprod,coord[1]], axe$moyen[1:nbprod,coord[2]], labels = axe$moyen[1:nbprod,nbcoord+1], cex = 0.8, pos = 4, offset = 0.2)
+  title(main = paste("Individuals factor map: comp ",coord[1]," (",res.afm$eig[coord[1],2],"%) - comp ",coord[2]," (",res.afm$eig[coord[2],2],"%)",sep=""))
   return(axe)
 }

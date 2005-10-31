@@ -8,7 +8,12 @@ Performs preference mapping techniques based on multidimensional exploratory dat
 }
 
 \usage{
-carto(Mat, MatH, option = c("pca", "manual","afmult", "statis", "gpa"), level = 0, regmod = 1, graphic = FALSE, coord = c(1, 2), asp = 1, cex = 1.3, col = "steelblue4", font = 2, clabel = 0.8, label.j = FALSE,resolution=200,nb.clusters=0)
+carto(Mat, MatH, 
+      option = c("pca", "manual","afmult", "statis", "gpa"),
+      level = 0, regmod = 1, graphic = FALSE, coord = c(1, 2), 
+      asp = 1, cex = 1.3, col = "steelblue4", font = 2, 
+      clabel = 0.8, label.j = FALSE, resolution = 200, 
+      nb.clusters = 0)
 }
 
 \arguments{
@@ -65,21 +70,20 @@ Sébastien Lê \email{Sebastien.Le@agrocampus-rennes.fr}
 \seealso{\code{\link{afmult}}, \code{\link{gpa}}}
 
 \examples{
-\dontrun{
 ## Example 1
 data(chocolates)
 data(hedochoc)
-chocselect <- search.desc(chocolates,col.j=1,col.p=4,firstvar=5)
-resaveragetable<-averagetable(chocselect,formul="~Product",firstvar=5)
+chocselect <- search.desc(chocolates, col.j = 1, col.p = 4, firstvar = 5)
+resaveragetable<-averagetable(chocselect, formul="~Product",firstvar=5)
 carto(resaveragetable, hedochoc, option = "pca")
 
 ## Example 2
+\dontrun{
 data(sensopanels)
 data(hedochoc)
 ktabsenso <- ktab.data.frame(sensopanels, blocks = rep(14,7))
 carto(ktabsenso,hedochoc,option = "afmult", graphic = TRUE)
 }
 }
-
 \keyword{multivariate}
 \keyword{models}

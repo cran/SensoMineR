@@ -11,7 +11,9 @@ the consumers is also very easy to obtain.
 }
 
 \usage{
-cpa(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,scale.unit=FALSE,col=terrain.colors(45)[1:41])
+cpa(senso, hedo, coord=c(1,2), center = TRUE, scale = TRUE, 
+    nb.clusters = 0, scale.unit = FALSE, 
+    col = terrain.colors(45)[1:41])
 }
 
 \arguments{
@@ -63,11 +65,11 @@ Sébastien Lê \email{Sebastien.Le@agrocampus-rennes.fr}
 \dontrun{
 data(chocolates)
 data(hedochoc)
-chocosenso=averagetable(chocolates,formul="~Product",firstvar=5)
-cpa(chocosenso,hedochoc,coord=c(1,2),center=TRUE,scale=TRUE)
+chocosenso=averagetable(chocolates, formul = "~Product", firstvar = 5)
+cpa(chocosenso, hedochoc, coord = c(1,2), center = TRUE,scale = TRUE)
 ## If you prefer a graph in black and white and with 3 clusters
-cpa(chocosenso,hedochoc,coord=c(1,2),center=TRUE,scale=TRUE,col=gray((50:1)/50),nb.clusters=3)
+cpa(chocosenso, hedochoc, coord = c(1,2), center = TRUE, scale = TRUE, 
+    col = gray((50:1)/50), nb.clusters = 3)
 }
 }
-
 \keyword{multivariate}

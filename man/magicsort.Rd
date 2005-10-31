@@ -6,7 +6,8 @@
 Sort the rows and columns of a matrix in a "magic" order or by ascending (or descending) mean or median or geometrical mean.
 }
 \usage{
-magicsort(matrice,sort.mat=matrice,method="magic",byrow=TRUE,bycol=TRUE,ascending=TRUE)
+magicsort(matrice, sort.mat = matrice, method = "magic",
+    byrow = TRUE, bycol = TRUE, ascending = TRUE)
 }
 
 \arguments{
@@ -26,13 +27,18 @@ Very useful function to compare results.
 \examples{
 ## Example 1
 data(chocolates)
-resdecat<-decat(chocolates,formul="~Product",firstvar=5,graph=FALSE)
-coltable(magicsort(resdecat$tabT),level.lower=-1.96,level.upper=1.96,main.title="Products' description")
+resdecat<-decat(chocolates, formul = "~Product", firstvar = 5, 
+    graph = FALSE)
+coltable(magicsort(resdecat$tabT), level.lower = -1.96, 
+    level.upper = 1.96, main.title = "Products' description")
 
 ## Example 2
 data(chocolates)
-resperf<-paneliperf(chocolates,formul="~Product+Panelist+Product:Panelist",formul.j="~Product",col.j=1,firstvar=5,lastvar=12,synthesis=FALSE,graph=FALSE)
-res.sort=magicsort(resperf$prob.ind,method="median")
-coltable(res.sort,main.title="P-values of the F-test by panelist")
+resperf<-paneliperf(chocolates, 
+    formul = "~Product+Panelist+Product:Panelist",
+    formul.j = "~Product", col.j = 1, firstvar = 5, lastvar = 12,
+    synthesis = FALSE, graph = FALSE)
+res.sort=magicsort(resperf$prob.ind, method = "median")
+coltable(res.sort, main.title = "P-values of the F-test by panelist")
 }
 \keyword{manip}

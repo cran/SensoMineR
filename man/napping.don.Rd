@@ -29,5 +29,4 @@ data(napping.don)
 nappeplot(napping.don)
 }
 }
-
 \keyword{datasets}

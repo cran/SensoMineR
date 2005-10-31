@@ -5,8 +5,8 @@ for (i in firstvar:lastvar){
   a <- summary(lm(donnee[,i]~donnee[,var1]+donnee[,var2], na.action=na.omit))$coef[2]
   b <- summary(lm(donnee[,i]~donnee[,var1]+donnee[,var2], na.action=na.omit))$coef[3]
   r2 <- summary(lm(donnee[,i]~donnee[,var1]+donnee[,var2],na.action=na.omit))$r.squared
-  cor1 <- cor(donnee[,i],donnee[,var1],use="complete")
-  cor2 <-  cor(donnee[,i],donnee[,var2],use="complete")
+  cor1 <- cor(donnee[,i],donnee[,var1],use="pairwise.complete.obs")
+  cor2 <-  cor(donnee[,i],donnee[,var2],use="pairwise.complete.obs")
   axe2 <- sqrt(r2/(1+a^2/b^2))*(abs(b)/b)
   axe1 <- a*axe2/b
   aux [i,1] <-  colnames(donnee)[i]

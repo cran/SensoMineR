@@ -22,10 +22,14 @@
     aux1 <- cbind(aux1,c(tab[,,k]))
     aux2 <- cbind(aux2,c(res[,,k]))
   }
-  aux1 <- cbind.data.frame(aux1,rep(levels(axeACP[,ncol(axeACP)-1]),rep(nbjuge,nbprod)))
-  aux2 <- cbind.data.frame(aux2,rep(levels(axeACP[,ncol(axeACP)-1]),rep(nbsimul,nbprod)))
-  colnames(aux1)=colnames(aux2)=colnames(cbind.data.frame(t(moy),levels(axeACP[,ncol(axeACP)-1])))
-  donnee<-as.data.frame(rbind(cbind.data.frame(t(moy),levels(axeACP[,ncol(axeACP)-1])),aux1,aux2))
+#  aux1 <- cbind.data.frame(aux1,rep(levels(axeACP[,ncol(axeACP)-1]),rep(nbjuge,nbprod)))
+#  aux2 <- cbind.data.frame(aux2,rep(levels(axeACP[,ncol(axeACP)-1]),rep(nbsimul,nbprod)))
+  aux1 <- cbind.data.frame(aux1,rep(axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1],rep(nbjuge,nbprod)))
+  aux2 <- cbind.data.frame(aux2,rep(axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1],rep(nbsimul,nbprod)))
+#  colnames(aux1)=colnames(aux2)=colnames(cbind.data.frame(t(moy),levels(axeACP[,ncol(axeACP)-1])))
+  colnames(aux1)=colnames(aux2)=colnames(cbind.data.frame(t(moy),axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1]))
+#  donnee<-as.data.frame(rbind(cbind.data.frame(t(moy),levels(axeACP[,ncol(axeACP)-1])),aux1,aux2))
+  donnee<-as.data.frame(rbind(cbind.data.frame(t(moy),axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1]),aux1,aux2))
 
   return(donnee)
 }

@@ -16,7 +16,8 @@
 }
 
 \usage{
-decat(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba = 0.05,graph=TRUE)
+decat(donnee, formul, firstvar, lastvar = length(colnames(donnee)), 
+    proba = 0.05, graph = TRUE)
 }
 
 \arguments{
@@ -60,11 +61,12 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 \examples{
 data(chocolates)
 ## model (AOV): " descriptor = product + panelist "
-resdecat<-decat(chocolates,formul="~Product+Panelist",firstvar=5)
-coltable(magicsort(resdecat$tabT),level.lower=-1.96,level.upper=1.96,main.title="Products' description")
+resdecat<-decat(chocolates, formul="~Product+Panelist", firstvar = 5)
+coltable(magicsort(resdecat$tabT), level.lower = -1.96, 
+    level.upper = 1.96, main.title="Products' description")
 barrow(resdecat$tabT)
-barrow(t(resdecat$tabT),numr=3,numc=3)
-barrow(resdecat$coeff,color="orange") 
+barrow(t(resdecat$tabT), numr = 3, numc = 3)
+barrow(resdecat$coeff, color = "orange") 
 }
 
 \keyword{models}

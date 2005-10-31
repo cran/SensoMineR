@@ -10,7 +10,9 @@ quantitative variables.
 }
 
 \usage{
-prefpls(donnee,var1=1,var2=2,firstvar=3,lastvar=ncol(donnee),levels=c(0.2,0.4,0.6,0.7,0.8,0.9,1),asp=1,nbchar=max(nchar(colnames(donnee))))
+prefpls(donnee, var1 = 1, var2 = 2, firstvar = 3, 
+    lastvar = ncol(donnee), levels = c(0.2,0.4,0.6,0.7,0.8,0.9,1), 
+    asp = 1, nbchar = max(nchar(colnames(donnee))))
 }
 
 \arguments{
@@ -42,7 +44,7 @@ François Husson
 
 \examples{
 data(chocolates)
-resaverage <- averagetable(chocolates,formul="~Product",firstvar=5)
+resaverage <- averagetable(chocolates, formul = "~Product", firstvar = 5)
 prefpls(resaverage)
 }
 

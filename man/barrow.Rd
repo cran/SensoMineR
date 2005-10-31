@@ -10,7 +10,8 @@ for all the quantitative variables.
 }
 
 \usage{
-barrow(donnee,numr = 2,numc = 2,numchar=8,color="lightblue",title=NULL)
+barrow(donnee, numr = 2, numc = 2, numchar = 8, color = "lightblue",
+      title = NULL)
 }
 
 \arguments{
@@ -41,12 +42,12 @@ Sébastien Lê \email{Sebastien.Le@agrocampus-rennes.fr}
 }
 
 \examples{
-\dontrun{
 data(chocolates)
-resdecat<-decat(chocolates,formul="~Product+Panelist",firstvar=5,graph=FALSE)
+resdecat<-decat(chocolates, formul = "~Product+Panelist", firstvar = 5, 
+    graph = FALSE)
+\dontrun{
 barrow(resdecat$tabT)
-barrow(resdecat$coeff,color="orange")
+barrow(resdecat$coeff, color = "orange")
 }
 }
-
 \keyword{univar}

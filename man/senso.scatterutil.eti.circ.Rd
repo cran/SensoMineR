@@ -6,7 +6,8 @@
 Puts labels on a correlation circle
 }
 \usage{
-senso.scatterutil.eti.circ(x, y,label,clabel, origin = c(0, 0), boxes = FALSE, col="black")
+senso.scatterutil.eti.circ(x, y, label, clabel, origin = c(0, 0), 
+    boxes = FALSE, col = "black")
 }
 \arguments{
   \item{x}{}
@@ -15,6 +16,7 @@ senso.scatterutil.eti.circ(x, y,label,clabel, origin = c(0, 0), boxes = FALSE, c
   \item{clabel}{}
   \item{origin}{}
   \item{boxes}{}
+  \item{col}{}
 }
 
 

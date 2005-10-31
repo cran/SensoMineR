@@ -1,6 +1,6 @@
 "scalebypanelist" <- function(matrice,center=TRUE,scale=FALSE,col.p,col.j,firstvar,lastvar=ncol(matrice),method="coeff"){
 
-if ((method!="coeff")&(method!="mean")) stop(paste("The method",method,"is unknown. Use coeff or mean"))
+if ((method!="coeff")&(method!="average")) stop(paste("The method",method,"is unknown. Use coeff or average"))
 for (j in 1 :(firstvar-1))  matrice[,j] <- as.factor(matrice[,j])
   labjuge=levels(matrice[,col.j])
   oo <- order(matrice[,col.p])
@@ -21,7 +21,7 @@ for (j in 1 :(firstvar-1))  matrice[,j] <- as.factor(matrice[,j])
 
   if (any(is.na(moy.aux))){
   #### Missing value are replaced by the average of the average for the descriptor
-    if (method=="mean") {
+    if (method=="average") {
       for (i in 3:(nbdesc+2)) moy.aux[,i]<-replace(moy.aux[,i],is.na(moy.aux[,i]),mean(moy.aux[1:nbprod,i]))
     }  
     #### Calculate the average by product and the average by product and by panelist, 
@@ -74,7 +74,8 @@ for (j in 1 :(firstvar-1))  matrice[,j] <- as.factor(matrice[,j])
   moy.aux<-cbind.data.frame(moy.aux[,1:2],moy.aux.scale[,-(1:2)])
   }
   
-  moy.aux[(1:nbprod),-(1:2)] <- sapply(as.data.frame(moy.aux[(moy.aux[,1]!=0),-(1:2)]),function(vec,fac) tapply(vec,fac,mean,na.rm=TRUE),fac=moy.aux[(moy.aux[,1]!=0),2])
+#  moy.aux[(1:nbprod),-(1:2)] <- sapply(as.data.frame(moy.aux[(moy.aux[,1]!=0),-(1:2)]),function(vec,fac) tapply(vec,fac,mean,na.rm=TRUE),fac=moy.aux[(moy.aux[,1]!=0),2])
+  for (i in 1:nbprod) moy.aux[i,-(1:2)] <- apply(moy.aux[(moy.aux[,1]!=0)&(moy.aux[,2]==moy.aux[i,2]),-(1:2)],2,mean,na.rm=TRUE)
   dimnames(moy.aux)[2] <- dimnames(matrice)[2]
   return(moy.aux)
 }

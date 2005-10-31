@@ -69,7 +69,7 @@ if (length(mean.conf)==0){
   mean.conf <- res.afm$li
 }
 if (!do.mfa){
-  aa=cor(matrice,mean.conf[,coord],use="complete")
+  aa=cor(matrice,mean.conf[,coord],use="pairwise.complete.obs")
   senso.corcircle(aa, fullcircle=TRUE)
   title(main = paste("Correlation circle (comp",coord[1],"-","comp",coord[2],")"))
   get(getOption("device"))()

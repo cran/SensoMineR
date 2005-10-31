@@ -17,7 +17,8 @@
             }
 
 \usage{
-averagetable(donnee,formul,subset=NULL,method="coeff",firstvar,lastvar=ncol(donnee),file=NULL)
+averagetable(donnee, formul, subset = NULL, method = "coeff", 
+    firstvar, lastvar = ncol(donnee), file = NULL)
 }
 
 \arguments{
@@ -34,8 +35,8 @@ averagetable(donnee,formul,subset=NULL,method="coeff",firstvar,lastvar=ncol(donn
 \details{
   The \code{formul} parameter can be filled in for a given analysis of variance model.
   The \code{formul} parameter must begin with the categorical variable of interest (generally the \emph{product} variable)
-  followed by the different other factors (and their combinations) of interest.
-  E.g.:\code{formul = "~Product+Panelist+Product:Panelist"}.
+  followed by the different other factors (and eventually their interactions) of interest. Classicially, one can used 
+  \code{formul = "~Product+Panelist+Product:Panelist"}.
   In practise and in our type of applications, this function is very useful to obtain a data matrix 
   in which rows represent products and columns represent sensory descriptors. \cr
   If "mean" is assigned to the \code{method} parameter, then the \code{formul} parameter
@@ -63,10 +64,12 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 
 \examples{
 data(chocolates)
-resaverage<-averagetable(chocolates,formul="~Product+Panelist",firstvar=5)
-coltable(magicsort(resaverage),level.upper=6,level.lower=4,main.title="Average by chocolate")
+resaverage<-averagetable(chocolates, formul = "~Product+Panelist",
+    firstvar = 5)
+coltable(magicsort(resaverage), level.upper = 6,level.lower = 4,
+    main.title = "Average by chocolate")
 get(getOption("device"))()
-pca(resaverage,scale.unit=TRUE)
+pca(resaverage, scale.unit = TRUE)
 }
 
 \keyword{models}

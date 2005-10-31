@@ -5,7 +5,9 @@
 Performs a multiple factor analysis, using an object of class \code{ktab}.
 }
 \usage{
-afmult(X, option = c("lambda1", "inertia", "uniform", "internal"),coord=c(1,2),scannf = TRUE, nf = 3,cex=0.8,col = "steelblue4", font = 2, clabel = 0.8,scale.unit=TRUE)
+afmult(X, option = c("lambda1", "inertia", "uniform", "internal"),
+     coord = c(1,2), scannf = TRUE, nf = 3, cex = 0.8, 
+     col = "steelblue4", font = 2, clabel = 0.8, scale.unit = TRUE)
 }
 \arguments{
   \item{X}{an object of class \code{ktab}}
@@ -47,10 +49,9 @@ lies in the calculations of the coordinates of the partial individuals.
 }
 
 \examples{
-\dontrun{
 data(sensopanels)
-resafmult<-afmult(ktab.data.frame(sensopanels, blocks = rep(14,7)),scannf=FALSE)
-}
+resafmult<-afmult(ktab.data.frame(sensopanels, blocks = rep(14,7)),
+    scannf = FALSE)
 }
 
 \keyword{multivariate}

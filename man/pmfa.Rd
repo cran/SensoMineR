@@ -9,7 +9,8 @@ Performs Multiple Factor Analysis combined with Procrustean Analysis.
 }
 
 \usage{
-pmfa(matrice,matrice.illu=NULL,mean.conf=NULL,dilat=TRUE,graph.ind=TRUE,lim=c(60,40),coord=c(1,2))
+pmfa(matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
+      graph.ind = TRUE, lim = c(60,40), coord = c(1,2))
 }
 
 \arguments{
@@ -48,11 +49,12 @@ Morand, E., Pagès, J. (accepted) Procrustes multiple factor analysis to analyze 
 \seealso{\code{\link{afmult}}, \code{\link{nappeplot}}, \code{\link{indscal}}}
 
 \examples{
+\dontrun{
 data(napping.don)
 data(napping.words)
 nappeplot(napping.don)
 get(getOption("device"))()
-pmfa(napping.don,napping.words)
+pmfa(napping.don, napping.words)
 }
-
+}
 \keyword{multivariate}

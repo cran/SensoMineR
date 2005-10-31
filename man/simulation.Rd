@@ -9,7 +9,7 @@
 }
 
 \usage{
-simulation(axeAFM,nbchoix=NULL,nbbloc,nbsimul=500)
+simulation(axeAFM, nbchoix = NULL, nbbloc, nbsimul = 500)
 }
 
 \arguments{
@@ -34,10 +34,12 @@ Called by the simulation procedure
 
 \examples{
 data(chocolates)
-ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],chocolates[,4],chocolates[,-(1:4)]),blocks=c(2,14),tabnames=c("JP","Gr1"))
-ktab.interesting.desc <- search.desc.ktab(ktab.donnee,level=0.5)
-axe <- construct.axes(ktab.interesting.desc,scale.unit=TRUE)
-simul <- simulation(axe,nbbloc=length(ktab.interesting.desc$blo)-1,nbsimul=500)
+ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],
+    chocolates[,4], chocolates[,-(1:4)]), blocks = c(2,14),
+    tabnames = c("JP","Gr1"))
+ktab.interesting.desc <- search.desc.ktab(ktab.donnee)
+axe <- construct.axes(ktab.interesting.desc, scale.unit = TRUE)
+simul <- simulation(axe, nbbloc = length(ktab.interesting.desc$blo)-1)
 }
 
 \keyword{models}

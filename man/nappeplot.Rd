@@ -4,7 +4,7 @@
 \title{Plot panelists' tableclothe}
 \description{Plot panelists' tableclothe.}
 \usage{
-nappeplot(donnee,numr=2,numc=2,color="blue",lim=c(60,40))
+nappeplot(donnee, numr = 2, numc = 2, color = "blue", lim = c(60,40))
 }
 
 \arguments{
@@ -37,5 +37,4 @@ data(napping.don)
 nappeplot(napping.don)
 }
 }
-
 \keyword{multivariate}

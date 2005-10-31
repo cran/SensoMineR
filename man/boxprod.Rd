@@ -11,7 +11,8 @@
 }
 
 \usage{
-boxprod(donnee,col.p,firstvar,lastvar=ncol(donnee),numr=2,numc=2)
+boxprod(donnee, col.p, firstvar, lastvar = ncol(donnee), 
+    numr = 2, numc = 2)
 }
 
 \arguments{
@@ -44,10 +45,8 @@ for an alternative (with small data sets).
 }
 
 \examples{
-\dontrun{
 data(chocolates)
-boxprod(chocolates,col.p=4,firstvar=5,numr=2,numc=2)
-}
+boxprod(chocolates, col.p = 4, firstvar = 5, numr = 2, numc = 2)
 }
 
 \keyword{univar}

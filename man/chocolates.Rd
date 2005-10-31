@@ -26,7 +26,7 @@ Département de mathématiques appliquées, Agrocampus Rennes
 
 \examples{
 data(chocolates)
-decat(chocolates,formul="~Product+Panelist",firstvar=5,graph=FALSE)
+decat(chocolates, formul = "~Product+Panelist", firstvar = 5, graph = FALSE)
 }
 
 \keyword{datasets}

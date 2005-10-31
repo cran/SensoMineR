@@ -13,7 +13,8 @@ Produces graphs of products and descriptors from the output of PCA or MFA.
 }
 
 \usage{
-construct.axes(ktableau,coord=c(1,2),scale.unit=TRUE,centerbypanelist=FALSE,scalebypanelist=FALSE)
+construct.axes(ktableau, coord = c(1,2), scale.unit = TRUE, 
+      centerbypanelist = FALSE, scalebypanelist = FALSE)
 }
 
 \arguments{
@@ -45,6 +46,7 @@ This function is necessary when calculating confidence ellipses for products.
 
 \value{
 A list containing the following elements:
+  \item{eig}{a matrix with the component of the factor analysis (in row) and the eigenvalues, the inertia and the cumulative inertia for each component}
   \item{moyen}{the coordinates of the products with respect to the panel and to each panelists}
   \item{partiel}{the coordinates of the \emph{partial} products with respect to the panel and to each panelists}
 Returns also a correlation circle as well as a graph of individuals
@@ -65,16 +67,18 @@ Multiple factor analysis (AFMULT package).
 \seealso{ \code{\link{mfasenso}}}
 
 \examples{
-\dontrun{
 data(chocolates)
 
 ## PCA (two blocks of variables)
-ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],chocolates[,4],chocolates[,-(1:4)]),blocks=c(2,14),tabnames=c("JP","Gr1"))
-axe <- construct.axes(ktab.donnee,scale.unit=TRUE)
+ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1], 
+    chocolates[,4], chocolates[,-(1:4)]), blocks = c(2,14), 
+    tabnames = c("JP","Gr1"))
+axe <- construct.axes(ktab.donnee, scale.unit = TRUE)
  
 ## MFA (three blocks of variables)
-ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],chocolates[,4],chocolates[,-(1:4)]),blocks=c(2,6,4,4),tabnames=c("JP","A","F","T"))
-axe <- construct.axes( ktab.donnee,scale.unit=TRUE)
-}
+ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],
+    chocolates[,4], chocolates[,-(1:4)]), blocks = c(2,6,8),
+    tabnames = c("JP","A-F","T-S"))
+axe <- construct.axes(ktab.donnee, scale.unit = TRUE)
 }
 \keyword{multivariate}

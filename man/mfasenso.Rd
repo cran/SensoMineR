@@ -2,28 +2,30 @@
 
 \alias{mfasenso}
 
-\title{Make MFA with illustrative individuals}
+\title{Make MFA (or PCA) with illustrative individuals}
 
 \description{
 
 }
 
 \usage{
-mfasenso(ktab,ktab.illu=NULL,scale.unit=TRUE,nbcoord=2,poids=NULL)
+mfasenso(ktab, ktab.illu = NULL, scale.unit = TRUE, nbcoord = 2, 
+    poids = NULL)
 }
 
 \arguments{
-  \item{ktab}{ktableau des individus actifs}
-  \item{ktab.illu}{ktableau des individus illustratifs}  
-  \item{scale.unit}{Booléen qui prend la valeur vraie si les variables sont normées}  
+  \item{ktab}{ktableau with active individuals}
+  \item{ktab.illu}{ktableau with illustrative individuals}  
+  \item{scale.unit}{Boolean, TRUE if the variables are scaled to unit}  
   \item{nbcoord}{number of coordinates}  
-  \item{poids}{pour mettre des poids aux variables (intérêt limité très certainement)}  
+  \item{poids}{vector of the weight of the variables (by default, all the variables hace the same weight)}  
 }
 
 \details{
-Programme d'analyse factorielle: 2 ktableaux le 1er actif, le 2ème illustratif
-ressort les coord des points moyens et partiels, des individus actifs et illustratifs
-Si dans les k-tableaux il n'y a qu'un groupe, fait aussi des ACP.
+Factor analysis is done. Two ktable are required, the first one concern the active individuals,
+the second one concerns the illustrative individuals. The outputs are the coordinates
+of the active and illustrative individuals (the mean points and the partial points if the method used is an MFA).
+If in the ktables, there is only one group of variable, then a PCA is done (else an MFA).
 }
 
 \value{
@@ -37,9 +39,18 @@ Pagès, J. & Husson, F. (2005) Multiple Factor Analysis with confidence ellipses:
 
 \author{François Husson}
 
-\examples{
+\examples{ 
+## PCA 
 data(chocolates)
-ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],chocolates[,4],chocolates[,-(1:4)]),blocks=c(2,14),tabnames=c("JP","Gr1"))
+ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],
+    chocolates[,4], chocolates[,-(1:4)]), blocks = c(2,14),
+    tabnames = c("JP","Desc"))
+
+## MFA 
+data(chocolates)
+ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],
+    chocolates[,4], chocolates[,-(1:4)]), blocks = c(2,6,8),
+    tabnames = c("JP","A-F","T-S"))
 }
 
 \keyword{dplot}

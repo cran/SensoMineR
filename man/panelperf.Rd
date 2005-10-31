@@ -9,7 +9,8 @@ Computes automatically P-values associated with the F-test as well as the residu
 }
 
 \usage{
-panelperf(donnee,formul,subset=NULL,firstvar,lastvar=ncol(donnee),random=TRUE)
+panelperf(donnee, formul, subset = NULL, firstvar, 
+    lastvar = ncol(donnee), random = TRUE)
 }
 
 \arguments{
@@ -50,9 +51,11 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 
 \examples{
 data(chocolates)
-resperf=panelperf(chocolates,formul="~Product+Panelist+Session+Product:Panelist+Session:Product+Panelist:Session",firstvar=5)
+res=panelperf(chocolates, firstvar = 5,
+    formul = "~Product+Panelist+Session+Product:Panelist+Session:Product")
 ## Sort results by product p.values.
-coltable(magicsort(resperf$p.value,sort.mat=resperf$p.value[,1],bycol=FALSE),main.title="Panel performance (sorted by product P-value)")
+coltable(magicsort(res$p.value, sort.mat = res$p.value[,1], bycol = FALSE),
+    main.title = "Panel performance (sorted by product P-value)")
 }
 
 \keyword{models}

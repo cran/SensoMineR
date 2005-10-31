@@ -13,7 +13,8 @@ The two axes have the same scale.\cr
 }
 
 \usage{
-senso.scatterutil.eti(x, y, label, clabel, boxes = FALSE, coul = rep(1, length(x)), font = 2, pos = 4, offset = 0.2 )
+senso.scatterutil.eti(x, y, label, clabel, boxes = FALSE, 
+    coul = rep(1, length(x)), font = 2, pos = 4, offset = 0.2)
 }
 \arguments{
   \item{x}{}

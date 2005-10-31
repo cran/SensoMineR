@@ -29,7 +29,7 @@ data(napping.don)
 data(napping.words)
 nappeplot(napping.don)
 get(getOption("device"))()
-pmfa(napping.don,napping.words)
+pmfa(napping.don, napping.words)
 }
 }
 

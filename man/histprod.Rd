@@ -9,7 +9,8 @@ Computes automatically histograms for a set of quantitative variables.
 }
 
 \usage{
-histprod(donnee,firstvar,lastvar=ncol(donnee),numr=2,numc=2,adjust=1)
+histprod(donnee, firstvar, lastvar = ncol(donnee), numr = 2, 
+    numc = 2, adjust = 1)
 }
 
 \arguments{
@@ -37,7 +38,7 @@ Sébastien Lê
 
 \examples{
 data(chocolates)
-histprod(chocolates,firstvar=5,lastvar=10,numr=2,numc=2,adjust=1)
+histprod(chocolates, firstvar = 5, lastvar = 10)
 }
 
 \keyword{univar}

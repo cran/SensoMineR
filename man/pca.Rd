@@ -7,7 +7,11 @@
 \description{Performs a PCA and returns the individuals factor map and the variables factor map.} 
 
 \usage{
-pca(df,supind=NULL,supvar=NULL,row.w=rep(1, nrow(df)-length(supind))/(nrow(df)-length(supind)),scale.unit=TRUE,coord=c(1,2),graph=TRUE,main.title=NULL,clabel=1,cex=0.7,font=1,csub = 1,col="black",lty=1)
+pca(df, supind = NULL, supvar = NULL,
+   row.w = rep(1,nrow(df)-length(supind))/(nrow(df)-length(supind)),
+   scale.unit = TRUE, coord = c(1,2), graph = TRUE, 
+   main.title = NULL, clabel = 1, cex = 0.7, font = 1, csub = 1, 
+   col = "black", lty = 1)
 }
 
 \arguments{
@@ -47,8 +51,9 @@ François Husson, Sébastien Lê
 
 \examples{
 data(chocolates)
-resaverage<-averagetable(chocolates,formul="~Product+Panelist",firstvar=5)
-pca(resaverage,scale.unit=TRUE)
+resaverage<-averagetable(chocolates, formul = "~Product+Panelist", 
+    firstvar = 5)
+pca(resaverage, scale.unit = TRUE)
 }
 
 \keyword{multivariate}

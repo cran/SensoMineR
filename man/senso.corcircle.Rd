@@ -7,7 +7,10 @@
 Performs the scatter diagram of a correlation circle. 
 }
 \usage{
-senso.corcircle(dfxy, xax = 1, yax = 2, label = row.names(df),clabel = 1, grid = TRUE, sub = "", csub = 1, possub = "bottomleft",cgrid = 0, fullcircle = TRUE, box = FALSE, add.plot = FALSE,col="black",lty=1)
+senso.corcircle(dfxy, xax = 1, yax = 2, label = row.names(df), 
+    clabel = 1, grid = TRUE, sub = "", csub = 1, 
+    possub = "bottomleft", cgrid = 0, fullcircle = TRUE, 
+    box = FALSE, add.plot = FALSE, col = "black", lty = 1)
 }
 \arguments{
   \item{dfxy}{a data frame with two coordinates }
@@ -28,8 +31,8 @@ senso.corcircle(dfxy, xax = 1, yax = 2, label = row.names(df),clabel = 1, grid =
 }
 
 \details{
-The only difference between this function and the one programed by Daniel Chessel
-is that \code{scatterutil.eti.circ} was replaced by \code{senso.scatterutil.eti.circ}
+The only difference between this function and the one programed by Daniel Chessel in the package
+\code{ade4} is that \code{scatterutil.eti.circ} was replaced by \code{senso.scatterutil.eti.circ}
 in order not to display frames around the names of the variables.
 }
 

@@ -12,7 +12,9 @@ Gives the panel results (optional).
 }
 
 \usage{
-paneliperf(donnee,formul,formul.j="~Product",col.j,firstvar,lastvar=ncol(donnee),synthesis=FALSE,random=TRUE,graph=TRUE)
+paneliperf(donnee, formul, formul.j = "~Product", col.j, firstvar,
+      lastvar = ncol(donnee), synthesis = FALSE, random = TRUE, 
+      graph = TRUE)
 }
 
 \arguments{
@@ -59,7 +61,6 @@ A list containing the following components:
   \item{res}{a vector of dimension \emph{k} of residual terms for the analysis
   of variance model of interest}
   \item{r2}{a vector of dimension \emph{k} of r-squared for the analysis of variance model of interest}
-%\cr
 
 The usual graphs when MFA is performed on the ktab
 resulting from vtest.ind and agree.ind. \cr
@@ -77,17 +78,23 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 \examples{
 \dontrun{
 data(chocolates)
-resperf<-paneliperf(chocolates,formul="~Product+Panelist+Session+Product:Panelist+Product:Session+Session:Panelist",formul.j="~Product",col.j=1,firstvar=5,synthesis=TRUE)
-resperfprob<-magicsort(resperf$prob.ind,method="median")
-coltable(resperfprob,level.lower=0.05,level.upper=1,main.title="P-value of the F-test (by panelist)")
+res<-paneliperf(chocolates, 
+  formul = "~Product+Panelist+Session+Product:Panelist+Product:Session",
+  formul.j = "~Product", col.j = 1, firstvar = 5, synthesis = TRUE)
+resprob<-magicsort(res$prob.ind, method = "median")
+coltable(resprob, level.lower = 0.05, level.upper = 1,
+    main.title = "P-value of the F-test (by panelist)")
 
-resperfr2<-magicsort(resperf$r2.ind,method="median",ascending=FALSE)
-coltable(resperfr2,level.lower=0.00,level.upper=0.85,main.title="Adjusted R-square (by panelist)")
+resr2<-magicsort(res$r2.ind, method = "median", ascending = FALSE)
+coltable(resr2, level.lower = 0.00, level.upper = 0.85,
+    main.title = "Adjusted R-square (by panelist)")
 
-resperfagree<-magicsort(resperf$agree,method="median",ascending=FALSE)
-coltable(resperfagree,level.lower=0.00,level.upper=0.85,main.title="Agreement between panelists")
+resagree<-magicsort(res$agree, method = "median", ascending = FALSE)
+coltable(resagree, level.lower = 0.00, level.upper = 0.85,
+    main.title = "Agreement between panelists")
 
-coltable(magicsort(resperf$p.value,sort.mat=resperf$p.value[,1],bycol=FALSE),main.title="Panel performance (sorted by product P-value)")
+coltable(magicsort(res$p.value, sort.mat = res$p.value[,1], bycol = FALSE),
+    main.title = "Panel performance (sorted by product P-value)")
 }
 }
 

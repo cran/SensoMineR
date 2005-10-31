@@ -11,7 +11,7 @@ Computes automatically the interaction coefficients between two quantitative var
 }
 
 \usage{
-interact(donnee,col.p,col.j,firstvar,lastvar=ncol(donnee))
+interact(donnee, col.p, col.j, firstvar, lastvar = ncol(donnee))
 }
 
 \arguments{
@@ -45,7 +45,7 @@ a graph where the contribution to the (panelist,product) interaction coefficient
 \examples{
 \dontrun{
 data(chocolates)
-resinteract=interact(chocolates,col.p=4,col.j=1,firstvar=5)
+resinteract=interact(chocolates, col.p = 4, col.j = 1, firstvar = 5)
 }
 }
 \keyword{models}

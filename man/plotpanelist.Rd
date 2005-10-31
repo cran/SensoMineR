@@ -8,7 +8,7 @@ Displays panelists' sensory profiles onto the products' space
 }
 
 \usage{
-plotpanelist(mat,coord=c(1,2),name=FALSE)
+plotpanelist(mat, coord = c(1,2), name = FALSE, eig)
 }
 
 \arguments{
@@ -17,6 +17,7 @@ plotpanelist(mat,coord=c(1,2),name=FALSE)
   \item{coord}{a length 2 vector specifying the components to plot}
   \item{name}{boolean, if T then the name of each panelist is displayed on the graph (by default, FALSE
   is assigned to that parameter)}
+  \item{eig}{a matrix with the component of the factor analysis (in row) and the eigenvalues, the inertia and the cumulative inertia for each component. Typically, the \code{eig} output of the \code{construct.axes} function}
 }
 
 \value{
@@ -29,9 +30,11 @@ they are described by each panelist.
 
 \examples{
 data(chocolates)
-ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],chocolates[,4],chocolates[,-(1:4)]),blocks=c(2,14),tabnames=c("JP","Gr1"))
-ktab.interesting.desc <- search.desc.ktab(ktab.donnee,level=0.5)
-axe <- construct.axes(ktab.interesting.desc,scale.unit=TRUE)
-plotpanelist(axe$moyen)
+ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],
+    chocolates[,4], chocolates[,-(1:4)]), blocks = c(2,14), 
+    tabnames = c("JP","Gr1"))
+ktab.interesting.desc <- search.desc.ktab(ktab.donnee, level = 0.5)
+axe <- construct.axes(ktab.interesting.desc, scale.unit = TRUE)
+plotpanelist(axe$moyen, eig = axe$eig)
 }
 \keyword{multivariate}

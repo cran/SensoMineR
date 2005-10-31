@@ -53,9 +53,10 @@ and isotropic scaling factors in sensory profiling, \emph{Food Quality and Prefe
 \author{Elisabeth Morand}
 
 \examples{
+\dontrun{
 data(sensopanels)
 ktabsenso <- ktab.data.frame(sensopanels, blocks = rep(14,7))
 gpa(ktabsenso)
 }
-  
+}  
 \keyword{multivariate}

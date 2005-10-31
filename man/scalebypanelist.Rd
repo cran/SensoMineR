@@ -10,7 +10,8 @@ the whole panel and for each panelist.
 }
 
 \usage{
-scalebypanelist(matrice,center=TRUE,scale=FALSE,col.p,col.j,firstvar,lastvar=ncol(matrice),method="coeff")
+scalebypanelist(matrice, center = TRUE, scale = FALSE, col.p, 
+    col.j, firstvar, lastvar = ncol(matrice), method = "coeff")
 }
 
 \arguments{
@@ -22,7 +23,7 @@ scalebypanelist(matrice,center=TRUE,scale=FALSE,col.p,col.j,firstvar,lastvar=nco
   \item{col.j}{the position of one categorical variables of interest (the \emph{panelist} variable)}
   \item{firstvar}{the position of the first endogenous variable}
   \item{lastvar}{the position of the last endogenous variable (by default the last column of \code{donnee})}
-  \item{method}{the method to replace the missing values: "mean" or "coeff" 
+  \item{method}{the method to replace the missing values: "average" or "coeff" 
   (coefficients of the \emph{product} variable in the anova model)}
 }
 
@@ -41,7 +42,8 @@ parameter is set by users).
 
 \examples{
 data(chocolates)
-res=scalebypanelist(chocolates,col.p=4,col.j=1,firstvar=5,center=TRUE,method="coeff")
+res=scalebypanelist(chocolates, col.p = 4, col.j = 1, firstvar = 5)
+res
 }
 
 \keyword{manip}

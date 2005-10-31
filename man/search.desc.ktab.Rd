@@ -9,13 +9,13 @@ This function is designed to select the significant descriptors in an object of 
 }
 
 \usage{
-search.desc.ktab(ktab.donnee,level=0.5)
+search.desc.ktab(ktab.donnee, level = 0.5)
 }
 
 \arguments{
   \item{ktab.donnee}{an object of class \code{ktab} (i.e. a list of data frames with the same row.names in common)}
   \item{level}{the threshold (P-value) below which variables are considered as discriminating for
-  the following analysis of variance model: \code{descriptor=Panelist+Product}}  
+  the analysis of variance model: \code{descriptor=Panelist+Product}}  
 }
 
 \details{
@@ -34,8 +34,10 @@ Returns an object of class \code{ktab} with only discriminating variables.
 \examples{
 data(chocolates)
 #Construction of the ktab (J stands for Panelist and P stands for Product)
-ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],chocolates[,4],chocolates[,5:ncol(chocolates)]),blocks=c(2,14),tabnames=c("JP","Gr1"))
-ktab.interesting.desc <- search.desc.ktab(ktab.donnee,level=0.5)
+ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],
+    chocolates[,4], chocolates[,5:ncol(chocolates)]), blocks = c(2,14), 
+    tabnames = c("JP","Gr1"))
+ktab.interesting.desc <- search.desc.ktab(ktab.donnee, level = 0.5)
 }
 
 \keyword{models}

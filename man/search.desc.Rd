@@ -9,7 +9,8 @@ This function is designed to select the significant descriptors in a data frame
 }
 
 \usage{
-search.desc(matrice,col.j,col.p,firstvar,lastvar=ncol(matrice),level=0.5)
+search.desc(matrice, col.j, col.p, firstvar, 
+      lastvar = ncol(matrice), level = 0.5)
 }
 
 \arguments{
@@ -31,9 +32,10 @@ Returns a data frame with all the qualitative variables and only discriminating 
 \author{François Husson}
 
 \examples{
- data(chocolates)
- ## In this example, all the descriptos are discriminated
- chocolates.interesting.desc <- search.desc(chocolates,col.j=1,col.p=4,firstvar=5,level=0.5)
+data(chocolates)
+## In this example, all the descriptos are discriminated
+interesting.desc <- search.desc(chocolates, col.j = 1, col.p = 4, 
+    firstvar = 5, level = 0.5)
 }
 
 \keyword{models}

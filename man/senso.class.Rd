@@ -6,10 +6,14 @@ Performs the scatter diagrams with representation of point classes.
 }
 \usage{
 senso.class(dfxy, fac, wt = rep(1, length(fac)), xax = 1, yax = 2, 
-   cstar = 1, cellipse = 0, axesell = TRUE, label = levels(fac), clabel = 1, cpoint = 0.5, pch = 20,
-   col = rep(1, length(levels(fac))), col.moy = rep("blue",length(levels(fac))), xlim = NULL, ylim = NULL,
-   grid = TRUE, addaxes = TRUE, origin = c(0,0), include.origin = TRUE, sub = "", csub = 0, possub = "bottomleft", 
-   cgrid = 1, pixmap = NULL, contour = NULL, area = NULL, add.plot = FALSE, box=TRUE) 
+   cstar = 1, cellipse = 0, axesell = TRUE, label = levels(fac), 
+   clabel = 1, cpoint = 0.5, pch = 20, 
+   col = rep(1, length(levels(fac))), 
+   col.moy = rep("blue",length(levels(fac))), xlim = NULL, 
+   ylim = NULL, grid = TRUE, addaxes = TRUE, origin = c(0,0), 
+   include.origin = TRUE, sub = "", csub = 0, 
+   possub = "bottomleft", cgrid = 1, pixmap = NULL, contour = NULL, 
+   area = NULL, add.plot = FALSE, box=TRUE) 
 }
 \arguments{
   \item{dfxy}{a data frame containing the two columns for the axes}

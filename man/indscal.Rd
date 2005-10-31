@@ -10,7 +10,8 @@ are positioned on a tableclothe by panelists, then their coordinates are used as
 }
 
 \usage{
-indscal(matrice,matrice.illu=NULL,maxit=200,coord=c(1,2),eps = 1/10^5)
+indscal(matrice, matrice.illu = NULL, maxit = 200, coord = c(1,2), 
+    eps = 1/10^5)
 }
 
 \arguments{
@@ -51,12 +52,11 @@ François Husson}
 data(napping.don)
 data(napping.words)
 nappeplot(napping.don)
-resindscal<- indscal(napping.don,napping.words)
+resindscal<- indscal(napping.don, napping.words)
 get(getOption("device"))()
-prefpls(cbind(resindscal$points,napping.words))
+prefpls(cbind(resindscal$points, napping.words))
 get(getOption("device"))()
-pmfa(napping.don,napping.words,mean.conf=resindscal$points)
+pmfa(napping.don, napping.words, mean.conf = resindscal$points)
 }
 }
-
 \keyword{multivariate}

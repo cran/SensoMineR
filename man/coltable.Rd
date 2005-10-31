@@ -11,7 +11,10 @@ Return a colored display of a data frame according to 2 threshold levels.
 }
 
 \usage{
-coltable(matrice,nbrow=nrow(matrice),nbcol=ncol(matrice),level.lower=0.05,col.lower="mistyrose",level.upper=1e10,col.upper="lightblue",cex=0,nbdec=4,main.title=NULL)
+coltable(matrice, nbrow = nrow(matrice), nbcol = ncol(matrice), 
+    level.lower = 0.05, col.lower = "mistyrose", 
+    level.upper = 1e10, col.upper = "lightblue",
+    cex = 0,nbdec = 4,main.title = NULL)
 }
 
 \arguments{
@@ -38,22 +41,33 @@ François Husson, Sébastien Lê
 \examples{
 ## Example 1
 data(chocolates)
-resdecat<-decat(chocolates,formul="~Product+Panelist",firstvar=5,graph=FALSE)
-coltable(magicsort(resdecat$tabT),level.lower=-1.96,level.upper=1.96,main.title="Products' description")
+resdecat<-decat(chocolates, formul = "~Product+Panelist", firstvar = 5,
+    graph = FALSE)
+coltable(magicsort(resdecat$tabT), level.lower = -1.96, 
+    level.upper = 1.96, main.title = "Products' description")
 
 ## Example 2
 data(chocolates)
-resaverage<-averagetable(chocolates,formul="~Product+Panelist",firstvar=5)
-coltable(magicsort(resaverage),level.upper=6,level.lower=4,main.title="Average by chocolate")
+resaverage<-averagetable(chocolates, formul = "~Product+Panelist", 
+    firstvar = 5)
+coltable(magicsort(resaverage), level.upper = 6, level.lower = 4, 
+    main.title = "Average by chocolate")
 
 ## Example 3
+\dontrun{
 data(chocolates)
-resperf<-paneliperf(chocolates,formul="~Product+Panelist+Product:Panelist",formul.j="~Product",col.j=1,firstvar=5,lastvar=12,synthesis=FALSE,graph=FALSE)
-resperfprob<-magicsort(resperf$prob.ind,method="median")
-coltable(resperfprob,level.lower=0.05,level.upper=1,main.title="P-value of the F-test (by panelist)")
+resperf<-paneliperf(chocolates, 
+    formul = "~Product+Panelist+Product:Panelist", 
+    formul.j = "~Product", col.j = 1, firstvar = 5, lastvar = 12, 
+    synthesis = FALSE, graph = FALSE)
+resperfprob<-magicsort(resperf$prob.ind, method = "median")
+coltable(resperfprob, level.lower = 0.05, level.upper = 1, 
+    main.title = "P-value of the F-test (by panelist)")
 
-resperfr2<-magicsort(resperf$r2.ind,method="median",ascending=FALSE)
-coltable(resperfr2,level.lower=0.00,level.upper=0.85,main.title="Adjusted R-square (by panelist)")
+resperfr2<-magicsort(resperf$r2.ind, method = "median", 
+    ascending = FALSE)
+coltable(resperfr2, level.lower = 0.00, level.upper = 0.85, 
+    main.title = "Adjusted R-square (by panelist)")
 }
-
+}
 \keyword{color}

@@ -13,7 +13,8 @@ with respect to a set of quantitative variables (the sensory descriptors).
 }
 
 \usage{
-ardi(donnee,col.p,col.j,firstvar,lastvar=ncol(donnee),nbval=10,center=TRUE,scale=FALSE)
+ardi(donnee, col.p, col.j, firstvar, lastvar = ncol(donnee), 
+      nbval = 10, center = TRUE, scale = FALSE)
 }
 
 
@@ -54,10 +55,12 @@ François Husson, Sébastien Lê
 
 \seealso{\code{\link{decat}}}
 \examples{
+\dontrun{
 data(chocolates)
-ardi(chocolates,col.p=4,col.j=1,firstvar=5)
+ardi(chocolates, col.p = 4, col.j = 1, firstvar = 5)
 
 ## In the case where there's one particular variable of interest
-ardi(chocolates,col.p=4,col.j=1,firstvar=7,lastvar=7)
+ardi(chocolates, col.p = 4, col.j = 1, firstvar = 7, lastvar = 7)
+}
   }
 \keyword{univar}

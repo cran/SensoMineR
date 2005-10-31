@@ -10,7 +10,8 @@ the \emph{product} and the \emph{session} variables.
 }
 
 \usage{
-graphinter(donnee, col.p, col.j, firstvar, lastvar=ncol(donnee), numr = 2,numc = 2)
+graphinter(donnee, col.p, col.j, firstvar, lastvar=ncol(donnee), 
+    numr = 2,numc = 2)
 }
 
 \arguments{
@@ -51,8 +52,7 @@ Delphine Anger, François Husson, Sébastien Lê}
 \examples{
 \dontrun{
 data(chocolates)
-graphinter(chocolates, col.p=4, col.j=2, firstvar=5, lastvar=8, numr=1,numc=1)
+graphinter(chocolates, col.p = 4, col.j = 2, firstvar = 5, lastvar = 12
 }
 }
-
 \keyword{models}

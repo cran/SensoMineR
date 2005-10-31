@@ -57,11 +57,17 @@ nb.column <- function(ktab,num.group){
     scores.partiel <- rbind(scores.partiel,score.aux/poids[i]*sum(poids))
   }
 #  scores.partiel <- scores.partiel * length(tab.names(ktab))
+  aux = matrix(0,min(nrow(tab)-1,ncol(tab)),3)
+  aux[,1]=eig$values[1:min(nrow(tab)-1,ncol(tab))]
+  aux[,2]=signif(aux[,1]/sum(eig$values)*100,4)
+  for (i in 1:min(nrow(tab)-1,ncol(tab))) aux[i,3]=signif(sum(aux[1:i,1])/sum(eig$values)*100,4)
+  dimnames(aux)=list(paste("Comp",1:min(nrow(tab)-1,ncol(tab))),c("Eigenvalues","Inertia","Cumulative inertia"))
   MFASENSO <- list()
+  MFASENSO$eig <- aux
   MFASENSO$moyen <- scores[,1:nbcoord]
   MFASENSO$partiel <- matrix(0,nrow(ktab[[1]]),0)
   for (i in 1:length(tab.names(ktab))) MFASENSO$partiel <- cbind(MFASENSO$partiel,scores.partiel[((i-1)*nrow(ktab[[1]])+1):(i*nrow(ktab[[1]])),1:nbcoord])
-  
+
   if (is.ktab(ktab.illu) ==TRUE){
     scores.illu <- as.matrix(tab.illu)%*%diag(sqrt(colw))%*%eig$vectors
     MFASENSO$moyen.illu <- NULL
