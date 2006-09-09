@@ -7,7 +7,7 @@ for (j in 1:(firstvar-1))  donnee[,j] <- as.factor(donnee[,j])
 
 formul = as.formula(formul)
 lab.sauv <- lab <- colnames(donnee)
-for (i in 1:length(lab)) lab[i]=gsub(" ",".",lab[i])
+for (i in 1:length(lab)) lab[i] = chartr(" '", "..", lab[i])
 colnames(donnee) = lab
 equation <- as.character(formul)
 Terms=attr(terms(as.formula(equation)),"term.labels")
@@ -25,12 +25,12 @@ tab<-matrix(NA,nbprod,lastvar-firstvar+1)
 row.names(tab) = levels(donnee[,col.p])
 
 if (method =="mean"){
-  for (j in firstvar:lastvar){
+#  for (j in firstvar:lastvar){
     for (i in 1:nbprod){             
-      if (length(subset)==0) tab[i,j-firstvar+1]<-mean(donnee[donnee[,col.p]==levels(donnee[,col.p])[i],j],na.rm=TRUE)
-      if (length(subset)!=0) tab[i,j-firstvar+1]<-mean(donnee[subset&(donnee[,col.p]==levels(donnee[,col.p])[i]),j],na.rm=TRUE)
+      if (length(subset)==0) tab[i,(firstvar:lastvar)-firstvar+1]<-colMeans(donnee[donnee[,col.p]==levels(donnee[,col.p])[i],firstvar:lastvar],na.rm=TRUE)
+      if (length(subset)!=0) tab[i,(firstvar:lastvar)-firstvar+1]<-colMeans(donnee[subset&(donnee[,col.p]==levels(donnee[,col.p])[i]),firstvar:lastvar],na.rm=TRUE)
     }
-  }
+#  }
 }
 
 if (method =="coeff"){

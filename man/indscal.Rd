@@ -52,9 +52,9 @@ François Husson}
 data(napping)
 nappeplot(napping.don)
 resindscal<- indscal(napping.don, napping.words)
-get(getOption("device"))()
+x11()
 prefpls(cbind(resindscal$points, napping.words))
-get(getOption("device"))()
+x11()
 pmfa(napping.don, napping.words, mean.conf = resindscal$points)
 }
 }

@@ -1,4 +1,4 @@
-"decat" <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba = 0.05,graph=TRUE){
+"decat" <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba = 0.05,graph=TRUE, col.lower = "mistyrose", col.upper = "lightblue", nbrow = NULL, nbcol = NULL){
 
     options(contrasts=c("contr.sum", "contr.sum"))
     for (j in 1 :(firstvar-1)) donnee[,j] <- as.factor(donnee[,j])
@@ -85,6 +85,7 @@
     par(las=3)
     barplot(tabF[order(tabF[,2]),2],ylim=c(0,1),names.arg=rownames(tabF[order(tabF[,2]),]),ylab="P-value",main="P-value associated with the F-test of the product effet for each descriptor",cex.main=0.9,cex.names=0.8)
     par(las=0)
+
   }
  
   result = list() 
@@ -96,6 +97,13 @@
     result$resF = resF
     result$resT = resT
   }
+  if (graph){
+    aux.sort = result$adjmean[rownames(magicsort(result$tabT)), colnames(magicsort(result$tabT))]
+    if (is.null(nbrow)) nbrow = nrow(aux.sort)
+    if (is.null(nbcol)) nbcol = ncol(aux.sort)
+    coltable(aux.sort, magicsort(result$tabT),col.lower = col.lower, col.upper = col.upper, level.lower = qnorm(proba/2), level.upper = -qnorm(proba/2), nbrow = nbrow, nbcol = nbcol, main.title = "Ajusted mean")
+  }
+
   if (length(select1) == 0) print("Warning: No variables are discriminant")
   options(contrasts=c("contr.helmert", "contr.poly"))
   return(result)

@@ -7,7 +7,7 @@ if (length(color)==0) color = c("black","red","green3","blue",
   "darkturquoise","darkviolet", "lightgray","lightsalmon","lightyellow", "maroon")
  plotellipseinter(mat,alpha=alpha,coord=coord,nbgroup=1,moy=TRUE,eig=eig,color=color,cex=cex)
 if (length(mat$partiel)!=0) {
-  get(getOption("device"))(max(14,eig[coord[1],1]/eig[coord[1],2]*8),8)
+  get(getOption("device"))(width=max(14,eig[coord[1],1]/eig[coord[1],2]*8),height=8)
   nbgroup=length(levels(mat$partiel$simul[,ncol(mat$partiel$simul)])) / length(levels(mat$moy$simul[,ncol(mat$moy$simul)]))
   plotellipseinter(mat,alpha=alpha,coord=coord,nbgroup=nbgroup,moy=FALSE,eig=eig,color=color,cex=cex)
 }

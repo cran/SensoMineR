@@ -16,7 +16,7 @@ search.desc(matrice, col.j, col.p, firstvar,
 \arguments{
   \item{matrice}{a data frame made up of at least two qualitative variables 
   (\emph{product}, \emph{panelist}) and a set of quantitative variables (sensory descriptors)}
-  \item{col.j}{the position of the categorical variable which make the variability, panelist for sensory studies}
+  \item{col.j}{the position of the categorical variable which make the variability, panelist for sensory studies. The value of \code{col.j} can also be NULL if no categorical variables make the variability.}
   \item{col.p}{the position of the categorical variable of interest, product for sensory studies}
   \item{firstvar}{the position of the first endogenous variable}
   \item{lastvar}{the position of the last endogenous variable (by default the last column of \code{donnee}}

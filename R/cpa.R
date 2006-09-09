@@ -47,7 +47,7 @@ cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,sc
     colnames(coef) <- colnames(senso)
     B <- cbind.data.frame(rbind.data.frame(hedo.pca$ind$coord,hedo.pca$ind.sup$coord[1:nb.clusters,]),coef)
     for (d in 1:nbdesc) {
-      get(getOption("device"))(9,7)
+      get(getOption("device"))(width=9,height=7)
       par(mar = c(4.2,4.1,3.5,2))
       colplot(as.matrix(B), k=nb.clusters,coord, (nrow(hedo)+d),col=col, xlab=paste("Dim",coord[1]," (",signif(hedo.pca$eig[coord[1],2],4),"%)",sep=""), ylab=paste("Dim",coord[2]," (",signif(hedo.pca$eig[coord[2],2],4),"%)",sep=""))
       points(hedo.pca$ind.sup$coord[nb.clusters+d,coord[1]],hedo.pca$ind.sup$coord[nb.clusters+d,coord[2]],col="red",pch=15,cex=0.8)

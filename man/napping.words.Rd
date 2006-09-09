@@ -27,7 +27,7 @@ Département de mathématiques appliquées, Agrocampus Rennes
 \dontrun{
 data(napping)
 nappeplot(napping.don)
-get(getOption("device"))()
+x11()
 pmfa(napping.don, napping.words)
 }
 }

@@ -25,13 +25,13 @@ for (m in 0:mult) {
     for (nbd in 1:(numr*numc)) {
           nb <- (m*(numr*numc)+nbd)
           if (nb <= nbdesc) {
-              xmin = ymin <- min(moy[,nb],moyS[,nb,])-0.2
-              xmax = ymax <- max(moy[,nb],moyS[,nb,])+0.2
+              xmin = ymin <- min(moy[,nb],moyS[,nb,],na.rm=TRUE)-0.2
+              xmax = ymax <- max(moy[,nb],moyS[,nb,],na.rm=TRUE)+0.2
             for (s in 1:nbseance) {
                 if (s==1) {
                   plot(moy[order(moy[,nb]),nb],moyS[order(moy[,nb]),nb,s],type="o",xlab=paste("Mean on the whole ",colnames(donnee)[col.j],"s",sep=""), ylab=paste("Mean per ",colnames(donnee)[col.j],sep=""),
                      cex.lab = 0.8, asp = 1, pch = 20, xlim = c(xmin,xmax), ylim = c(ymin,ymax), col = "violetred4")
-                  for (i in 1:nrow(moy))  text(moy[i,nb],moyS[i,nb,s],label=labprod[i], pos = 3,offset = 0.4, font = 1)
+                  for (i in 1:nrow(moy))  text(moy[i,nb],max(moyS[i,nb,],na.rm=TRUE),label=labprod[i], pos = 3,offset = 0.4, font = 1)
                 }
                 else  points(moy[order(moy[,nb]),nb],moyS[order(moy[,nb]),nb,s],type="o",pch=20,col=s)
               title(variable.names(moy)[nb])

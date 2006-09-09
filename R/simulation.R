@@ -1,7 +1,7 @@
 "simulation" <- function(axeAFM,nbchoix=NULL,nbgroup=1,nbsimul=500){
 
 ##################################################################################
-"simulate.judgement" <- function(axeACP,nbsimul=500,nbchoix){
+"simulate.judgement" <- function(axeACP,echantillon){
   axeACP<-as.data.frame(axeACP)
   nbcoord<-ncol(axeACP)-2
   axeACP[,(ncol(axeACP)-1)]<-as.factor(axeACP[,(ncol(axeACP)-1)])
@@ -12,10 +12,10 @@
   
   nbjuge<-nrow(tab)
   nbprod<-ncol(tab)
+  nbsimul <- nrow(echantillon)
+  nbchoix <- ncol(echantillon)
   res<-array(0,dim=c(nbsimul,nbprod,nbcoord))
-  for (j in 1:nbsimul)
-      for (i in 1:nbchoix) res[j,,]<-res[j,,]+tab[round(runif(1,0,nbjuge)+0.5,0),,]
-  res<-res/nbchoix
+  for (j in 1:nbsimul) res[j,,] <- apply(tab[echantillon[j,],,],c(2,3),mean)
   
   aux1 <- aux2 <- NULL
   for (k in 1:nbcoord){
@@ -35,10 +35,13 @@
   nbprod <- length(levels(axeAFM$moyen[,ncol(axeAFM$moyen)-1]))
   if (length(nbchoix)==0) nbchoix <- nbjuge
   print(paste("Number of panelists in the virtual panel: ",nbchoix,"  (in the real panel: ",nbjuge,")."))
-  if (nbgroup==1) simul.moy<-simulate.judgement(axeAFM$moyen,nbsimul=nbsimul,nbchoix=nbchoix)
+  echantillon <- matrix(0,nbsimul,nbchoix)
+  for (j in 1:nbsimul) echantillon[j,] <- sample(nbjuge,nbchoix,replace=TRUE)
+
+  if (nbgroup==1) simul.moy<-simulate.judgement(axeAFM$moyen,echantillon)
   simulres <- list()
   if (nbgroup>1){
-    simul.analyse.partiel<-simulate.judgement(axeAFM$partiel,nbsimul=nbsimul,nbchoix=nbchoix)
+    simul.analyse.partiel<-simulate.judgement(axeAFM$partiel,echantillon)
     nom.des.prod<-simul.analyse.partiel[,ncol(simul.analyse.partiel)]
     simul.analyse.partiel[,ncol(simul.analyse.partiel)] <- as.integer(simul.analyse.partiel[,ncol(simul.analyse.partiel)])
     simul.analyse.partiel <- as.matrix(simul.analyse.partiel)
@@ -64,5 +67,6 @@
   simulres$moy$P <- simul.moy[1:nbprod,]
   simulres$moy$PJ <- simul.moy[(nbprod+1):(nbprod*(1+nbjuge)),]
   simulres$moy$simul <- simul.moy[(1+nbprod*(nbjuge+1)):nrow(simul.moy),]
+  simulres$sample <- echantillon
   return(simulres)
 }

@@ -69,7 +69,7 @@ options(contrasts=c("contr.sum", "contr.sum"))
   aux.graph = MFA(cbind.data.frame(aux.agree,aux.vtest),group=c(ncol(aux.agree),ncol(aux.vtest)),name.group=c("Agree","Prob"),graph=FALSE)
   plot(aux.graph,choix="ind")
   plot(aux.graph,choix="ind",partial="all",habillage="group")
-  plot(aux.graph,choix="var")
+  plot(aux.graph,choix="var", habillage="group")
   plot(aux.graph,choix="group")
  }
   paneliperf = list() 
@@ -84,7 +84,11 @@ options(contrasts=c("contr.sum", "contr.sum"))
     bb=panelperf(donnee,formul=formul,subset=NULL,firstvar=firstvar,lastvar=lastvar,random=random)
     aux=cbind(-qnorm(bb$p.value/2),apply(agree,2,median,na.rm=T),apply(prob,2,median,na.rm=T),bb$res,bb$r2)
     colnames(aux)=c(colnames(bb$p.value),"median(agree)","median(prob.ind)","stdev Res","R2")
-    if (graph) PCA(aux,quanti.sup=(ncol(aux)-3):ncol(aux),title="PCA on the P-values issued from the AOV model")
+    if (graph) {
+      res.pca = PCA(aux,quanti.sup=(ncol(aux)-3):ncol(aux),graph=FALSE)
+      plot(res.pca,title="PCA on the P-values issued from the AOV model")
+      plot(res.pca,choix="var",title="PCA on the P-values issued from the AOV model")
+    }
     rownames(aux) <- rownames(bb$p.value) <- rownames(bb$variab) <- rownames(bb$res) <- lab.sauv[firstvar:lastvar]
     paneliperf$complete = aux
     paneliperf$p.value = bb$p.value

@@ -40,7 +40,7 @@ if (!novalue){
 
 ################################################################
 "police" <- function(matrice,nbrow,nbcol,nbdec) {
-    get(getOption("device"))(12,8)
+    get(getOption("device"))(width=12,height=8)
     par(mar=c(0,0,2,0))
     plot.new() ; title(main=main.title);
     a <- c(rownames(matrice),colnames(matrice))
@@ -79,7 +79,7 @@ if (dim2%/%nbcol==dim2/nbcol) {
         B.col <- cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          get(getOption("device"))(12,8)
+          get(getOption("device"))(width=12,height=8)
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -96,7 +96,7 @@ if (dim2%/%nbcol==dim2/nbcol) {
       B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-         get(getOption("device"))(12,8)
+         get(getOption("device"))(width=12,height=8)
          par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -117,7 +117,7 @@ else {
         B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          get(getOption("device"))(12,8)
+          get(getOption("device"))(width=12,height=8)
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -133,7 +133,7 @@ else {
         B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          get(getOption("device"))(12,8)
+          get(getOption("device"))(width=12,height=8)
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -153,7 +153,7 @@ else {
       B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          get(getOption("device"))(12,8)
+          get(getOption("device"))(width=12,height=8)
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -173,7 +173,7 @@ else {
       B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          get(getOption("device"))(12,8)
+          get(getOption("device"))(width=12,height=8)
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }

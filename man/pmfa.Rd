@@ -53,7 +53,7 @@ Morand, E., Pagès, J. (accepted) Procrustes multiple factor analysis to analyze 
 \dontrun{
 data(napping)
 nappeplot(napping.don)
-get(getOption("device"))()
+x11()
 pmfa(napping.don, napping.words)
 }
 }

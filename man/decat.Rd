@@ -17,7 +17,8 @@
 
 \usage{
 decat(donnee, formul, firstvar, lastvar = length(colnames(donnee)), 
-    proba = 0.05, graph = TRUE)
+    proba = 0.05, graph = TRUE, col.lower = "mistyrose", 
+    col.upper = "lightblue", nbrow = NULL, nbcol = NULL)
 }
 
 \arguments{
@@ -28,6 +29,10 @@ decat(donnee, formul, firstvar, lastvar = length(colnames(donnee)),
   \item{lastvar}{the position of the last endogenous variable (by default the last column of \code{donnee})}
   \item{proba}{the significance threshold considered for the analyses of variance (by default 0.05)}
   \item{graph}{a boolean, if TRUE a barplot of the P-values associated with the F-test of the product effet is displayed}
+  \item{col.lower}{the color used for 'level.lower'. Only useful if \code{graph} is TRUE}
+  \item{col.upper}{the color used for 'upper.lower'. Only useful if \code{graph} is TRUE}
+  \item{nbrow}{the number of rows to be displayed (by default, all the values are displayed). Only useful if \code{graph} is TRUE}
+  \item{nbcol}{the number of columns to be displayed (by default, all the values are displayed). Only useful if \code{graph} is TRUE}
 }
 
 \details{
@@ -47,7 +52,10 @@ A list containing the following elements:
   \item{resF}{the V-test and the P-value for each descriptor resulting from the analysis of variance model, sorted in ascending order}
   \item{resT}{a list which elements are data frames, one data frame per product: 
   the coefficient, the P-value and the Vtest for each significant descriptor resulting from the analysis of variance model, sorted in descending order}
-A barplot of the P-values associated with the F-test of the product effet.
+
+A barplot of the P-values associated with the F-test of the product effet.\cr
+A colored table with the adjusted means of the categorical variable: the values significantly different from the general mean are colored (singnificantly
+different with the \code{proba} level); the significantly less are colored in red (by default) and the significantly great are colored in blue. 
 }
 
 \references{P. Lea, T. Naes, M. Rodbotten. \emph{Analysis of variance for sensory data}.\cr
@@ -63,8 +71,6 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 data(chocolates)
 ## model (AOV): " descriptor = product + panelist "
 resdecat<-decat(sensochoc, formul="~Product+Panelist", firstvar = 5)
-coltable(magicsort(resdecat$tabT), level.lower = -1.96, 
-    level.upper = 1.96, main.title="Products' description")
 barrow(resdecat$tabT)
 barrow(t(resdecat$tabT), numr = 3, numc = 3)
 barrow(resdecat$coeff, color = "orange") 
@@ -72,9 +78,8 @@ barrow(resdecat$coeff, color = "orange")
 ### Example 2
 data(chocolates)
 ## model (AOV): " descriptor = product + panelist "
-res2 <-decat(sensochoc, formul="~Product+Panelist", firstvar = 5,proba=1)
-coltable(magicsort(res2$adjmean,res2$tabT), magicsort(res2$tabT), 
-  level.lower =-1.96, level.upper = 1.96, main.title="Products' description")
+res2 <-decat(sensochoc, formul="~Product+Panelist", firstvar = 5,
+    proba=1, graph = FALSE)
 }
 
 \keyword{models}
