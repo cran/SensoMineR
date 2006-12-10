@@ -57,10 +57,10 @@ François Husson, Sébastien Lê
 \examples{
 \dontrun{
 data(chocolates)
-ardi(chocolates, col.p = 4, col.j = 1, firstvar = 5)
+ardi(sensochoc, col.p = 4, col.j = 1, firstvar = 5)
 
 ## In the case where there's one particular variable of interest
-ardi(chocolates, col.p = 4, col.j = 1, firstvar = 7, lastvar = 7)
+ardi(sensochoc, col.p = 4, col.j = 1, firstvar = 7, lastvar = 7)
 }
   }
 \keyword{univar}

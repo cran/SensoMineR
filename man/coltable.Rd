@@ -51,9 +51,9 @@ François Husson, Sébastien Lê
 \examples{
 ## Example 1
 data(chocolates)
-resdecat<-decat(chocolates, formul = "~Product+Panelist", firstvar = 5,
+resdecat<-decat(sensochoc, formul = "~Product+Panelist", firstvar = 5,
     graph = FALSE)
-resaverage<-averagetable(chocolates, formul = "~Product+Panelist", 
+resaverage<-averagetable(sensochoc, formul = "~Product+Panelist", 
     firstvar = 5)
 resaverage.sort = resaverage[rownames(magicsort(resdecat$tabT)),
     colnames(magicsort(resdecat$tabT))]
@@ -64,7 +64,7 @@ coltable(resaverage.sort, magicsort(resdecat$tabT),
 ## Example 3
 \dontrun{
 data(chocolates)
-resperf<-paneliperf(chocolates, 
+resperf<-paneliperf(sensochoc, 
     formul = "~Product+Panelist+Product:Panelist", 
     formul.j = "~Product", col.j = 1, firstvar = 5, lastvar = 12, 
     synthesis = FALSE, graph = FALSE)

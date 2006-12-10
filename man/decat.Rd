@@ -59,14 +59,22 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 \seealso{ \code{\link{aov}}}
 
 \examples{
+### Example 1
 data(chocolates)
 ## model (AOV): " descriptor = product + panelist "
-resdecat<-decat(chocolates, formul="~Product+Panelist", firstvar = 5)
+resdecat<-decat(sensochoc, formul="~Product+Panelist", firstvar = 5)
 coltable(magicsort(resdecat$tabT), level.lower = -1.96, 
     level.upper = 1.96, main.title="Products' description")
 barrow(resdecat$tabT)
 barrow(t(resdecat$tabT), numr = 3, numc = 3)
 barrow(resdecat$coeff, color = "orange") 
+
+### Example 2
+data(chocolates)
+## model (AOV): " descriptor = product + panelist "
+res2 <-decat(sensochoc, formul="~Product+Panelist", firstvar = 5,proba=1)
+coltable(magicsort(res2$adjmean,res2$tabT), magicsort(res2$tabT), 
+  level.lower =-1.96, level.upper = 1.96, main.title="Products' description")
 }
 
 \keyword{models}

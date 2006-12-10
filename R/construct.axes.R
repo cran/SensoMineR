@@ -1,10 +1,6 @@
-"construct.axes" <- function(ktableau,coord=c(1,2),scale.unit=TRUE,centerbypanelist=FALSE,scalebypanelist=FALSE,method="coeff"){
+"construct.axes" <- function(matrice,coord=c(1,2),scale.unit=TRUE,group=NULL,name.group=NULL,centerbypanelist=FALSE,scalebypanelist=FALSE,method="coeff"){
 
   nbcoord=max(coord)
-  matrice <- ktableau[[1]]
-  matrice[,1]=as.factor(matrice[,1])
-  matrice[,2]=as.factor(matrice[,2])
-  for (i in 2:length(ktableau$blo))  matrice <- cbind.data.frame(matrice,ktableau[[i]])
 
   oo <- order(matrice[,2])
   matrice <- matrice[oo,]
@@ -13,32 +9,28 @@
 
   nbjuge <- sum(as.integer(summary(matrice[,1])!=0))
   nbprod <- length(levels(matrice[,2]))
-  nbdesc <- dim(matrice)[2]-2
+  nbdesc <- ncol(matrice)-2
 
   moy.aux=scalebypanelist(matrice,col.j=1,col.p=2,firstvar=3,center=centerbypanelist,scale=scalebypanelist,method=method)
+  rownames(moy.aux) <- 1:nrow(moy.aux)
+  rownames(moy.aux)[1:nbprod] <- as.character(moy.aux[1:nbprod,2])
   ###AF with active data the averages for all the panelist 
-  nbactif <- nbprod
-  ktable <- ktab.data.frame(moy.aux[1:nbactif,-c(1,2)],blocks=ktableau$blo[-1],tabnames=tab.names(ktableau)[-1])
-  ktable2 <- ktab.data.frame(moy.aux[(nbactif+1):dim(moy.aux)[1],-c(1,2)],blocks=ktableau$blo[-1],tabnames=tab.names(ktableau)[-1])
-  res.afm <- mfasenso(ktable,ktable2,scale.unit=scale.unit,nbcoord=nbcoord)
   axe <- list()
-  axe$moyen <- data.frame(rbind(res.afm$moyen,res.afm$moyen.illu),as.factor(moy.aux[,2]),as.factor(moy.aux[,1]))
-  dimnames(axe$moyen)[2][[1]]<-c (paste("Comp", 1:nbcoord, sep = ""),"Product","Panelist")
-
-  if (length(ktableau$blo)>2) {
-    axe$partiel <- data.frame(rbind(res.afm$partiel,res.afm$partiel.illu),as.factor(moy.aux[,2]),as.factor(moy.aux[,1]))
-    dimnames(axe$partiel)[2][[1]][(dim(axe$partiel)[2]-1):dim(axe$partiel)[2]] <- c("Product","Panelist")
-    for (i in 1:length(ktable$blo)) dimnames(axe$partiel)[2][[1]][((i-1)*nbcoord+1):(i*nbcoord)]<-paste("Comp", 1:nbcoord, sep = "",tab.names(ktable)[i])
+  if (is.null(group)){
+    res.af <- PCA(moy.aux[,-c(1,2)],ind.sup = (nbprod+1):nrow(moy.aux), scale.unit = scale.unit, ncp = nbcoord,graph=FALSE)
+    axe$moyen <- data.frame(rbind(res.af$ind$coord,res.af$ind.sup$coord),as.factor(moy.aux[,2]),as.factor(moy.aux[,1]))
   }
-  axe$eig = res.afm$eig
-  aa=cor(moy.aux[1:nbprod,-(1:2)],axe$moyen[1:nbprod,coord])
-  get(getOption("device"))(10,8)
-  senso.corcircle(aa, fullcircle=TRUE)
-  title(main = paste("Correlation circle: comp ",coord[1]," (",res.afm$eig[coord[1],2],"%) - comp ",coord[2]," (",res.afm$eig[coord[2],2],"%)",sep=""))
-  get(getOption("device"))(max(14,res.afm$eig[coord[1],1]/res.afm$eig[coord[1],2]*8),8)
-  par(mar = c(0,0,2,0))
-  senso.label( axe$moyen[1:nbprod,coord], clabel=0, cpoint=0.8, include.origin = FALSE)
-  text( axe$moyen[1:nbprod,coord[1]], axe$moyen[1:nbprod,coord[2]], labels = axe$moyen[1:nbprod,nbcoord+1], cex = 0.8, pos = 4, offset = 0.2)
-  title(main = paste("Individuals factor map: comp ",coord[1]," (",res.afm$eig[coord[1],2],"%) - comp ",coord[2]," (",res.afm$eig[coord[2],2],"%)",sep=""))
+  else {
+    if (scale.unit) res.af <- MFA(moy.aux[,-c(1,2)],ind.sup = (nbprod+1):nrow(moy.aux), group = group, name.group = name.group, type = rep("s",length(group)), ncp = nbcoord,graph=FALSE)
+    else res.af <- MFA(moy.aux[,-c(1,2)],ind.sup = (nbprod+1):nrow(moy.aux), group = group, name.group = name.group, type = rep("c",length(group)), ncp = nbcoord,graph=FALSE)
+    axe$moyen <- data.frame(rbind(res.af$ind$coord,res.af$ind.sup$coord),as.factor(moy.aux[,2]),as.factor(moy.aux[,1]))
+    axe$partiel <- data.frame(rbind(t(matrix(t(as.matrix(res.af$ind$coord.partiel)),nrow=nbcoord*length(group),byrow=FALSE)),t(matrix(t(as.matrix(res.af$ind.sup$coord.partiel)),nrow=nbcoord*length(group),byrow=FALSE))),as.factor(moy.aux[,2]),as.factor(moy.aux[,1]))
+    dimnames(axe$partiel)[2][[1]][(dim(axe$partiel)[2]-1):dim(axe$partiel)[2]] <- c("Product","Panelist")
+    for (i in 1:length(group)) dimnames(axe$partiel)[2][[1]][((i-1)*nbcoord+1):(i*nbcoord)]<-paste("Dim", 1:nbcoord, sep = "",name.group[i])
+  }
+  plot(res.af,choix="var")
+  plot(res.af,choix="ind",invisible="ind.sup")
+  dimnames(axe$moyen)[2][[1]]<-c (paste("Dim", 1:nbcoord, sep = ""),"Product","Panelist")
+  axe$eig = res.af$eig
   return(axe)
 }

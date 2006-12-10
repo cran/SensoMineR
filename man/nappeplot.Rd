@@ -30,10 +30,10 @@ application to the study of ten white wines from the Loire Valley. \emph{Food Qu
 }
 \author{François Husson}
 
-\seealso{\code{\link{napping.don}}, \code{\link{pmfa}}, \code{\link{indscal}}}
+\seealso{\code{\link{napping}}, \code{\link{pmfa}}, \code{\link{indscal}}}
 \examples{
 \dontrun{
-data(napping.don)
+data(napping)
 nappeplot(napping.don)
 }
 }

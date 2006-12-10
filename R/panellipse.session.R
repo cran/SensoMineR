@@ -39,7 +39,7 @@ nbjuge <- length(levels(donnee[,col.j]))
   for (seance in 1:nbseance)  don <- cbind.data.frame(don,data.frame(donnee[donnee[,col.s]==labseance[seance],firstvar:ncol(donnee)],row.names=paste(donnee[donnee[,col.s]==labseance[seance],col.p],donnee[donnee[,col.s]==labseance[seance],col.j],sep=".")))
   colnames(don) <- colnames(donnee)[c(col.j,col.p,rep(firstvar:ncol(donnee),nbseance))]
   colnames(don) <- paste(colnames(don),c("","",rep(paste(".S",1:nbseance,sep=""),rep(ncol(donnee)-firstvar+1,nbseance))),sep="")
-  bb=panellipse(don,bloc=c(rep(ncol(donnee)-firstvar+1,nbseance)),name.bloc=c(paste("S",1:nbseance,sep="")),col.j=1,col.p=2,firstvar=3,alpha=alpha,coord=coord,scale.unit=scale.unit,nbsimul=nbsimul,nbchoix=nbchoix,level.search.desc=level.search.desc,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,name.panelist=name.panelist,cex=cex,color=color)
+  bb=panellipse(don,group=c(rep(ncol(donnee)-firstvar+1,nbseance)),name.group=c(paste("S",1:nbseance,sep="")),col.j=1,col.p=2,firstvar=3,alpha=alpha,coord=coord,scale.unit=scale.unit,nbsimul=nbsimul,nbchoix=nbchoix,level.search.desc=level.search.desc,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,name.panelist=name.panelist,cex=cex,color=color)
   legend("bottomleft",legend=paste(colnames(donnee)[col.s],1:nbseance,sep=" "),lty=1:nbseance,cex=0.8,bg="white")
 
   mat = list(bysession=bb$hotelling$bygroup,byproduct=bb$hotelling$byproduct)
@@ -48,8 +48,7 @@ nbjuge <- length(levels(donnee[,col.j]))
 
   aa <- matrix(0,ncol(donnee)-firstvar+1,2)
   res.average=averagetable(don,formul=as.formula(paste("~",colnames(don)[2])),firstvar=3)
-  for (j in 1:(ncol(donnee)-firstvar+1)) aa[j,1]<-pca(res.average[,(ncol(donnee)-firstvar+1)*(0:(nbseance-1))+j],graph=FALSE)$eig[1]
-  aa[,2]=aa[,1]/nbseance*100
+  for (j in 1:(ncol(donnee)-firstvar+1)) aa[j,] <- as.matrix(PCA(res.average[,(ncol(donnee)-firstvar+1)*(0:(nbseance-1))+j],graph=FALSE)$eig[1,1:2])
   rownames(aa) <- colnames(donnee[,firstvar:ncol(donnee)])
   colnames(aa) <- c("eig1","Reproductibility")
   res <- list()

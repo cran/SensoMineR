@@ -1,4 +1,4 @@
-"simulation" <- function(axeAFM,nbchoix=NULL,nbbloc,nbsimul=500){
+"simulation" <- function(axeAFM,nbchoix=NULL,nbgroup=1,nbsimul=500){
 
 ##################################################################################
 "simulate.judgement" <- function(axeACP,nbsimul=500,nbchoix){
@@ -35,31 +35,31 @@
   nbprod <- length(levels(axeAFM$moyen[,ncol(axeAFM$moyen)-1]))
   if (length(nbchoix)==0) nbchoix <- nbjuge
   print(paste("Number of panelists in the virtual panel: ",nbchoix,"  (in the real panel: ",nbjuge,")."))
-  if (nbbloc==1) simul.moy<-simulate.judgement(axeAFM$moyen,nbsimul=nbsimul,nbchoix=nbchoix)
+  if (nbgroup==1) simul.moy<-simulate.judgement(axeAFM$moyen,nbsimul=nbsimul,nbchoix=nbchoix)
   simulres <- list()
-  if (nbbloc>1){
+  if (nbgroup>1){
     simul.analyse.partiel<-simulate.judgement(axeAFM$partiel,nbsimul=nbsimul,nbchoix=nbchoix)
     nom.des.prod<-simul.analyse.partiel[,ncol(simul.analyse.partiel)]
     simul.analyse.partiel[,ncol(simul.analyse.partiel)] <- as.integer(simul.analyse.partiel[,ncol(simul.analyse.partiel)])
     simul.analyse.partiel <- as.matrix(simul.analyse.partiel)
     simul.moy<-matrix(0,nrow(simul.analyse.partiel),nbcoord) 
-    for (i in 1:nbcoord) simul.moy[,i]<-apply(simul.analyse.partiel[,i+nbcoord*(0:(nbbloc-1))],1,mean)
+    for (i in 1:nbcoord) simul.moy[,i]<-apply(simul.analyse.partiel[,i+nbcoord*(0:(nbgroup-1))],1,mean)
     simul.moy <- cbind.data.frame(simul.moy,as.factor(nom.des.prod))
     ### pour les coord des prod
     simul.partiel <- matrix(0,0,nbcoord)
-    for (i in 1:nbbloc)  simul.partiel <- rbind(simul.partiel,simul.analyse.partiel[1:nbprod,((i-1)*nbcoord+1):(i*nbcoord)])
-    for (i in 1:nbbloc)  simul.partiel <- rbind(simul.partiel,simul.analyse.partiel[(nbprod+1):(nbprod*(nbchoix+1)),((i-1)*nbcoord+1):(i*nbcoord)])
-    for (i in 1:nbbloc)  simul.partiel <- rbind(simul.partiel,simul.analyse.partiel[(nbprod*(nbchoix+1)+1):nrow(simul.analyse.partiel),((i-1)*nbcoord+1):(i*nbcoord)])
+    for (i in 1:nbgroup)  simul.partiel <- rbind(simul.partiel,simul.analyse.partiel[1:nbprod,((i-1)*nbcoord+1):(i*nbcoord)])
+    for (i in 1:nbgroup)  simul.partiel <- rbind(simul.partiel,simul.analyse.partiel[(nbprod+1):(nbprod*(nbchoix+1)),((i-1)*nbcoord+1):(i*nbcoord)])
+    for (i in 1:nbgroup)  simul.partiel <- rbind(simul.partiel,simul.analyse.partiel[(nbprod*(nbchoix+1)+1):nrow(simul.analyse.partiel),((i-1)*nbcoord+1):(i*nbcoord)])
     ### pour les noms des prod
     simul.nom.partiel <- NULL
-    for (i in 1:nbbloc)  simul.nom.partiel <- rbind(simul.nom.partiel,t(t(as.vector(paste(nom.des.prod[1:nbprod],gsub("Comp1","",colnames(axeAFM$partiel)[((i-1)*nbcoord+1)]),sep="")))))
-    for (i in 1:nbbloc)  simul.nom.partiel <- rbind(simul.nom.partiel,t(t(as.vector(paste(nom.des.prod[(nbprod+1):(nbprod*(nbchoix+1))],gsub("Comp1","",colnames(axeAFM$partiel)[((i-1)*nbcoord+1)]),sep="")))))
-    for (i in 1:nbbloc)  simul.nom.partiel <- rbind(simul.nom.partiel,t(t(as.vector(paste(nom.des.prod[(nbprod*(nbchoix+1)+1):nrow(simul.analyse.partiel)],gsub("Comp1","",colnames(axeAFM$partiel)[((i-1)*nbcoord+1)]),sep="")))))
+    for (i in 1:nbgroup)  simul.nom.partiel <- rbind(simul.nom.partiel,t(t(as.vector(paste(nom.des.prod[1:nbprod],gsub("Comp1","",colnames(axeAFM$partiel)[((i-1)*nbcoord+1)]),sep="")))))
+    for (i in 1:nbgroup)  simul.nom.partiel <- rbind(simul.nom.partiel,t(t(as.vector(paste(nom.des.prod[(nbprod+1):(nbprod*(nbchoix+1))],gsub("Comp1","",colnames(axeAFM$partiel)[((i-1)*nbcoord+1)]),sep="")))))
+    for (i in 1:nbgroup)  simul.nom.partiel <- rbind(simul.nom.partiel,t(t(as.vector(paste(nom.des.prod[(nbprod*(nbchoix+1)+1):nrow(simul.analyse.partiel)],gsub("Comp1","",colnames(axeAFM$partiel)[((i-1)*nbcoord+1)]),sep="")))))
     rownames(simul.partiel)<-NULL
     simul.partiel <- cbind.data.frame(simul.partiel,simul.nom.partiel)
-    simulres$partiel$P <- simul.partiel[1:(nbprod*nbbloc),]
-    simulres$partiel$PJ <- simul.partiel[(nbprod*nbbloc+1):(nbbloc*nbprod*(1+nbjuge)),]
-    simulres$partiel$simul <- simul.partiel[(nbbloc*nbprod*(1+nbjuge)+1):nrow(simul.partiel),]
+    simulres$partiel$P <- simul.partiel[1:(nbprod*nbgroup),]
+    simulres$partiel$PJ <- simul.partiel[(nbprod*nbgroup+1):(nbgroup*nbprod*(1+nbjuge)),]
+    simulres$partiel$simul <- simul.partiel[(nbgroup*nbprod*(1+nbjuge)+1):nrow(simul.partiel),]
   }
   simulres$moy$P <- simul.moy[1:nbprod,]
   simulres$moy$PJ <- simul.moy[(nbprod+1):(nbprod*(1+nbjuge)),]

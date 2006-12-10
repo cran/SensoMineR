@@ -38,7 +38,7 @@ Sébastien Lê
 
 \examples{
 data(chocolates)
-histprod(chocolates, firstvar = 5, lastvar = 10)
+histprod(sensochoc, firstvar = 5, lastvar = 10)
 }
 
 \keyword{univar}

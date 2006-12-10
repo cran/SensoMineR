@@ -43,7 +43,7 @@ Sébastien Lê \email{Sebastien.Le@agrocampus-rennes.fr}
 
 \examples{
 data(chocolates)
-resdecat<-decat(chocolates, formul = "~Product+Panelist", firstvar = 5, 
+resdecat<-decat(sensochoc, formul = "~Product+Panelist", firstvar = 5, 
     graph = FALSE)
 \dontrun{
 barrow(resdecat$tabT)

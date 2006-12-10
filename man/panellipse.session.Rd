@@ -82,7 +82,7 @@ François Husson, Sébastien Lê}
 
 \examples{
 data(chocolates)
-res <- panellipse.session(chocolates, col.p = 4, col.j = 1, col.s = 2, 
+res <- panellipse.session(sensochoc, col.p = 4, col.j = 1, col.s = 2, 
     firstvar = 5)
 magicsort(res$variability)
 for (i in 1:dim(res$hotelling$bysession)[3]) coltable(res$hotelling$bysession[,,i], 

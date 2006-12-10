@@ -8,8 +8,7 @@
 \usage{
 panelmatch(donnee, col.p, col.j, firstvar, 
     alpha = 0.05, coord = c(1,2), scale.unit = TRUE, nbsimul = 500, 
-    nbchoix = NULL, bloc = NULL, name.bloc = NULL, 
-    centerbypanelist = TRUE, 
+    nbchoix = NULL, centerbypanelist = TRUE, 
     scalebypanelist = FALSE, name.panelist = FALSE, cex = 1, 
     color = NULL, hierar = NULL)
 }
@@ -25,8 +24,6 @@ panelmatch(donnee, col.p, col.j, firstvar,
   \item{scale.unit}{boolean, if T the descriptors are scaled to unit variance}
   \item{nbsimul}{the number of simulations (corresponding to the number of virtual panels) used to compute the ellipses}
   \item{nbchoix}{the number of panelists forming a virtual panel, by default the number of panelists in the original panel}  
-  \item{bloc}{the number of groups of variables when multiple factor analysis is performed (by default this parameter equals NULL and a PCA is performed)}  
-  \item{name.bloc}{the names of the groups of variables when mfa is performed (if \code{bloc} differs from NULL)}  
   \item{centerbypanelist}{boolean, if T center the data by panelist before the construction of the axes}
   \item{scalebypanelist}{boolean, if T scale the data by panelist before the construction of the axes (by default, FALSE
   is assigned to that parameter)}
@@ -70,10 +67,10 @@ Pagès J. & Husson F. (2005). Multiple Factor Analysis with confidence ellipses: 
 \examples{
 \dontrun{
 data(chocolates)
-Panel1= chocolates[chocolates[,1]<11,]
-Panel2= chocolates[(chocolates[,1]<21)&(chocolates[,1]>10),]
-Panel3= chocolates[chocolates[,1]>20,]
-res <- panelmatch(list(Panel1,Panel2,Panel3), col.p = 4, col.j = 1, firstvar = 5)
+Panel1= sensochoc[sensochoc[,1]<11,]
+Panel2= sensochoc[(sensochoc[,1]<21)&(sensochoc[,1]>10),]
+Panel3= sensochoc[sensochoc[,1]>20,]
+res <- panelmatch(list(P1=Panel1,P2=Panel2,P3=Panel3), col.p = 4, col.j = 1, firstvar = 5)
 }
 }
 \keyword{multivariate}

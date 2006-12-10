@@ -44,7 +44,7 @@ François Husson
 
 \examples{
 data(chocolates)
-resaverage <- averagetable(chocolates, formul = "~Product", firstvar = 5)
+resaverage <- averagetable(sensochoc, formul = "~Product", firstvar = 5)
 prefpls(resaverage)
 }
 

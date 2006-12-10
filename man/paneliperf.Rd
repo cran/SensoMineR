@@ -14,7 +14,7 @@ Gives the panel results (optional).
 \usage{
 paneliperf(donnee, formul, formul.j = "~Product", col.j, firstvar,
       lastvar = ncol(donnee), synthesis = FALSE, random = TRUE, 
-      graph = TRUE)
+      graph = FALSE)
 }
 
 \arguments{
@@ -27,7 +27,7 @@ paneliperf(donnee, formul, formul.j = "~Product", col.j, firstvar,
   \item{lastvar}{the position of the last endogenous variable (by default the last column of \code{donnee}}
   \item{synthesis}{boolean, the possibility to have the anova results for the panel model}
   \item{random}{boolean, the status of the Panelist variable in the anova model for the panel}
-  \item{graph}{boolean, draws the PCA graph}
+  \item{graph}{boolean, draws the PCA and MFA graphs}
 }
 
 \details{
@@ -62,7 +62,7 @@ A list containing the following components:
   of variance model of interest}
   \item{r2}{a vector of dimension \emph{k} of r-squared for the analysis of variance model of interest}
 
-The usual graphs when MFA is performed on the ktab
+The usual graphs when MFA is performed on the data.frame
 resulting from vtest.ind and agree.ind. \cr
 The PCA graphs for the complete output.\cr
 }
@@ -78,7 +78,7 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 \examples{
 \dontrun{
 data(chocolates)
-res<-paneliperf(chocolates, formul = "~Product+Panelist+Session+
+res<-paneliperf(sensochoc, formul = "~Product+Panelist+Session+
   Product:Panelist+Product:Session+Panelist:Session",
   formul.j = "~Product", col.j = 1, firstvar = 5, synthesis = TRUE)
 resprob<-magicsort(res$prob.ind, method = "median")

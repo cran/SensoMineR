@@ -11,7 +11,7 @@ The data used here refer to 10 different French wines evaluated by 11 panelists.
 They were asked to describe each wine using their own word list.
 }
 
-\usage{data(napping.words)}
+\usage{data(napping)}
 
 \format{
  A data frame of dimension (10,14): each row represents
@@ -25,8 +25,7 @@ Département de mathématiques appliquées, Agrocampus Rennes
 
 \examples{
 \dontrun{
-data(napping.don)
-data(napping.words)
+data(napping)
 nappeplot(napping.don)
 get(getOption("device"))()
 pmfa(napping.don, napping.words)

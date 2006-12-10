@@ -45,7 +45,7 @@ a graph where the contribution to the (panelist,product) interaction coefficient
 \examples{
 \dontrun{
 data(chocolates)
-resinteract=interact(chocolates, col.p = 4, col.j = 1, firstvar = 5)
+resinteract=interact(sensochoc, col.p = 4, col.j = 1, firstvar = 5)
 }
 }
 \keyword{models}

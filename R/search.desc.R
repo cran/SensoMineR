@@ -1,6 +1,8 @@
 "search.desc" <- function(matrice,col.j,col.p,firstvar,lastvar=ncol(matrice),level=0.5){
-  lab<-labels(matrice)[[2]]
-  nomdescripteur<-lab[firstvar:lastvar]
+  lab.sauv <- lab <- colnames(matrice)
+  for (i in 1:length(lab)) lab[i]=gsub(" ",".",lab[i])
+  colnames(matrice) = lab
+  nomdescripteur<-lab.sauv[firstvar:lastvar]
   for (i in 1:(firstvar-1)) matrice[,i]<-as.factor(matrice[,i])
   tab.F<-matrix(0,(lastvar-firstvar+1),1)
   for (i in firstvar:lastvar){
@@ -16,7 +18,7 @@
   for (i in firstvar:lastvar){
     if (tab.F[i-firstvar+1]<level) mat.analyse <- cbind(mat.analyse,matrice[,i])
   }
-  dimnames(mat.analyse)[[2]][1:(firstvar-1)]<-lab[1:(firstvar-1)]
-  dimnames(mat.analyse)[[2]][firstvar:dim(mat.analyse)[2]]<-dimnames(tab.F)[[1]][tab.F<level]
+  colnames(mat.analyse)[1:(firstvar-1)]<-lab.sauv[1:(firstvar-1)]
+  colnames(mat.analyse)[firstvar:ncol(mat.analyse)]<-dimnames(tab.F)[[1]][tab.F<level]
   return(mat.analyse)
 }

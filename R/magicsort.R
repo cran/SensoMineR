@@ -9,13 +9,13 @@
   if ((dim(sort.mat)[2]!=dim(matrice)[2])&(bycol)) stop("Number of columns must be the same in matrice and in sort.mat: you can use the option bycol=FALSE")
   if (method=="magic"){
     for (j in 1:ncol(sort.mat)) sort.mat[,j] <- replace(sort.mat[,j],is.na(sort.mat[,j]),mean(sort.mat[,j],na.rm=TRUE))
-    res.pca <- dudi.pca(sort.mat,scannf=FALSE,nf=2)
+    res.pca <- PCA(sort.mat,ncp=2,graph=FALSE)
   }
   if (byrow==TRUE) {
     if (method=="geo") matrice=cbind(matrice,exp(apply(log(sort.mat),1,mean,na.rm=TRUE)))
     if (method=="mean") matrice=cbind(matrice,apply(sort.mat,1,mean,na.rm=TRUE))
     if (method=="median") matrice=cbind(matrice,apply(sort.mat,1,median,na.rm=TRUE))
-    if (method=="magic") matrice=cbind(matrice,res.pca$li[,1])
+    if (method=="magic") matrice=cbind(matrice,res.pca$ind$coord[,1])
     oo=order(matrice[,ncol(matrice)])
     if (ascending==TRUE) matrice=matrice[oo,-ncol(matrice)]
     if (ascending!=TRUE) matrice=matrice[rev(oo),-ncol(matrice)]
@@ -26,7 +26,7 @@
     if (method=="geo") matrice=cbind(matrice,exp(apply(log(sort.mat),1,mean,na.rm=TRUE)))
     if (method=="mean") matrice=cbind(matrice,apply(sort.mat,1,mean,na.rm=TRUE))
     if (method=="median") matrice=cbind(matrice,apply(sort.mat,1,median,na.rm=TRUE))
-    if (method=="magic") matrice <- cbind(matrice,res.pca$co[,1])
+    if (method=="magic") matrice <- cbind(matrice,res.pca$var$coord[,1])
     oo=order(matrice[,ncol(matrice)])
     if (ascending==TRUE) matrice=matrice[oo,]
     if (ascending!=TRUE) matrice=matrice[rev(oo),]

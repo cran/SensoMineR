@@ -21,21 +21,16 @@ plotellipse(mat, alpha = 0.05, coord = c(1,2), eig, cex = 1, color = NULL)
 
 \examples{
 data(chocolates)
-ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1], 
-    chocolates[,4], chocolates[,-(1:4)]), blocks = c(2,14), 
-    tabnames = c("JP","Gr1"))
-ktab.interesting.desc <- search.desc.ktab(ktab.donnee, level = 0.5)
-axe <- construct.axes(ktab.interesting.desc, scale.unit = TRUE)
-simul <- simulation(axe, nbbloc = length(ktab.interesting.desc$blo)-1)
-plotellipse (simul, alpha = 0.05, eig = axe$eig)
+donnee <- cbind.data.frame(sensochoc[,c(1,4,5:18)])
+axe <- construct.axes(donnee, scale.unit = TRUE)
+simul <- simulation(axe)
+plotellipse (simul, alpha = 0.05, eig = signif(axe$eig,4))
 #######################################
-ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],
-    chocolates[,4],chocolates[,-(1:4)]), blocks = c(2,6,4,4), 
-    tabnames = c("JP","A","F","T"))
-ktab.interesting.desc <- search.desc.ktab(ktab.donnee, level = 0.5)
-axe <- construct.axes(ktab.interesting.desc, scale.unit = TRUE)
-simul <- simulation(axe, nbbloc = length(ktab.interesting.desc$blo)-1)
-plotellipse (simul, alpha = 0.05, eig = axe$eig)
+donnee <- cbind.data.frame(sensochoc[,c(1,4,5:18)])
+axe <- construct.axes(donnee, group = c(6,8), 
+    name.group = c("A-F","T-S"),scale.unit = TRUE)
+simul <- simulation(axe, nbgroup = (ncol(axe$partiel)-2)/(ncol(axe$moyen)-2))
+plotellipse (simul, alpha = 0.05, eig = signif(axe$eig,4))
 }
 \keyword{dplot}
 \keyword{internal}

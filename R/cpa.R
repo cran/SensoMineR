@@ -17,7 +17,6 @@ cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,sc
 
   hc <- hclust(dist(t(hedo)),method="ward")
   plot(as.dendrogram(hc),main="Cluster Dendrogram",xlab="Panelists",leaflab="none") 
-  get(getOption("device"))()
   if (nb.clusters==0){
     classif=hopach(t(hedo),d="euclid",K=10,mss="mean")
     nb.clusters=classif$clustering$k
@@ -29,41 +28,30 @@ cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,sc
     mat[i,] <- apply(t(hedo[,clusters==i]),2,mean)
     rownames(mat)[i] <- paste("cluster",i)
   }  
-  desc.clusters=cor(senso,t(mat))
+  desc.clusters=cor(senso,t(mat),use="pairwise.complete.obs")
 
     A <- rbind.data.frame(t(hedo),mat,t(senso))
     colnames(A) <- row.names(hedo)
     result <- A
-
-    hedo.pca <- pca(A,supind=(nbjuge+1):nrow(A),coord=coord,scale.unit=scale.unit,clabel=0.7,graph=TRUE)
-    get(getOption("device"))()
-    par(mar = c(0,0,2,0))
-    par(mar = c(0,0,2,0))
-    senso.label(hedo.pca$li[,coord], clabel=0, cpoint=0)
-    points(hedo.pca$li[,coord], pch=20,cex=0.8,col=2+clusters)
-    if (name.panelist) text(hedo.pca$li[,coord[1]],hedo.pca$li[,coord[2]], labels = row.names(A[1:nbjuge,]),col=2+clusters, cex = 0.7, pos = 4, offset = 0.2)
-    title(main = paste("Individuals factor map: comp",coord[1]," (",signif(100*hedo.pca$eig[coord[1]]/sum(hedo.pca$eig),4),"%)","-comp",coord[2]," (",signif(100*hedo.pca$eig[coord[2]]/sum(hedo.pca$eig),4),"%)",sep=""),cex.main = 1.1, font.main = 2, col.main = 1, adj = 0.5)
-
-    points(hedo.pca$lisup[1:nb.clusters,coord], col=(3:(2+nb.clusters)),pch=15,cex=0.9)
-    text(hedo.pca$lisup[1:nb.clusters,coord[1]],hedo.pca$lisup[1:nb.clusters,coord[2]], labels = row.names(A[(nbjuge+1):(nbjuge+nb.clusters),]), cex = 0.9, pos = 1, offset = 0.05, col = (3:(2+nb.clusters)))
-    points(hedo.pca$lisup[(nb.clusters+1):nrow(hedo.pca$lisup),coord], col="red",pch=20,cex=0.8)
-    text(hedo.pca$lisup[(nb.clusters+1):nrow(hedo.pca$lisup),coord[1]],hedo.pca$lisup[(nb.clusters+1):nrow(hedo.pca$lisup),coord[2]], labels = row.names(A[(nbjuge+nb.clusters+1):nrow(A),]), cex = 0.7, pos = 1, offset = 0.05, col = "red")
-
+  
+    hedo.pca <- PCA(cbind.data.frame(A,as.factor(c(clusters,rep(1,nrow(mat)+ncol(senso))))),quali.sup=ncol(A)+1,ind.sup=(nbjuge+1):nrow(A),scale.unit=scale.unit,graph=FALSE,ncp = min(nbjuge-1,ncol(A)))
+    plot(hedo.pca,choix="ind",axes=coord,cex=0.7,habillage="quali")
+    plot(hedo.pca,choix="var",axes=coord)
     TA <- t(A)
-    coef <- matrix(0,nbjuge+nb.clusters,nbdesc)
+    coef <- matrix(NA,nbjuge+nb.clusters,nbdesc)
     for (d in 1:nbdesc) {
-      coef[1:nbjuge,d] <- cor(TA[,1:nbjuge],TA[,nbjuge+nb.clusters+d])
-      coef[(nbjuge+1):(nbjuge+nb.clusters),d] <- cor(TA[,(nbjuge+1):(nbjuge+nb.clusters)],TA[,nbjuge+nb.clusters+d])
+      coef[1:nbjuge,d] <- cor(TA[,1:nbjuge],TA[,nbjuge+nb.clusters+d],use="pairwise.complete.obs")
+      coef[(nbjuge+1):(nbjuge+nb.clusters),d] <- cor(TA[,(nbjuge+1):(nbjuge+nb.clusters)],TA[,nbjuge+nb.clusters+d],use="pairwise.complete.obs")
     }
     coef <- data.frame(coef)
     colnames(coef) <- colnames(senso)
-    B <- cbind.data.frame(rbind(hedo.pca$li,hedo.pca$lisup[1:nb.clusters,]),coef)
+    B <- cbind.data.frame(rbind.data.frame(hedo.pca$ind$coord,hedo.pca$ind.sup$coord[1:nb.clusters,]),coef)
     for (d in 1:nbdesc) {
       get(getOption("device"))(9,7)
       par(mar = c(4.2,4.1,3.5,2))
-      colplot(B, k=nb.clusters,coord, (nrow(hedo)+d),col=col, xlab=paste("Comp",coord[1]," (",signif(100*hedo.pca$eig[coord[1]]/sum(hedo.pca$eig),4),"%)",sep=""), ylab=paste("Comp",coord[2]," (",signif(100*hedo.pca$eig[coord[2]]/sum(hedo.pca$eig),4),"%)",sep=""))
-      points(hedo.pca$lisup[nb.clusters+d,coord[1]],hedo.pca$lisup[nb.clusters+d,coord[2]],col="red",pch=15,cex=0.8)
-      text(hedo.pca$lisup[nb.clusters+d,coord[1]],hedo.pca$lisup[nb.clusters+d,coord[2]],col="red",labels=colnames(B)[nrow(hedo)+d],pos = 1, offset = 0.05)
+      colplot(as.matrix(B), k=nb.clusters,coord, (nrow(hedo)+d),col=col, xlab=paste("Dim",coord[1]," (",signif(hedo.pca$eig[coord[1],2],4),"%)",sep=""), ylab=paste("Dim",coord[2]," (",signif(hedo.pca$eig[coord[2],2],4),"%)",sep=""))
+      points(hedo.pca$ind.sup$coord[nb.clusters+d,coord[1]],hedo.pca$ind.sup$coord[nb.clusters+d,coord[2]],col="red",pch=15,cex=0.8)
+      text(hedo.pca$ind.sup$coord[nb.clusters+d,coord[1]],hedo.pca$ind.sup$coord[nb.clusters+d,coord[2]],col="red",labels=colnames(B)[nrow(hedo)+d],pos = 1, offset = 0.05)
       title(main = paste("Consumers' preferences analysed by",colnames(B)[nrow(hedo)+d]),cex.main = 1.1, font.main = 2)
     }
     don <- cbind.data.frame(as.factor(clusters),t(hedo))
@@ -84,18 +72,14 @@ colplot<-function(mat, k=0,coord, z, level=41, col = terrain.colors(level+level%
     x <- mat[,abs]
     y <- mat[,ord]
     z <- mat[,z]
-
 #    x1 <- min(z)
 #    x2 <- max(z)
     x1 <- -1
     x2 <- 1
-
     plot(mat[,abs],mat[,ord],xlab=xlab, ylab=ylab,asp=1,type="n")
     legend("topleft",legend=c(1,0.75,0.5,0.25,0,-0.25,-0.5,-0.75,-1),fill=c(col[level],col[(level%/%2)+(level%/%4)+(level%/%8)+1],col[(level%/%2)+(level%/%4)+1],col[(level%/%2)+(level%/%8)+1],col[(level%/%2)+1],col[(level%/%4)+(level%/%8)+1],col[(level%/%4)+1],col[(level%/%8)+1],col[1]),cex=0.7)
     abline(v=0,lty=2)
     abline(h=0,lty=2)
-#    senso.label(mat[,c(abs,ord)],cpoint=0,clabel=0)
-#    legend(min(x),max(y),c(1,0.75,0.5,0.25,0,-0.25,-0.5,-0.75,-1),fill=c(col[level],col[(level%/%2)+(level%/%4)+(level%/%8)+1],col[(level%/%2)+(level%/%4)+1],col[(level%/%2)+(level%/%8)+1],col[(level%/%2)+1],col[(level%/%4)+(level%/%8)+1],col[(level%/%4)+1],col[(level%/%8)+1],col[1]),cex=0.7)
 ####rect(0, levels[-length(levels)], 1, levels[-1], col = col)
     n <- nrow(mat)
     h <- (x2-x1)/level

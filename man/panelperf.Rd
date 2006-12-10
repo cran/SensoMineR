@@ -51,7 +51,7 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 
 \examples{
 data(chocolates)
-res=panelperf(chocolates, firstvar = 5, formul = "~Product+Panelist+
+res=panelperf(sensochoc, firstvar = 5, formul = "~Product+Panelist+
     Session+Product:Panelist+Session:Product+Panelist:Session")
 ## Sort results by product p.values.
 coltable(magicsort(res$p.value, sort.mat = res$p.value[,1], bycol = FALSE,

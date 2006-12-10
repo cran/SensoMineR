@@ -1,9 +1,18 @@
 "panelperf" <- function(donnee,formul,subset=NULL,firstvar,lastvar=ncol(donnee),random=TRUE){
 
+options(contrasts=c("contr.sum", "contr.sum"))
+
   for (j in 1 :(firstvar-1))  donnee[,j] <- as.factor(donnee[,j])
   formul = as.formula(formul)
-  lab <- labels(donnee)[[2]]
+  lab.sauv <- lab <- colnames(donnee)
+  for (i in 1:length(lab)) lab[i]=gsub(" ",".",lab[i])
+  colnames(donnee) = lab
   equation <- as.character(formul)
+
+  Terms=attr(terms(as.formula(equation)),"term.labels")
+  equation = paste("~",Terms[1])
+  if (length(Terms) > 1) for (i in 2:length(Terms)) equation <- paste(equation,"+",Terms[i])
+  equation <- as.character(as.formula(equation))
 
   dim.donnee <- ncol(donnee)
   for (i in 1:dim.donnee) {
@@ -15,23 +24,24 @@
   variab <- perf <- matrix(0,lastvar+1-firstvar,length(strsplit(equation[2],"+",extended=FALSE)[[1]]))
 
   for (varendo in firstvar:lastvar) {
-    formule <- paste(lab[varendo],"~ C(")
-    aux2 <- equation[2]
-    aux3 <- strsplit(aux2,"+",extended=FALSE)[[1]]
-
-    for (i in 1:length(aux3)) {
-      if (any(grep("%",aux3[i]))) {
-            formule <- paste(formule,strsplit(aux3[i],"%",extended=FALSE)[[1]][1],",sum)%in%C(",strsplit(aux3[i],"%",extended=FALSE)[[1]][3],",sum)")
-      }
-      else
-      if (any(grep(":",aux3[i]))) {
-         formule <- paste(formule,strsplit(aux3[i],":",extended=FALSE)[[1]][1],",sum) : C(",strsplit(aux3[i],":",extended=FALSE)[[1]][2],",sum)")
-      }
-      else {
-      formule <- paste(formule,aux3[i],",sum)")
-      }
-      if (i < length(aux3))  formule <- paste (formule, "+C(")
-    }
+      formule <- paste(lab[varendo],"~",equation[2])
+##    formule <- paste(lab[varendo],"~ C(")
+##    aux2 <- equation[2]
+##    aux3 <- strsplit(aux2,"+",extended=FALSE)[[1]]
+##
+##    for (i in 1:length(aux3)) {
+##      if (any(grep("%",aux3[i]))) {
+##            formule <- paste(formule,strsplit(aux3[i],"%",extended=FALSE)[[1]][1],",sum)%in%C(",strsplit(aux3[i],"%",extended=FALSE)[[1]][3],",sum)")
+##      }
+##      else
+##      if (any(grep(":",aux3[i]))) {
+##         formule <- paste(formule,strsplit(aux3[i],":",extended=FALSE)[[1]][1],",sum) : C(",strsplit(aux3[i],":",extended=FALSE)[[1]][2],",sum)")
+##      }
+##      else {
+##      formule <- paste(formule,aux3[i],",sum)")
+##      }
+##      if (i < length(aux3))  formule <- paste (formule, "+C(")
+##    }
 
     formule <- as.formula(formule)
     aux1 <- aov( formule , data = donnee, subset=subset,na.action =na.exclude)
@@ -40,30 +50,31 @@
     variab[varendo-firstvar+1,] <- aux[-nrow(aux),2]/sum(aux[,2])
     res[varendo-firstvar+1,] <- sqrt(aux[nrow(aux),3])
     r2[varendo-firstvar+1,] <- summary.lm(aux1)$r.squared
-    
+ 
     if (random) {
-      row.interact=nrow(aux)
-      for (i in 1:nrow(aux)){
-       if (gsub(" ","",paste("C(",colnames(donnee)[col.p],",sum):C(",colnames(donnee)[col.j],",sum)")) == gsub(" ","",rownames(aux)[i])) row.interact=i
-       if (gsub(" ","",paste("C(",colnames(donnee)[col.j],",sum):C(",colnames(donnee)[col.p],",sum)")) == gsub(" ","",rownames(aux)[i])) row.interact=i
+      panelist=colnames(donnee)[col.j]
+      for (i in 1:length(Terms)){
+        if (any(grep(panelist,Terms[i]))){ 
+          if (any(grep(":",Terms[i]))){
+            facteur = gsub(":","",Terms[i])
+            facteur = gsub(panelist,"",facteur)
+            for (k in 1:nrow(aux)) if(gsub(" ","",rownames(aux)[k])==facteur) nrow.facteur = k
+            perf[varendo-firstvar+1,nrow.facteur] <- pf(aux[nrow.facteur,3]/aux[i,3],aux[nrow.facteur,1],aux[i,1],lower.tail=FALSE)
+          }
+        }
       }
-      perf[varendo-firstvar+1,1] <- pf(aux[1,3]/aux[row.interact,3],aux[1,1],aux[row.interact,1],lower.tail=FALSE)
     }
   }
-
 aa <- strsplit(as.character(formule),split="~",extended=FALSE)[[3]]
-aa <- gsub("C\\(","",aa)
-aa <- gsub(", sum","",aa)
-aa <- gsub(")","",aa)
-dimnames(perf) <- list(labels(donnee)[[2]][firstvar:lastvar],gsub(" ","",gsub(", sum)","",gsub("C\\(","",rownames(aux))))[-nrow(aux)])
-dimnames(variab) <- list(labels(donnee)[[2]][firstvar:lastvar],gsub(" ","",gsub(", sum)","",gsub("C\\(","",rownames(aux))))[-nrow(aux)])
-dimnames(res) <- list(labels(donnee)[[2]][firstvar:lastvar],"stdev residual")
-dimnames(r2) <- list(labels(donnee)[[2]][firstvar:lastvar],"r2")
+dimnames(variab) <- dimnames(perf) <- list(lab.sauv[firstvar:lastvar],rownames(aux)[-nrow(aux)])
+dimnames(res) <- list(lab.sauv[firstvar:lastvar],"stdev residual")
+dimnames(r2) <- list(lab.sauv[firstvar:lastvar],"r2")
 
 panelperf = list() 
 panelperf$p.value = perf
 panelperf$variability = variab
 panelperf$res = res
 panelperf$r2 = r2
+options(contrasts=c("contr.helmert", "contr.poly"))
 return(panelperf)
 }

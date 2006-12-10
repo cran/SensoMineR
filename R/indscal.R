@@ -88,31 +88,41 @@ for (i in 1:dim(d)[3]) d[,,i] <- dist2full(dist(matrice[,(2*i-1):(2*i)]))
       dimnames(X) <- list(stimuli, paste("Dim", 1:k))
       dimnames(W) <- list(subjects, paste("Dim", 1:k))
   get(getOption("device"))()
-  plot( W[,coord], xlim=c(-0.1,1.1),ylim=c(0.1,1.1),type="n",xlab=paste("Dim",coord[1]),ylab=paste("Dim",coord[2]))
+  plot( W[,coord], xlim=c(0,1),ylim=c(0,1),type="n",xlab=paste("Dim",coord[1]),ylab=paste("Dim",coord[2]), main = "Weight representation")
   points(W[,coord[1]],W[,coord[2]],cex=1.2,pch=20)
   text( W[,coord[1]], W[,coord[2]], labels=subjects, cex = 0.8, pos = 4, offset = 0.2)
-  title(main = paste("Weight representation (","comp",coord[1]," - ","comp",coord[2],")",sep=""))
 
   get(getOption("device"))()
   X <- as.matrix(X[,])
   aa=cor(matrice,X[,coord])
-  senso.corcircle(aa, fullcircle=FALSE)
+
+  plot(0, 0, xlab = paste("Dim",coord[1]), ylab = paste("Dim",coord[2]), xlim = c(-1,1), ylim = c(-1,1), col = "white", asp=1, main="Correlation circle")
+  x.cercle <- seq(-1, 1, by = 0.01)
+  y.cercle <- sqrt(1 - x.cercle^2)
+  lines(x.cercle, y = y.cercle)
+  lines(x.cercle, y = -y.cercle)
+  abline(v=0,lty=2)
+  abline(h=0,lty=2)
+  for (v in 1:nrow(X)){
+    arrows(0, 0, aa[v, 1], aa[v, 2], length = 0.1, angle = 15, code = 2)
+    text(aa[v, 1], y = aa[v, 2], labels = rownames(aa)[v], pos = 1, offset=0.1)
+  }
+
   if (length(matrice.illu)!=0){
     bb=cor(matrice.illu,X[,coord])
-    senso.corcircle(bb, fullcircle=TRUE,add=TRUE,col="blue")
+    for (v in 1:nrow(X)){
+      arrows(0, 0, bb[v, 1], bb[v, 2], length = 0.1, angle = 15, code = 2, col = "blue")
+      text(bb[v, 1], y = bb[v, 2], labels = rownames(bb)[v], pos = 1, offset=0.1, col="blue")
+    }
   }
-  title(main = paste("Correlation (comp",coord[1]," - ","comp",coord[2],")",sep=""))
 
   get(getOption("device"))()
-  par(mar = c(0,0,2,0))
-  senso.label( X[,coord], clabel=0, cpoint=0.8, include.origin = FALSE)
+  plot(X[,coord], main = "Stimuli map", xlab = paste("Dim",coord[1]), ylab = paste("Dim",coord[2]), asp=1, cex=0.8, pch=20)
   text( X[,coord[1]], X[,coord[2]], labels = stimuli, cex = 0.8, pos = 4, offset = 0.2)
-  title(main = paste("Stimuli map (comp",coord[1]," - comp",coord[2],")",sep=""))
+  abline(v=0,lty=2)
+  abline(h=0,lty=2)
 
-###  senso.label( W[,coord], clabel=0, cpoint=0.8, include.origin = TRUE,xlim=c(0,1),ylim=c(0,1))
-###  text( W[,coord[1]], W[,coord[2]], labels = subjects, cex = 0.8, pos = 4, offset = 0.2)
-
-      dimnames(rarr) <- list(stimuli, paste("Dim", 1:k), subjects)
+     dimnames(rarr) <- list(stimuli, paste("Dim", 1:k), subjects)
       out <- list(W = as.matrix(W), points = as.matrix(X), subvar = r2ind, r2 = r2,
             dfr = (k * (m + n - 2))/((m * n * (n - 1))/2))
       class(out) <- "indscal"

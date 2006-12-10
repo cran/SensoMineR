@@ -12,7 +12,7 @@ Each chocolate was evaluated by 7 panels according to 14
 sensory descriptors.
 }
 
-\usage{data(sensopanels)}
+\usage{data(chocolates)}
 
 \format{
  A data frame with 6 rows and 98 columns: each row corresponds to a chocolate
@@ -25,7 +25,7 @@ Département de mathématiques appliquées, Agrocampus Rennes
 }
 
 \examples{
-data(sensopanels)
+data(chocolates)
 }
 
 \keyword{datasets}

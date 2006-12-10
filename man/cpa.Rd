@@ -64,13 +64,11 @@ Sébastien Lê \email{Sebastien.Le@agrocampus-rennes.fr}
 
 \examples{
 \dontrun{
-data(chocolates)
-data(hedochoc)
-chocosenso=averagetable(chocolates, formul = "~Product", firstvar = 5)
-cpa(chocosenso, hedochoc, coord = c(1,2), center = TRUE,scale = TRUE)
+data(cocktail)
+res.cpa = cpa(cbind(compo.cocktail, senso.cocktail), hedo.cocktail)
 ## If you prefer a graph in black and white and with 3 clusters
-cpa(chocosenso, hedochoc, coord = c(1,2), center = TRUE, scale = TRUE, 
-    name.panelist = FALSE, col = gray((50:1)/50), nb.clusters = 3)
+res.cpa = cpa(cbind(compo.cocktail, senso.cocktail), hedo.cocktail, 
+    name.panelist = TRUE, col = gray((50:1)/50), nb.clusters = 3)
 }
 }
 \keyword{multivariate}

@@ -28,12 +28,13 @@ for (j in 1 :(firstvar-1))  matrice[,j] <- as.factor(matrice[,j])
     #### Calculate the average by product and the average by product and by panelist, 
     #### Missing values are replaced by the adjusted coefficient alpha_prod+beta_panelist 
     if (method=="coeff")  {
+     options(contrasts=c("contr.sum", "contr.sum"))
      coeff.prod <- matrix(0,nbprod,nbdesc)
      coeff.juge <- matrix(0,nbjuge,nbdesc)
      for (i in 1:nbdesc){
        # If all data are missing for a panelist and a descriptor, put a score, why not 0
        for (juge in 1:nbjuge) if (is.na(mean(moy.aux[moy.aux[,1]==juge,i+2],na.rm=TRUE))) moy.aux[which(moy.aux[,1]==juge)[1],i+2]<-0
-       res <- summary.lm(aov(moy.aux[(nbprod+1):nrow(moy.aux),i+2]~ C(as.factor(as.character(moy.aux[(nbprod+1):nrow(moy.aux),2])),sum) + C(as.factor(as.character(moy.aux[(nbprod+1):nrow(moy.aux),1])),sum),na.action=na.exclude))$coef
+       res <- summary.lm(aov(moy.aux[(nbprod+1):nrow(moy.aux),i+2]~ as.factor(as.character(moy.aux[(nbprod+1):nrow(moy.aux),2])) + as.factor(as.character(moy.aux[(nbprod+1):nrow(moy.aux),1])),na.action=na.exclude))$coef
        coeff.prod[1:(nbprod-1),i] <- res[1]+res[2:nbprod]
        coeff.prod[nbprod,i] <- res[1]-sum(res[2:nbprod])
        coeff.juge[1:(nbjuge-1),i] <- res[(nbprod+1):(nbjuge+nbprod-1)]
@@ -48,6 +49,7 @@ for (j in 1 :(firstvar-1))  matrice[,j] <- as.factor(matrice[,j])
       }
     }
   }}
+  options(contrasts=c("contr.helmert", "contr.poly"))
   moy.aux <- as.data.frame(moy.aux)
 
   if (center|scale){

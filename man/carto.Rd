@@ -9,30 +9,21 @@ Performs preference mapping techniques based on multidimensional exploratory dat
 
 \usage{
 carto(Mat, MatH, 
-      option = c("pca", "manual","afmult", "statis", "gpa"),
-      level = 0, regmod = 1, graphic = FALSE, coord = c(1, 2), 
-      asp = 1, cex = 1.3, col = "steelblue4", font = 2, 
-      clabel = 0.8, label.j = FALSE, resolution = 200, 
-      nb.clusters = 0)
+      level = 0, regmod = 1, coord = c(1, 2), asp = 1, 
+      cex = 1.3, col = "steelblue4", font = 2, clabel = 0.8,
+      label.j = FALSE, resolution = 200, nb.clusters = 0)
 }
 
 \arguments{
 
-\item{Mat}{a data frame or an object of class \code{ktab} (i.e. a list of data frames with the same row.names in common).
-If "pca" or "manual" are assigned to the \code{option} parameter, then Mat must be a data frame, otherwise
-Mat is an object of class \code{ktab}}
+\item{Mat}{a data frame corresponding to the axes of the map}
 \item{MatH}{a data frame in which each row represent a product and each column represent the hedonic scores of a given 
 consumer for the products}
-\item{option}{the multidimensional exploratory data analysis to be performed, e.g. Principal Components 
-Analysis (\code{"pca"}), Multiple Factor Analysis (\code{"afmult"}), 
-Statis method (\code{"statis"}), Generalised Procrustes Analysis (\code{"gpa"}); or two axis calculated
-separatly (\code{"manual"})}
 \item{level}{the number of standard deviations used in the calculation of the preference response surface for all
 the consumers}
 \item{regmod}{the type of regression model used in the calculation of the preference response surface for all
 the consumers. \code{regmod} = 1: quadratic model, 
 \code{regmod} = 2: vector model, \code{regmod} = 3: circular model, \code{regmod} = 4: elliptical model}
-\item{graphic}{if \code{TRUE} is assigned to that parameter, each graphic displayed is output in a specific window}
 \item{coord}{a vector of length 2, the rank of the axis used to display the results if \code{"manual"}
 is not assigned to the \code{option} parameter}
 \item{asp}{if 1 is assigned to that parameter, the graphic displays are output in an orthonormal coordinate system}
@@ -67,22 +58,21 @@ François Husson \email{François.Husson@agrocampus-rennes.fr} \cr
 Sébastien Lê \email{Sebastien.Le@agrocampus-rennes.fr}
 }
 
-\seealso{\code{\link{afmult}}, \code{\link{gpa}}}
+\seealso{\code{\link[FactoMineR]{MFA}}, \code{\link[FactoMineR]{GPA}}}
 
 \examples{
-## Example 1
-data(chocolates)
-data(hedochoc)
-chocselect <- search.desc(chocolates, col.j = 1, col.p = 4, firstvar = 5)
-resaveragetable<-averagetable(chocselect, formul="~Product",firstvar=5)
-carto(resaveragetable, hedochoc, option = "pca")
+## Example 1: carto for the sensory descriptors
+data(cocktail)
+res.pca <- PCA(senso.cocktail)
+carto(res.pca$ind$coord[,1:2], hedo.cocktail)
 
 ## Example 2
 \dontrun{
-data(sensopanels)
-data(hedochoc)
-ktabsenso <- ktab.data.frame(sensopanels, blocks = rep(14,7))
-carto(ktabsenso,hedochoc,option = "afmult", graphic = TRUE)
+data(cocktail)
+res.mfa <- MFA(cbind.data.frame(senso.cocktail,compo.cocktail),
+    group=c(ncol(senso.cocktail),ncol(compo.cocktail)),
+    name.group=c("senso","compo"))
+carto(res.mfa$ind$coord[,1:2], hedo.cocktail)
 }
 }
 \keyword{multivariate}

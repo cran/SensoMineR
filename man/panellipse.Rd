@@ -9,7 +9,7 @@ confidence ellipses around products.}
 \usage{
 panellipse(donnee, col.p, col.j, firstvar, lastvar = ncol(donnee), 
     alpha = 0.05, coord = c(1,2), scale.unit = TRUE, nbsimul = 500, 
-    nbchoix = NULL, bloc = NULL, name.bloc = NULL, 
+    nbchoix = NULL, group = NULL, name.group = NULL, 
     level.search.desc = 0.5, centerbypanelist = TRUE, 
     scalebypanelist = FALSE, name.panelist = FALSE, cex = 1, 
     color = NULL)
@@ -27,8 +27,8 @@ panellipse(donnee, col.p, col.j, firstvar, lastvar = ncol(donnee),
   \item{scale.unit}{boolean, if T the descriptors are scaled to unit variance}
   \item{nbsimul}{the number of simulations (corresponding to the number of virtual panels) used to compute the ellipses}
   \item{nbchoix}{the number of panelists forming a virtual panel, by default the number of panelists in the original panel}  
-  \item{bloc}{the number of groups of variables when multiple factor analysis is performed (by default this parameter equals NULL and a PCA is performed)}  
-  \item{name.bloc}{the names of the groups of variables when mfa is performed (if \code{bloc} differs from NULL)}  
+  \item{group}{the number of variables in each group of variables when multiple factor analysis is performed (by default this parameter equals NULL and a PCA is performed)}  
+  \item{name.group}{the names of the groups of variables when mfa is performed (if \code{group} differs from NULL)}  
   \item{level.search.desc}{the threshold above which a descriptor is not considered as discriminant according to AOV model \code{"descriptor=Product+Panelist"}}
   \item{centerbypanelist}{boolean, if T center the data by panelist before the construction of the axes}
   \item{scalebypanelist}{boolean, if T scale the data by panelist before the construction of the axes (by default, FALSE
@@ -82,22 +82,22 @@ Pagès J. & Husson F. (2005). Multiple Factor Analysis with confidence ellipses: 
 \dontrun{
 ## Example 1: PCA
 data(chocolates)
-res <- panellipse(chocolates, col.p = 4, col.j = 1, firstvar = 5)
+res <- panellipse(sensochoc, col.p = 4, col.j = 1, firstvar = 5)
 coltable(res$hotelling, main.title = "P-values for the Hotelling's T2 tests")
 
 ## If we consider only 12 panelists in a virtual panel, 
 ## what would be the size of the ellipses
-res2 <- panellipse(chocolates, col.p = 4, col.j = 1, nbchoix = 12, firstvar = 5)
+res2 <- panellipse(sensochoc, col.p = 4, col.j = 1, nbchoix = 12, firstvar = 5)
 coltable(res2$hotelling, main.title = "P-values for the Hotelling's T2 tests")
 
 ## If we want the confidence ellipses around the individual descriptions
-panellipse(chocolates, col.p = 4, col.j = 1, nbchoix = 1, firstvar = 5)
+panellipse(sensochoc, col.p = 4, col.j = 1, nbchoix = 1, firstvar = 5)
 
 
 ## Example 2: MFA
 data(chocolates)
-res <- panellipse(chocolates, col.p = 4, col.j = 1, firstvar = 5, 
-    bloc = c(6,8), name.bloc = c("G1","G2"))
+res <- panellipse(sensochoc, col.p = 4, col.j = 1, firstvar = 5, 
+    group = c(6,8), name.group = c("G1","G2"))
 for (i in 1:dim(res$hotelling$bygroup)[3]) coltable(res$hotelling$bygroup[,,i], 
     main.title = paste("P-values for the Hotelling's T2 tests (",
     dimnames(res$hotelling$bygroup)[3][[1]][i],")",sep=""))

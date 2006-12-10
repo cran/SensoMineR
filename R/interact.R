@@ -14,13 +14,14 @@ plotinteract<-function(tab,cex=1.1,xlegend=ncol(tab)-5,ylegend=max(tab),xlab=NUL
 }
 ############################################################################
 
+options(contrasts=c("contr.sum", "contr.sum"))
 for (j in 1 :(firstvar-1))  donnee[,j] <- as.factor(donnee[,j])
 nbprod <- length(levels(donnee[,col.p]))
 nbjuge <- length(levels(donnee[,col.j]))
 tab<-array(0,dim=c(nbprod,nbjuge,lastvar-firstvar+1))
 
 for (varendo in firstvar:lastvar) {
-  aux <- summary.lm(aov( donnee[,varendo]~C(donnee[,col.p],sum)+C(donnee[,col.j],sum)+C(donnee[,col.p],sum):C(donnee[,col.j],sum), data = donnee, na.action =na.exclude))$coef
+  aux <- summary.lm(aov( donnee[,varendo]~donnee[,col.p]+donnee[,col.j]+donnee[,col.p]:donnee[,col.j], data = donnee, na.action =na.exclude))$coef
   for (k in 1:(nbjuge-1)) tab[1:(nbprod-1),k,varendo-firstvar+1] <- aux[((nbprod+nbjuge-1)+(k-1)*(nbprod-1)+1):((nbprod+nbjuge-1)+k*(nbprod-1)),1]
   tab[,nbjuge,varendo-firstvar+1] <- - apply(tab[,,varendo-firstvar+1],1,sum)
   tab[nbprod,,varendo-firstvar+1] <- - apply(tab[,,varendo-firstvar+1],2,sum)
@@ -36,5 +37,6 @@ barrow(t(apply(tab^2,c(1,3),sum)/matrix(rep(apply(tab^2,3,sum),nrow(tab)),byrow=
 
 ## Make a graph to visualize the panelist which contribute the product-panelist interaction for each descriptor
 barrow(t(  apply(tab^2,c(2,3),sum) /matrix(rep(apply(tab^2,3,sum),ncol(tab)),byrow=TRUE,nrow=ncol(tab))))
+options(contrasts=c("contr.helmert", "contr.poly"))
 return(tab)
 }

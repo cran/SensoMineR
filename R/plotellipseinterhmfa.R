@@ -1,4 +1,4 @@
-"plotellipseinterhmfa" <- function(mat,alpha=0.05,coord=c(1,2),nbbloc=1,eig,cex=1,color=NULL,hmfa){
+"plotellipseinterhmfa" <- function(mat,alpha=0.05,coord=c(1,2),nbgroup=1,eig,cex=1,color=NULL,hmfa){
 
 #################################################################
 "ellipse" <- function(loc, cov,alpha)
@@ -34,7 +34,7 @@ if (length(color)==0) color = c("black","red","green3","blue",
 hierar=hmfa[[1]]
 ptpartiel = hmfa[[2]]
 nbp <- nrow(matP)
-nbprod <- nbp/nbbloc
+nbprod <- nbp/nbgroup
 coord.ellipse.a.tracer <- matrix(0,402,2*nbp)
 
 p <- 2
@@ -50,25 +50,28 @@ minx <- min(coord.ellipse.a.tracer[,1+2*(0:(nbp-1))],na.rm=TRUE)
 maxx <- max(coord.ellipse.a.tracer[,1+2*(0:(nbp-1))],na.rm=TRUE)
 miny <- min(coord.ellipse.a.tracer[,2*(1:nbp)],na.rm=TRUE)
 maxy <- max(coord.ellipse.a.tracer[,2*(1:nbp)],na.rm=TRUE)
-  par(mar = c(0,0,2,0))
-  senso.label( matP[,1:2], clabel=0, cpoint=0,xlim=c(minx*1.05,maxx*1.05),ylim=c(1.05*miny,1.05*maxy))
+  plot(0, 0, xlab = paste("Dim ",coord[1]," (",eig[coord[1],2],"%)",sep=""), ylab = paste("Dim ",coord[2]," (",eig[coord[2],2],"%)",sep=""), xlim = c(minx*1.05,maxx*1.05), ylim = c(1.05*miny,1.05*maxy), col = "white", asp=1)
+  abline(v=0,lty=2)
+  abline(h=0,lty=2)
   points(matmoyP[,1], matmoyP[,2],cex=0.9*cex,col=color[1:nbprod],pch=15)
-  for (j in 1:length(ptpartiel[[length(hierar)]])){
+  for (j in 1:dim(ptpartiel[[length(hierar)]])[3]){
     for (i in 1:nbprod) {
-      points(ptpartiel[[length(hierar)]][[j]][,1], ptpartiel[[length(hierar)]][[j]][,2],cex=0.8*cex,col=color[1:nbprod],pch=20)
-      lines(c(ptpartiel[[length(hierar)]][[j]][i,1],matmoyP[i,1]),c( ptpartiel[[length(hierar)]][[j]][i,2],matmoyP[i,2]),col=color[i],lwd=1.5)
+      points(ptpartiel[[length(hierar)]][,1,j], ptpartiel[[length(hierar)]][,2,j],cex=0.8*cex,col=color[1:nbprod],pch=20)
+      lines(c(ptpartiel[[length(hierar)]][i,1,j],matmoyP[i,1]),c( ptpartiel[[length(hierar)]][i,2,j],matmoyP[i,2]),col=color[i],lwd=1.5)
   }}
   text( matmoyP[,1], matmoyP[,2], matmoyP[,ncol(matmoyP)], cex = 0.8*cex, pos = 4, offset = 0.2,col=color[1:nbprod])
-  for (j in 1:nbbloc){
+  for (j in 1:nbgroup){
     for (i in 1:nbprod) {
-      points(ptpartiel[[length(hierar)-1]][[j]][i,1], ptpartiel[[length(hierar)-1]][[j]][i,2],cex=0.8*cex,col=color[i],pch=20)
+      points(ptpartiel[[length(hierar)-1]][i,1,j], ptpartiel[[length(hierar)-1]][i,2,j],cex=0.8*cex,col=color[i],pch=20)
       jj=1
       for (k in 2: length(hierar[[length(hierar)]])){
         if (j > sum(hierar[[length(hierar)]][1:(k-1)])) jj=jj+1
       }
-      lines(c(ptpartiel[[length(hierar)-1]][[j]][i,1],ptpartiel[[length(hierar)]][[jj]][i,1]),c( ptpartiel[[length(hierar)-1]][[j]][i,2],ptpartiel[[length(hierar)]][[jj]][i,2]),col=color[i],lty=j)
+      lines(c(ptpartiel[[length(hierar)-1]][i,1,j],ptpartiel[[length(hierar)]][i,1,jj]),c( ptpartiel[[length(hierar)-1]][i,2,j],ptpartiel[[length(hierar)]][i,2,jj]),col=color[i],lty=j)
       lines(coord.ellipse.a.tracer[,(1+2*((i+(j-1)*nbprod)-1)):(2*(i+(j-1)*nbprod))],col=color[i],lty=j)
     }
   }
-  title(main = paste("Confidence ellipses for the partial points: comp ",coord[1]," (",eig[coord[1],2],"%) - comp ",coord[2]," (",eig[coord[2],2],"%)",sep=""))
+  title(main = "Confidence ellipses for the partial points")
+
+
 }

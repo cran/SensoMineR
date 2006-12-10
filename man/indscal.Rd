@@ -49,8 +49,7 @@ François Husson}
 
 \examples{
 \dontrun{
-data(napping.don)
-data(napping.words)
+data(napping)
 nappeplot(napping.don)
 resindscal<- indscal(napping.don, napping.words)
 get(getOption("device"))()

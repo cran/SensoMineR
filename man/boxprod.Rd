@@ -39,14 +39,14 @@ Sébastien Lê \email{Sebastien.Le@agrocampus-rennes.fr}
 }
 
 \seealso{ 
-\code{\link{boxplot.stats}} which does the computation,
+\code{\link{boxplot}} which does the computation,
 \code{\link{bxp}} for the plotting and more examples; and \code{\link{stripchart}} 
 for an alternative (with small data sets).
 }
 
 \examples{
 data(chocolates)
-boxprod(chocolates, col.p = 4, firstvar = 5, numr = 2, numc = 2)
+boxprod(sensochoc, col.p = 4, firstvar = 5, numr = 2, numc = 2)
 }
 
 \keyword{univar}

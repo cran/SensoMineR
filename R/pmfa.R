@@ -71,30 +71,11 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
     matrice <- scale(matrice, center = TRUE, scale = FALSE)
  
     do.mfa = FALSE
-    if (length(mean.conf) == 0) {
+    if (is.null(mean.conf)) {
         do.mfa = TRUE
-        res.afm <- afmult(ktab.data.frame(as.data.frame(matrice),
-            blocks = rep(2, nbjuge)), scann = FALSE, nf = max(coord))
-        mean.conf <- res.afm$li
-    }
-    aa = cor(matrice, mean.conf[, coord], use = "complete")
-    senso.corcircle(aa, fullcircle = TRUE)
-    title(main = paste("Correlation circle (comp", coord[1],
-        "-", "comp", coord[2], ")"))
-    windows()
-    par(mar = c(0, 0, 2, 0))
-    s.label(mean.conf[, coord], clabel = 0, cpoint = 0.8, include.origin = FALSE)
-    text(mean.conf[, coord[1]], mean.conf[, coord[2]], labels = rownames(mean.conf),
-        cex = cex, pos = 4, offset = 0.2)
-    title(main = paste("Individuals factor map (", "comp", coord[1],
-        "-", "comp", coord[2], ")"))
-    windows()
-    if (length(matrice.illu) != 0) {
-        bb = cor(matrice.illu, mean.conf[, coord])
-        senso.corcircle(bb, fullcircle = TRUE, col = "blue")
-        title(main = paste("Correlation circle (comp", coord[1],
-            "-", "comp", coord[2], ")"))
-        windows()
+        if (is.null(matrice.illu)) res.afm <- MFA(as.data.frame(matrice), group = rep(2, nbjuge), ncp = max(coord),type=rep("c",nbjuge),graph=FALSE)
+        else res.afm <- MFA(cbind.data.frame(matrice,matrice.illu), group = c(rep(2, nbjuge),ncol(matrice.illu)), ncp = max(coord),type=c(rep("c",nbjuge),"s"),num.group.sup = nbjuge+1,graph=FALSE)
+        mean.conf <- res.afm$ind$coord
     }
     mean.conf <- as.matrix(mean.conf[, coord])
     res <- matrix(0, nbjuge, 1)
@@ -106,7 +87,7 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
             eig <- eigen(1/nrow(atourner) * t(scale(atourner,scale=FALSE)) %*% scale(atourner,scale=FALSE))
             res.procrustes <- procrustes(atourner, mean.conf,
                 orthogonal = T, translate = T, magnify = F)
-            magnify <- sqrt(res.afm$eig[1])/sqrt(eig$values[1])
+            magnify <- sqrt(res.afm$eig[1,1])/sqrt(eig$values[1])
         }
         else {
             res.procrustes <- procrustes(atourner, mean.conf,
@@ -118,32 +99,35 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
         if (graph.ind == T) {
             dd = cbind(mean.conf, tourne)
             nappe <- rbind((matrix(c(0, 0, 0, lim[2], lim[1], lim[2], lim[1], 0),ncol=2,byrow = T)
-                        -cbind(rep( matricemoyenne[(2 * (j - 1) + 1)],4),rep( matricemoyenne[(2 * j)],4))) %*% res.procrustes$tmat *
-                magnify)
+                        -cbind(rep( matricemoyenne[(2 * (j - 1) + 1)],4),rep( matricemoyenne[(2 * j)],4))) %*% res.procrustes$tmat * magnify)
                 
                
             if (j != 1)
-                windows()
+                get(getOption("device"))()
             plot(rbind(tourne, mean.conf, nappe), type = "n",
                 xlab = paste("Dim", coord[1]), ylab = paste("Dim",
                   coord[2]), asp = 1, main = colnames(matrice)[2 *
                   j], sub = paste("RV between the mean representation and the representation of",
-                  colnames(matrice)[2 * j], ": ", signif(res[j],
-                    4)), cex.sub = cex)
-            for (i in 1:nrow(mean.conf)) points(mean.conf[i,
-                1], mean.conf[i, 2], cex = cex, pch = 20)
-            for (i in 1:nrow(mean.conf)) text(mean.conf[i, 1],
-                mean.conf[i, 2], rownames(matrice)[i], cex = cex,
+                  colnames(matrice)[2 * j], ": ", signif(res[j], 4)), cex.sub = cex)
+            for (i in 1:nrow(mean.conf)) points(mean.conf[i, 1], mean.conf[i, 2], cex = cex, pch = 20)
+            for (i in 1:nrow(mean.conf)) text(mean.conf[i, 1], mean.conf[i, 2], rownames(matrice)[i], cex = cex,
                 pos = 1, offset = 0.5)
             lines(nappe[c(1:4, 1), ], col = 3, lty = 2)
-            for (i in 1:nrow(mean.conf)) points(tourne[i, 1],
-                tourne[i, 2], cex = cex, pch = 20, col = 3)
-            for (i in 1:nrow(mean.conf)) text(tourne[i, 1], tourne[i,
-                2], rownames(matrice)[i], col = 3, font = 3,
+            for (i in 1:nrow(mean.conf)) points(tourne[i, 1],  tourne[i, 2], cex = cex, pch = 20, col = 3)
+            for (i in 1:nrow(mean.conf)) text(tourne[i, 1], tourne[i, 2], rownames(matrice)[i], col = 3, font = 3,
                 cex = cex, pos = 2, offset = 0.2)
         }
     }
-    dimnames(res) <- list(colnames(matrice)[(1:(ncol(matrice)/2)) *
-        2], "RV coeff")
+    if (do.mfa){
+      plot(res.afm,choix="var",habillage="var")
+      if (!is.null(matrice.illu)){
+        plot(res.afm,choix="var",invisible="sup",habillage="var")
+        plot(res.afm,choix="var",invisible="actif")
+      }
+      plot(res.afm,choix="ind",partial="all",habillage="group")
+      plot(res.afm,choix="ind")
+      plot(res.afm,choix="group")
+    }
+    dimnames(res) <- list(colnames(matrice)[(1:(ncol(matrice)/2)) * 2], "RV coeff")
     return(res)
 }

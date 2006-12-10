@@ -38,11 +38,9 @@ parameter is set by users).
 
 \author{François Husson}
 
-\seealso{ \code{\link{afmult}}}
-
 \examples{
 data(chocolates)
-res=scalebypanelist(chocolates, col.p = 4, col.j = 1, firstvar = 5)
+res=scalebypanelist(sensochoc, col.p = 4, col.j = 1, firstvar = 5)
 res
 }
 

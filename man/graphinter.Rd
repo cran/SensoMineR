@@ -52,7 +52,7 @@ François Husson, Sébastien Lê}
 \examples{
 \dontrun{
 data(chocolates)
-graphinter(chocolates, col.p = 4, col.j = 2, firstvar = 5, lastvar = 12,
+graphinter(sensochoc, col.p = 4, col.j = 2, firstvar = 5, lastvar = 12,
     numr = 1, numc = 1)
 }
 }

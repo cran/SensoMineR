@@ -64,12 +64,12 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 
 \examples{
 data(chocolates)
-resaverage<-averagetable(chocolates, formul = "~Product+Panelist",
+resaverage<-averagetable(sensochoc, formul = "~Product+Panelist",
     firstvar = 5)
 coltable(magicsort(resaverage), level.upper = 6,level.lower = 4,
     main.title = "Average by chocolate")
 
-resdecat<-decat(chocolates, formul = "~Product+Panelist", firstvar = 5,
+resdecat<-decat(sensochoc, formul = "~Product+Panelist", firstvar = 5,
     graph = FALSE)
 resaverage.sort = resaverage[rownames(magicsort(resdecat$tabT)),
     colnames(magicsort(resdecat$tabT))]
@@ -77,8 +77,7 @@ coltable(resaverage.sort, magicsort(resdecat$tabT),
     level.lower = -1.96, level.upper = 1.96,
     main.title = "Average by chocolate")
 
-get(getOption("device"))()
-pca(resaverage, scale.unit = TRUE)
+res.pca = PCA(resaverage, scale.unit = TRUE)
 }
 
 \keyword{models}

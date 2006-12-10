@@ -33,7 +33,7 @@ If \code{mean.conf} is not NULL the configuration used is the one input by the u
 
 \value{
 Returns the RV coefficient between each individual configuration and the consensus. \cr
-If \code{mean.conf} is NULL, returns the usual graphs resulting from the afmult function: the graph of the individuals and their partial representations,
+If \code{mean.conf} is NULL, returns the usual graphs resulting from the MFA function: the graph of the individuals and their partial representations,
 the graph of the variables (i.e. the coordinates of the products given by each panelist). \cr
 If \code{mean.conf} is not NULL returns the configuration input by the user. \cr
 When \code{matrice.illu} is not NULL, returns a graph of illustrative variables. \cr
@@ -47,12 +47,11 @@ Morand, E., Pagès, J. (accepted) Procrustes multiple factor analysis to analyze 
 
 \author{François Husson, Sébastien Lê}
 
-\seealso{\code{\link{afmult}}, \code{\link{nappeplot}}, \code{\link{indscal}}}
+\seealso{\code{\link[FactoMineR]{MFA}}, \code{\link{nappeplot}}, \code{\link{indscal}}}
 
 \examples{
 \dontrun{
-data(napping.don)
-data(napping.words)
+data(napping)
 nappeplot(napping.don)
 get(getOption("device"))()
 pmfa(napping.don, napping.words)

@@ -11,7 +11,7 @@ The data used here refer to 10 different French wines evaluated by 11 panelists.
 They were asked to position the wines on a tableclothe of dimension (60,40).
 }
 
-\usage{data(napping.don)}
+\usage{data(napping)}
 
 \format{
  A data frame of dimension (10,22): each row represents
@@ -25,8 +25,8 @@ Département de mathématiques appliquées, Agrocampus Rennes
 
 \examples{
 \dontrun{
-data(napping.don)
-nappeplot(napping.don)
+data(napping)
+nappeplot(napping)
 }
 }
 \keyword{datasets}

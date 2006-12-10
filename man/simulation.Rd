@@ -9,13 +9,13 @@
 }
 
 \usage{
-simulation(axeAFM, nbchoix = NULL, nbbloc, nbsimul = 500)
+simulation(axeAFM, nbchoix = NULL, nbgroup = 1, nbsimul = 500)
 }
 
 \arguments{
   \item{axeAFM}{matrix}
-  \item{nbchoix}{Number of panelist in a virtual Panel}  
-  \item{nbbloc}{Number of bloc for the ktable}  
+  \item{nbchoix}{Number of panelists in a virtual Panel}  
+  \item{nbgroup}{Number of groups (by default 1 for a PCA)}  
   \item{nbsimul}{number of simulations}  
 }
 
@@ -33,12 +33,10 @@ Called by the simulation procedure
 
 \examples{
 data(chocolates)
-ktab.donnee <- ktab.data.frame(cbind.data.frame(chocolates[,1],
-    chocolates[,4], chocolates[,-(1:4)]), blocks = c(2,14),
-    tabnames = c("JP","Gr1"))
-ktab.interesting.desc <- search.desc.ktab(ktab.donnee)
-axe <- construct.axes(ktab.interesting.desc, scale.unit = TRUE)
-simul <- simulation(axe, nbbloc = length(ktab.interesting.desc$blo)-1)
+donnee <- cbind.data.frame(sensochoc[,c(1,4,5:18)])
+axe <- construct.axes(donnee, scale.unit = TRUE)
+simul <- simulation(axe)
+plotellipse (simul, alpha = 0.05, eig = signif(axe$eig,4))
 }
 
 \keyword{models}
