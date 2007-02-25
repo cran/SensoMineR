@@ -1,5 +1,6 @@
 "decat" <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba = 0.05,graph=TRUE, col.lower = "mistyrose", col.upper = "lightblue", nbrow = NULL, nbcol = NULL){
 
+    old.contr = options()$contrasts
     options(contrasts=c("contr.sum", "contr.sum"))
     for (j in 1 :(firstvar-1)) donnee[,j] <- as.factor(donnee[,j])
     level.lower = -qnorm(proba/2)
@@ -28,23 +29,6 @@
     lab2 <- labels(don.aux)[[2]]
   for (varendo in firstvar:lastvar) {
     formule <- paste(lab[varendo],"~",equation[2])
-##    formule <- paste(lab[varendo],"~ C(")
-##    aux2 <- equation[2]
-##    aux3 <- strsplit(aux2,"+",extended=FALSE)[[1]]
-##
-##    for (i in 1:length(aux3)) {
-##      if (any(grep("%",aux3[i]))) {
-##            formule <- paste(formule,strsplit(aux3[i],"%",extended=FALSE)[[1]][1],",sum)%in%C(",strsplit(aux3[i],"%",extended=FALSE)[[1]][3],",sum)")
-##      }
-##      else
-##        if (any(grep(":",aux3[i]))) {
-##           formule <- paste(formule,strsplit(aux3[i],":",extended=FALSE)[[1]][1],",sum) : C(",strsplit(aux3[i],":",extended=FALSE)[[1]][2],",sum)")
-##        }
-##        else {
-##          formule <- paste(formule,aux3[i],",sum)")
-##        }
-##      if (i < length(aux3))  formule <- paste (formule, "+C(")
-##    }
     formule <- as.formula(formule)
     res <- summary(aov( formule , data = donnee, na.action =na.exclude))[[1]]
     tabF[varendo-firstvar+1,1] <- -qnorm(pf(res[1,4],res[1,1],res[dim(res)[1],1],lower.tail=FALSE))
@@ -105,6 +89,6 @@
   }
 
   if (length(select1) == 0) print("Warning: No variables are discriminant")
-  options(contrasts=c("contr.helmert", "contr.poly"))
   return(result)
+  options(contrasts=old.contr)
 }

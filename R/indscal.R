@@ -103,14 +103,14 @@ for (i in 1:dim(d)[3]) d[,,i] <- dist2full(dist(matrice[,(2*i-1):(2*i)]))
   lines(x.cercle, y = -y.cercle)
   abline(v=0,lty=2)
   abline(h=0,lty=2)
-  for (v in 1:nrow(X)){
+  for (v in 1:nrow(aa)){
     arrows(0, 0, aa[v, 1], aa[v, 2], length = 0.1, angle = 15, code = 2)
     text(aa[v, 1], y = aa[v, 2], labels = rownames(aa)[v], pos = 1, offset=0.1)
   }
 
   if (length(matrice.illu)!=0){
     bb=cor(matrice.illu,X[,coord])
-    for (v in 1:nrow(X)){
+    for (v in 1:nrow(bb)){
       arrows(0, 0, bb[v, 1], bb[v, 2], length = 0.1, angle = 15, code = 2, col = "blue")
       text(bb[v, 1], y = bb[v, 2], labels = rownames(bb)[v], pos = 1, offset=0.1, col="blue")
     }

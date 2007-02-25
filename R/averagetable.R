@@ -33,6 +33,7 @@ if (method =="mean"){
 #  }
 }
 
+old.contr = options()$contrasts
 if (method =="coeff"){
   options(contrasts=c("contr.sum", "contr.sum"))
   for (varendo in firstvar:lastvar) {
@@ -53,12 +54,11 @@ if (method =="coeff"){
       tab[,varendo-firstvar+1] <-  tab[,varendo-firstvar+1]+aux[1,1]
     }
   }
-  options(contrasts=c("contr.helmert", "contr.poly"))
 }
 
 dimnames(tab) = list(levels(donnee[,col.p]),lab.sauv[firstvar:lastvar])
 tab=as.data.frame(tab)
 if (length(file)!=0) write.csv2(tab,file=file,sep=";",dec=",")
 return(tab)
-
+options(contrasts=old.contr)
 }

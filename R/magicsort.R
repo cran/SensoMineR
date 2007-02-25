@@ -2,11 +2,17 @@
 
   if ((method!="magic")&(method!="mean")&(method!="geo")&(method!="median")) stop("The method is unknown")
   if (length(dim(sort.mat))==0){         # Useful if there is only one columns
-    if (length(sort.mat) == dim(matrice)[2]) sort.mat=rbind(sort.mat)
-    if (length(sort.mat) == dim(matrice)[1]) sort.mat=cbind(sort.mat)
+    if ((length(sort.mat) == ncol(matrice))&(length(sort.mat) == nrow(matrice))) {
+      if (byrow) sort.mat = cbind(sort.mat)
+      if (bycol) sort.mat = rbind(sort.mat)
+    }
+    else {
+      if (length(sort.mat) == ncol(matrice)) sort.mat=rbind(sort.mat)
+      if (length(sort.mat) == nrow(matrice)) sort.mat=cbind(sort.mat)
+    }
   }
-  if ((dim(sort.mat)[1]!=dim(matrice)[1])&(byrow)) stop("Number of rows must be the same in matrice and in sort.mat: you can use the option byrow=FALSE")
-  if ((dim(sort.mat)[2]!=dim(matrice)[2])&(bycol)) stop("Number of columns must be the same in matrice and in sort.mat: you can use the option bycol=FALSE")
+  if ((nrow(sort.mat)!=nrow(matrice))&(byrow)) stop("Number of rows must be the same in matrice and in sort.mat: you can use the option byrow=FALSE")
+  if ((ncol(sort.mat)!=ncol(matrice))&(bycol)) stop("Number of columns must be the same in matrice and in sort.mat: you can use the option bycol=FALSE")
   if (method=="magic"){
     for (j in 1:ncol(sort.mat)) sort.mat[,j] <- replace(sort.mat[,j],is.na(sort.mat[,j]),mean(sort.mat[,j],na.rm=TRUE))
     res.pca <- PCA(sort.mat,ncp=2,graph=FALSE)

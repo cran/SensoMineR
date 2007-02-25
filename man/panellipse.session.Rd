@@ -10,7 +10,7 @@ confidence ellipses around products.}
 panellipse.session(donnee, col.p, col.j, col.s, firstvar, 
     lastvar = ncol(donnee), alpha = 0.05, coord = c(1,2), 
     scale.unit = TRUE, nbsimul = 500, nbchoix = NULL, 
-    level.search.desc = 0.5,  centerbypanelist = TRUE, 
+    level.search.desc = 0.2,  centerbypanelist = TRUE, 
     scalebypanelist = FALSE, name.panelist = FALSE,
     variability.variable = FALSE, cex = 1, color= NULL)
 }

@@ -1,4 +1,4 @@
-"panellipse.session" <- function(donnee,col.p,col.j,col.s,firstvar,lastvar=ncol(donnee),alpha=0.05,coord=c(1,2),scale.unit=TRUE,nbsimul=500,nbchoix=NULL,level.search.desc=0.5,centerbypanelist=TRUE,scalebypanelist=FALSE,name.panelist=FALSE,variability.variable=FALSE,cex=1,color=NULL){
+"panellipse.session" <- function(donnee,col.p,col.j,col.s,firstvar,lastvar=ncol(donnee),alpha=0.05,coord=c(1,2),scale.unit=TRUE,nbsimul=500,nbchoix=NULL,level.search.desc=0.2,centerbypanelist=TRUE,scalebypanelist=FALSE,name.panelist=FALSE,variability.variable=FALSE,cex=1,color=NULL){
 
 hotelling <- function(d1,d2,n1=nrow(d1),n2=nrow(d2)){
     k <- ncol(d1)

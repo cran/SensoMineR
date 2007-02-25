@@ -10,13 +10,13 @@ get(getOption("device"))()
             n1 * n1 + coeff[5] * n2 * n2 + coeff[6] * n1 * n2
     }
     if (!is.data.frame(MatH)) stop("Non convenient selection for MatH")
-    matrice <- cbind(row.names(MatH), Mat,MatH)
+    matrice <- cbind(row.names(MatH), Mat[rownames(MatH),],MatH)
 
     hc <- hclust(dist(t(MatH)),method="ward")
     plot(as.dendrogram(hc),main="Cluster Dendrogram",xlab="Panelists",leaflab="none")
     get(getOption("device"))()
     if (nb.clusters==0){
-      classif=hopach(t(MatH),d="cor",K=10,mss="mean")
+      classif=hopach(t(MatH),d="euclid",K=10,mss="mean")
       nb.clusters=classif$clustering$k
     }
     aux=pam(t(MatH),k=nb.clusters)$clustering
@@ -39,9 +39,9 @@ get(getOption("device"))()
     for (v in 1:nrow(aa)){
       arrows(0, 0, aa[v, 1], aa[v, 2], length = 0.1, angle = 15, code = 2, lty=2)
       if (label.j){
-        text(aa[v, 1], y = aa[v, 2], labels = rownames(aa)[v], pos = pos, offset=0.2)
         if (aa[v, 1] >= 0) pos <- 4
         else pos <- 2
+        text(aa[v, 1], y = aa[v, 2], labels = rownames(aa)[v], pos = pos, offset=0.2)
       }
     }
     for (v in 1:nrow(ab)){
@@ -109,4 +109,11 @@ get(getOption("device"))()
         text(matrice[i, 2], matrice[i, 3], matrice[i,1],pos = 4, offset = 0.2,)
     }
     points(abscis, ordon, pch = 20)
+    don <- cbind.data.frame(as.factor(aux),t(MatH))
+    colnames(don) <- c("clusters",paste("Prod",rownames(MatH),sep="."))
+    resdecat <- decat(don,formul="~clusters",firstvar=2,proba=0.05,graph=FALSE)
+    res <- list()
+    res$clusters <- aux
+    res$prod.clusters <- resdecat$resT
+    return(res)
 }

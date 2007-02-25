@@ -1,5 +1,6 @@
 "panelperf" <- function(donnee,formul,subset=NULL,firstvar,lastvar=ncol(donnee),random=TRUE){
 
+old.contr = options()$contrasts
 options(contrasts=c("contr.sum", "contr.sum"))
 
   for (j in 1 :(firstvar-1))  donnee[,j] <- as.factor(donnee[,j])
@@ -75,6 +76,6 @@ panelperf$p.value = perf
 panelperf$variability = variab
 panelperf$res = res
 panelperf$r2 = r2
-options(contrasts=c("contr.helmert", "contr.poly"))
 return(panelperf)
+options(contrasts=old.contr)
 }

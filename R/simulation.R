@@ -15,8 +15,9 @@
   nbsimul <- nrow(echantillon)
   nbchoix <- ncol(echantillon)
   res<-array(0,dim=c(nbsimul,nbprod,nbcoord))
-  for (j in 1:nbsimul) res[j,,] <- apply(tab[echantillon[j,],,],c(2,3),mean)
-  
+  if (nbchoix!=1) for (j in 1:nbsimul) res[j,,] <- apply(tab[echantillon[j,],,],c(2,3),mean)
+  else for (j in 1:nbsimul) res[j,,] <- tab[echantillon[j,1],,]
+
   aux1 <- aux2 <- NULL
   for (k in 1:nbcoord){
     aux1 <- cbind(aux1,c(tab[,,k]))
@@ -26,7 +27,6 @@
   aux2 <- cbind.data.frame(aux2,rep(axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1],rep(nbsimul,nbprod)))
   colnames(aux1)=colnames(aux2)=colnames(cbind.data.frame(t(moy),axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1]))
   donnee<-as.data.frame(rbind(cbind.data.frame(t(moy),axeACP[axeACP[,ncol(axeACP)]==0,ncol(axeACP)-1]),aux1,aux2))
-
   return(donnee)
 }
 ##################################################################################

@@ -27,8 +27,9 @@ for (j in 1 :(firstvar-1))  matrice[,j] <- as.factor(matrice[,j])
     }  
     #### Calculate the average by product and the average by product and by panelist, 
     #### Missing values are replaced by the adjusted coefficient alpha_prod+beta_panelist 
+    old.contr = options()$contrasts
+    options(contrasts=c("contr.sum", "contr.sum"))
     if (method=="coeff")  {
-     options(contrasts=c("contr.sum", "contr.sum"))
      coeff.prod <- matrix(0,nbprod,nbdesc)
      coeff.juge <- matrix(0,nbjuge,nbdesc)
      for (i in 1:nbdesc){
@@ -49,7 +50,6 @@ for (j in 1 :(firstvar-1))  matrice[,j] <- as.factor(matrice[,j])
       }
     }
   }}
-  options(contrasts=c("contr.helmert", "contr.poly"))
   moy.aux <- as.data.frame(moy.aux)
 
   if (center|scale){
@@ -80,4 +80,5 @@ for (j in 1 :(firstvar-1))  matrice[,j] <- as.factor(matrice[,j])
   dimnames(moy.aux)[2] <- dimnames(matrice)[2]
   levels(moy.aux[,1])=c("0",labjuge)
   return(moy.aux)
+  options(contrasts=old.contr)
 }

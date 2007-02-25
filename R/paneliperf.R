@@ -1,5 +1,6 @@
 "paneliperf" <- function(donnee,formul,formul.j="~Product",col.j,firstvar,lastvar=ncol(donnee),synthesis=FALSE,random=TRUE,graph=FALSE){
 
+old.contr = options()$contrasts
 options(contrasts=c("contr.sum", "contr.sum"))
   for (j in 1 :(firstvar-1))  donnee[,j] <- as.factor(donnee[,j])
   formul.j = as.formula(formul.j)
@@ -67,7 +68,7 @@ options(contrasts=c("contr.sum", "contr.sum"))
   aux.vtest=-qnorm(prob/2)
   colnames(aux.vtest)=paste(colnames(prob),".p",sep="")
   aux.graph = MFA(cbind.data.frame(aux.agree,aux.vtest),group=c(ncol(aux.agree),ncol(aux.vtest)),name.group=c("Agree","Prob"),graph=FALSE)
-  plot(aux.graph,choix="ind")
+  plot(aux.graph,choix = "ind",col.hab=rep("black",nrow(aux.graph$ind$coord)))
   plot(aux.graph,choix="ind",partial="all",habillage="group")
   plot(aux.graph,choix="var", habillage="group")
   plot(aux.graph,choix="group")
@@ -95,6 +96,6 @@ options(contrasts=c("contr.sum", "contr.sum"))
     paneliperf$variability = bb$variab
     paneliperf$res = bb$res
   }
-  options(contrasts=c("contr.helmert", "contr.poly"))
   return(paneliperf)
+  options(contrasts=old.contr)
 }

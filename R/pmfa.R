@@ -1,5 +1,5 @@
 pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
-    graph.ind = TRUE, lim = c(60, 40), coord = c(1, 2), cex = 0.8)
+    graph.ind = TRUE, graph.mfa = TRUE, lim = c(60, 40), coord = c(1, 2), cex = 0.8)
 {
     coeffRV <- function(X, Y) {
         X <- scale(X, scale = FALSE)
@@ -69,7 +69,7 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
     nbjuge <- ncol(matrice)/2
     matricemoyenne<-colMeans(matrice)
     matrice <- scale(matrice, center = TRUE, scale = FALSE)
- 
+    if (!is.null(matrice.illu)) matrice.illu = matrice.illu[rownames(matrice),] 
     do.mfa = FALSE
     if (is.null(mean.conf)) {
         do.mfa = TRUE
@@ -118,7 +118,7 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
                 cex = cex, pos = 2, offset = 0.2)
         }
     }
-    if (do.mfa){
+    if (do.mfa&graph.mfa){
       plot(res.afm,choix="var",habillage="var")
       if (!is.null(matrice.illu)){
         plot(res.afm,choix="var",invisible="sup",habillage="var")

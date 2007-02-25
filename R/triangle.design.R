@@ -47,8 +47,10 @@ triangle.design <- function(nbprod , nbpanelist, bypanelist = nbprod*(nbprod-1)/
   }
   plan = plan[order(runif(nrow(plan))),]
   plan = plan[order(plan[,1]),]
-  row.names(plan) = paste("Experiment",1:nrow(plan))
-  colnames(plan) = c("Panelist","Product X","Product Y","Product Z")
+  
+  row.names(plan) = paste("Panelist",plan[,1],".Test",1:bypanelist,sep="")
+  plan = plan[,-1]
+  colnames(plan) = c("Product X","Product Y","Product Z")
   plan = as.data.frame(plan)
   return(plan)
 }

@@ -9,13 +9,9 @@ search.desc<- function (matrice, col.j, col.p, firstvar, lastvar = ncol(matrice)
     for (i in 1:(firstvar - 1)) matrice[, i] <- as.factor(matrice[, i])
     tab.F <- matrix(0, (lastvar - firstvar + 1), 1)
     for (i in firstvar:lastvar) {
-        if (!is.null(col.j)) {
-            aux <- summary(aov(as.formula(paste(lab[i], "~", lab[col.p], "+", lab[col.j])), data = matrice, na.action = na.exclude))
-        } 
-        else {
-            aux <- summary(aov(as.formula(paste(lab[i], "~", lab[col.p] )), data = matrice, na.action = na.exclude))
-        }
-        tab.F[i - firstvar + 1] <- pf(aux[[1]][1, 4], aux[[1]][1, 1], aux[[1]][(dim(aux[[1]])[[1]]), 1], lower.tail = FALSE)
+        if (!is.null(col.j))  aux <- round(summary(aov(as.formula(paste(lab[i], "~", lab[col.p], "+", lab[col.j])), data = matrice, na.action = na.exclude))[[1]],10)
+        else aux <- round(summary(aov(as.formula(paste(lab[i], "~", lab[col.p] )), data = matrice, na.action = na.exclude))[[1]],10)
+        tab.F[i - firstvar + 1] <- pf(aux[1, 4], aux[1, 1], aux[(dim(aux)[[1]]), 1], lower.tail = FALSE)
     }
     dimnames(tab.F) <- list(nomdescripteur, NULL)
     resF <- vector("list", length = 1)
@@ -23,10 +19,16 @@ search.desc<- function (matrice, col.j, col.p, firstvar, lastvar = ncol(matrice)
     resF <- data.frame(Variables = as.factor(dimnames(tab.F)[[1]][rev(order(tab.F))][select]), Proba = as.numeric(tab.F[rev(order(tab.F))][select]))
     mat.analyse <- data.frame(as.factor(matrice[, 1]))
     for (i in 2:(firstvar - 1)) mat.analyse <- cbind.data.frame(mat.analyse, matrice[, i])
+    name.var = NULL
     for (i in firstvar:lastvar) {
-        if (tab.F[i - firstvar + 1] < level) mat.analyse <- cbind(mat.analyse, matrice[, i])
+        if (!is.na(tab.F[i - firstvar + 1])){
+         if (tab.F[i - firstvar + 1] < level) {
+          mat.analyse <- cbind(mat.analyse, matrice[, i])
+          name.var = c(name.var,lab.sauv[i])
+         }
+        }
     }
     colnames(mat.analyse)[1:(firstvar - 1)] <- lab.sauv[1:(firstvar - 1)]
-    colnames(mat.analyse)[firstvar:ncol(mat.analyse)] <- dimnames(tab.F)[[1]][tab.F < level]
+    colnames(mat.analyse)[firstvar:ncol(mat.analyse)] <- name.var
     return(mat.analyse)
 }

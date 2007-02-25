@@ -24,9 +24,9 @@ triangle.design (nbprod , nbpanelist, bypanelist = nbprod*(nbprod-1)/2,
 Triangle test: panelists receive three coded samples. They are told that two of the sample are the same and one is different.
 Panelists are asked to identify the odd sample.}
 \value{
-Returns an data.frame of dimension (\emph{t,4}), where \emph{t} is the number of experiments.
-In the first column, the number (or the name) of the panelist, and in column 2, 3 and 4 the product to test.
-The product in column 2 is by coded "X", in column 3 is coded by "Y" and in column 4 is coded by "Z".
+Returns an data.frame of dimension (\emph{t,3}), where \emph{t} is the number of experiments.
+In column 1, 2 and 3 the product to test are given.
+The product in column 1 is by coded "X", in column 2 is coded by "Y" and in column 3 is coded by "Z".
 Panelist should start by product "X", then "Y" and then by "Z".
 }
 

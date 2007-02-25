@@ -26,7 +26,7 @@ Département de mathématiques appliquées, Agrocampus Rennes
 \examples{
 \dontrun{
 data(napping)
-nappeplot(napping)
+nappeplot(napping.don)
 }
 }
 \keyword{datasets}

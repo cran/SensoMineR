@@ -117,6 +117,7 @@ hweight <- function (X, H, type = rep("s", length(H[[1]]))) {
  if (scale.unit==TRUE) tab <- tab / sqrt(ecart)
  aamoy = tab
  resafmh=HMFA(as.data.frame(aamoy),H=hierar, type = rep("c", length(hierar[[1]])),graph=FALSE)
+ plot(resafmh,choix="var")
  dilat = hdil(hierar)
 
 ##

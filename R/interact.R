@@ -13,7 +13,7 @@ plotinteract<-function(tab,cex=1.1,xlegend=ncol(tab)-5,ylegend=max(tab),xlab=NUL
   legend("topright",legend=rownames(tab),col=1:nrow(tab),pch=rep(20,nrow(tab)),cex=0.8,bg="white")
 }
 ############################################################################
-
+old.contr = options()$contrasts
 options(contrasts=c("contr.sum", "contr.sum"))
 for (j in 1 :(firstvar-1))  donnee[,j] <- as.factor(donnee[,j])
 nbprod <- length(levels(donnee[,col.p]))
@@ -37,6 +37,6 @@ barrow(t(apply(tab^2,c(1,3),sum)/matrix(rep(apply(tab^2,3,sum),nrow(tab)),byrow=
 
 ## Make a graph to visualize the panelist which contribute the product-panelist interaction for each descriptor
 barrow(t(  apply(tab^2,c(2,3),sum) /matrix(rep(apply(tab^2,3,sum),ncol(tab)),byrow=TRUE,nrow=ncol(tab))))
-options(contrasts=c("contr.helmert", "contr.poly"))
 return(tab)
+options(contrasts=old.contr)
 }

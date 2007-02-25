@@ -33,9 +33,10 @@ cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,sc
     A <- rbind.data.frame(t(hedo),mat,t(senso))
     colnames(A) <- row.names(hedo)
     result <- A
-  
-    hedo.pca <- PCA(cbind.data.frame(A,as.factor(c(clusters,rep(1,nrow(mat)+ncol(senso))))),quali.sup=ncol(A)+1,ind.sup=(nbjuge+1):nrow(A),scale.unit=scale.unit,graph=FALSE,ncp = min(nbjuge-1,ncol(A)))
-    plot(hedo.pca,choix="ind",axes=coord,cex=0.7,habillage="quali")
+    auxil = cbind.data.frame(A,as.factor(c(clusters,rep(1,nrow(mat)+ncol(senso)))))
+    colnames(auxil)[ncol(A)+1]="cluster"
+    hedo.pca <- PCA(auxil,quali.sup=ncol(A)+1,ind.sup=(nbjuge+1):nrow(A),scale.unit=scale.unit,graph=FALSE,ncp = min(nbjuge-1,ncol(A)))
+    plot(hedo.pca,choix="ind",axes=coord,cex=0.7,habillage=ncol(A)+1)
     plot(hedo.pca,choix="var",axes=coord)
     TA <- t(A)
     coef <- matrix(NA,nbjuge+nb.clusters,nbdesc)

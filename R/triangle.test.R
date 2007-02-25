@@ -1,14 +1,14 @@
 triangle.test <- function (design,answer,preference=NULL){
 
 answer = gsub("(\\w)", "\\U\\1", as.character(answer), perl=TRUE)
-labprod = levels(as.factor(c(as.character(design[,2]),as.character(design[,3]),as.character(design[,4]))))
+labprod = levels(as.factor(c(as.character(design[,1]),as.character(design[,2]),as.character(design[,3]))))
 nbprod = length(labprod)
 nb.answer = nb.good = pref = matrix(0,nbprod,nbprod)
 for (i in 1:nrow(design)){
   for (j in 1:nbprod){
-     if (labprod[j] == design[i,2]) i1 = j
-     if (labprod[j] == design[i,3]) i2 = j
-     if (labprod[j] == design[i,4]) i3 = j
+     if (labprod[j] == design[i,1]) i1 = j
+     if (labprod[j] == design[i,2]) i2 = j
+     if (labprod[j] == design[i,3]) i3 = j
   }
   if (i1!=i2) nb.answer [i1,i2] = nb.answer[i1,i2]+1
   if (i1==i2) nb.answer [i1,i3] = nb.answer[i1,i3]+1
@@ -64,7 +64,7 @@ if (length(preference)>0) rownames(pref) = colnames(pref) = labprod
 res = list()
 res$nb.comp = nb.answer
 res$nb.ident = nb.good
-res$prob = prob
+res$p.value = prob
 res$nb.recognition = recognize
 res$maxML = maxML
 res$confusion = confusion
