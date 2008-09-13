@@ -57,15 +57,16 @@ options(contrasts=c("contr.sum", "contr.sum"))
   aa <- averagetable(donnee,formul=formul,firstvar=firstvar,lastvar=lastvar)
   agree <- matrix(NA,length(lab.j),lastvar-firstvar+1)
   for (j in 1:length(lab.j)){
+print(j)
       bb <- averagetable(donnee,formul=formul.j,subset=(donnee[,col.j]==lab.j[j]),firstvar=firstvar,lastvar=lastvar)
-      for (k in 1:ncol(bb)) if (var(bb[,k])!=0) agree[j,k]=cor(aa[,k],bb[,k],use="pairwise.complete.obs")
+      for (k in 1:ncol(bb)) if (var(bb[,k],na.rm=T)!=0) agree[j,k]=cor(aa[,k],bb[,k],use="pairwise.complete.obs")
     }
   dimnames(agree) <- list(lab.j,lab.sauv[firstvar:lastvar])  
 
  if (graph){
   aux.agree=agree
   colnames(aux.agree)=paste(colnames(agree),".a",sep="")
-  aux.vtest=-qnorm(prob/2)
+  aux.vtest= -qnorm(prob/2)
   colnames(aux.vtest)=paste(colnames(prob),".p",sep="")
   aux.graph = MFA(cbind.data.frame(aux.agree,aux.vtest),group=c(ncol(aux.agree),ncol(aux.vtest)),name.group=c("Agree","Prob"),graph=FALSE)
   plot(aux.graph,choix = "ind",col.hab=rep("black",nrow(aux.graph$ind$coord)))

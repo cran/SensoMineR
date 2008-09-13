@@ -4,9 +4,7 @@
 
 \title{Simulate virtual panels}
 
-\description{
-
-}
+\description{Simulate virtual panels}
 
 \usage{
 simulation(axeAFM, nbchoix = NULL, nbgroup = 1, nbsimul = 500)

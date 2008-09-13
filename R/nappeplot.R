@@ -15,7 +15,7 @@ points(donnee[,(2*(nb-1)+1):(2*nb)],col=color,cex=0.8,pch=20)
 text(donnee[,(2*(nb-1)+1):(2*nb)],label=rownames(donnee),col=color,cex=0.8,pos = 4, offset = 0.2)
                                 }
                    }
-if (m < mult) get(getOption("device"))()
+if (m < mult) dev.new()
               }
 par(las=0)
 }

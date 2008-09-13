@@ -2,7 +2,7 @@ carto <- function (Mat, MatH, level = 0, regmod = 1,
     coord = c(1, 2), asp = 1, cex = 1.3, col = "steelblue4", font = 2, clabel = 0.8,label.j=FALSE,resolution=200,nb.clusters=0)
 {
 
-get(getOption("device"))()
+dev.new()
     op <- par(no.readonly = TRUE)
     on.exit(par(op))
     predire <- function(n1, n2, coeff) {
@@ -11,15 +11,16 @@ get(getOption("device"))()
     }
     if (!is.data.frame(MatH)) stop("Non convenient selection for MatH")
     matrice <- cbind(row.names(MatH), Mat[rownames(MatH),],MatH)
-
-    hc <- hclust(dist(t(MatH)),method="ward")
-    plot(as.dendrogram(hc),main="Cluster Dendrogram",xlab="Panelists",leaflab="none")
-    get(getOption("device"))()
+    classif <- agnes(dist(t(MatH)),method="ward")
+    plot(classif,main="Cluster Dendrogram",xlab="Panelists",which.plots=2)
+dev.new()
     if (nb.clusters==0){
-      classif=hopach(t(MatH),d="euclid",K=10,mss="mean")
-      nb.clusters=classif$clustering$k
+       classif2 <- as.hclust(classif)
+       nb.clusters = which.max(rev(diff(classif2$height))) + 1
+#      classif=hopach(t(MatH),d="euclid",K=10,mss="mean")
+#      nb.clusters=classif$clustering$k
     }
-    aux=pam(t(MatH),k=nb.clusters)$clustering
+    aux=kmeans(t(MatH),centers=nb.clusters)$cluster
     mat <- matrix(0,nb.clusters,nrow(MatH))
     dimnames(mat) <- list(1:nb.clusters,rownames(MatH))
     for (i in 1:nb.clusters){
@@ -28,8 +29,7 @@ get(getOption("device"))()
     } 
     ab=cor(t(mat),matrice[,2:3],use="pairwise.complete.obs")
     aa=cor(matrice[,4:ncol(matrice)],matrice[,2:3],use="pairwise.complete.obs")
-    
-    plot(0, 0, xlab = paste("Dim",coord[1]), ylab = paste("Dim",coord[2]), xlim = c(-1,1), ylim = c(-1,1), col = "white", asp=1, main="Correlation circle")
+    plot(0,0,xlab=paste("Dim",coord[1]),ylab=paste("Dim",coord[2]),xlim=c(-1,1),ylim=c(-1,1),col="white",asp=1,main="Correlation circle")
     x.cercle <- seq(-1, 1, by = 0.01)
     y.cercle <- sqrt(1 - x.cercle^2)
     lines(x.cercle, y = y.cercle)
@@ -51,7 +51,7 @@ get(getOption("device"))()
       text(ab[v, 1], y = ab[v, 2], labels = rownames(ab)[v], pos = pos, offset=0.2, col="blue")
     }
 
-    get(getOption("device"))()
+dev.new()
     matrice[, 4:ncol(matrice)] <- scale(matrice[, 4:ncol(matrice)], center =TRUE, scale =FALSE)[, ]
     nbconso <- ncol(matrice) - 3
     x1 <- matrice[, 2]
@@ -88,8 +88,8 @@ get(getOption("device"))()
             coeff <- c(coeff, 0)
         }
         predites <- outer(f1, f2, predire, coeff)
-        predites <- (predites - mean(predites, na.rm =TRUE))/sqrt(var(as.vector(predites),
-            na.rm =TRUE))
+        if(sd(as.vector(predites),na.rm =TRUE)!=0) predites <- (predites - mean(predites, na.rm =TRUE))/sd(as.vector(predites),
+            na.rm =TRUE)
         depasse <- depasse + matrix(as.numeric(predites > level),
             nrow = length(f1), ncol = length(f2))
         abscis <- c(abscis, f1[rev(order(predites))[1] - length(f1) *

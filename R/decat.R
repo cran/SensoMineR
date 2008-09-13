@@ -1,4 +1,4 @@
-"decat" <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba = 0.05,graph=TRUE, col.lower = "mistyrose", col.upper = "lightblue", nbrow = NULL, nbcol = NULL){
+decat <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba = 0.05,graph=TRUE, col.lower = "mistyrose", col.upper = "lightblue", nbrow = NULL, nbcol = NULL, random = TRUE){
 
     old.contr = options()$contrasts
     options(contrasts=c("contr.sum", "contr.sum"))
@@ -17,10 +17,15 @@
   equation <- as.character(as.formula(equation))
 
     dim.donnee <- dim(donnee)[2]
+
+    if (length(strsplit(equation,split="+",extended=FALSE)[[2]]) == 1) random = FALSE # if there is 1 effect, there is not random effect
     for (i in 1:dim.donnee) {
       if (gsub(" ","",strsplit(equation,split="+",extended=FALSE)[[2]][1])==lab[i]) col.p <- i
+      if (random){
+        if (gsub(" ","",strsplit(equation,split="+",extended=FALSE)[[2]][2])==lab[i]) col.j <- i
+      }
     }
-    nb.modalite <- length(summary(donnee[,col.p]))
+    nb.modalite <- nlevels(donnee[,col.p])
     don.aux <- cbind.data.frame(donnee,fac=ordered(donnee[,col.p],rev(levels(donnee[,col.p]))))
     dim.don.aux <- dim(don.aux)[2]
     don.aux[,col.p] <- as.factor(don.aux[,dim.don.aux])
@@ -31,21 +36,36 @@
     formule <- paste(lab[varendo],"~",equation[2])
     formule <- as.formula(formule)
     res <- summary(aov( formule , data = donnee, na.action =na.exclude))[[1]]
-    tabF[varendo-firstvar+1,1] <- -qnorm(pf(res[1,4],res[1,1],res[dim(res)[1],1],lower.tail=FALSE))
-    tabF[varendo-firstvar+1,2] <- pf(res[1,4],res[1,1],res[dim(res)[1],1],lower.tail=FALSE)
+
+    nrow.facteur=nrow(res)
+    if (random) {
+      panelist=colnames(donnee)[col.j]
+      product = colnames(donnee)[col.p]
+      for (i in 3:length(Terms)){                ## 1 is product, 2 is panelist
+        if ((any(grep(product,Terms[i])))&(any(grep(":",Terms[i])))&(any(grep(panelist,Terms[i])))) nrow.facteur = i
+      }
+    }
+
+##    tabF[varendo-firstvar+1,1] <- -qnorm(pf(res[1,4],res[1,1],res[dim(res)[1],1],lower.tail=FALSE))
+##    tabF[varendo-firstvar+1,2] <-        pf(res[1,4],res[1,1],res[dim(res)[1],1],lower.tail=FALSE)
+    tabF[varendo-firstvar+1,1] <- -qnorm(pf(res[1,3]/res[nrow.facteur,3],res[1,1],res[nrow.facteur,1],lower.tail=FALSE))
+    tabF[varendo-firstvar+1,2] <-        pf(res[1,3]/res[nrow.facteur,3],res[1,1],res[nrow.facteur,1],lower.tail=FALSE)
     res2 <- summary.lm(aov( formule , data = donnee, na.action =na.exclude))$coef[1:nb.modalite,]
     moy <- res2[1,1]
     res2 <- res2[-1,]
     if (nb.modalite >2){
-      tabT[varendo-firstvar+1,1:(nb.modalite-1)] <-  -qnorm(( pf(res2[,3]^2,1,res[(dim(res)[[1]]),1],lower.tail=FALSE) )/2)*(res2[,1]/abs(res2[,1]))
+##      tabT[varendo-firstvar+1,1:(nb.modalite-1)] <-  -qnorm(( pf(res2[,3]^2,1,res[(dim(res)[[1]]),1],lower.tail=FALSE) )/2)*(res2[,1]/abs(res2[,1]))
+      tabT[varendo-firstvar+1,1:(nb.modalite-1)] <- -qnorm((pf(res2[,3]^2*(res[nrow(res),3]/res[nrow.facteur,3]) ,1,res[nrow.facteur,1],lower.tail=FALSE) )/2)*sign(res2[,1])
       coeff[varendo-firstvar+1,1:(nb.modalite-1)] <-  res2[,1]
     }
     if (nb.modalite ==2){
-      tabT[varendo-firstvar+1,1:(nb.modalite-1)] <-  -qnorm(( pf(res2[3]^2,1,res[(dim(res)[[1]]),1],lower.tail=FALSE) )/2)*(res2[1]/abs(res2[1]))
+##      tabT[varendo-firstvar+1,1:(nb.modalite-1)] <-  -qnorm(( pf(res2[3]^2,1,res[(dim(res)[[1]]),1],lower.tail=FALSE) )/2)*(res2[1]/abs(res2[1]))
+      tabT[varendo-firstvar+1,1:(nb.modalite-1)] <- -qnorm((pf(res2[3]^2*(res[nrow(res),3]/res[nrow.facteur,3]) ,1,res[nrow.facteur,1],lower.tail=FALSE) )/2)*sign(res2[1])
       coeff[varendo-firstvar+1,1:(nb.modalite-1)] <-  res2[1]
     }
     res2 <- summary.lm(aov( formule , data = don.aux, na.action =na.exclude))$coef[2,]
-    tabT[varendo-firstvar+1,nb.modalite] <-  -qnorm(( pf(res2[3]^2,1,res[(dim(res)[[1]]),1],lower.tail=FALSE) )/2)*(res2[1]/abs(res2[1]))
+##    tabT[varendo-firstvar+1,nb.modalite] <-  -qnorm(( pf(res2[3]^2,1,res[(dim(res)[[1]]),1],lower.tail=FALSE) )/2)*(res2[1]/abs(res2[1]))
+      tabT[varendo-firstvar+1,nb.modalite] <- -qnorm((pf(res2[3]^2*(res[nrow(res),3]/res[nrow.facteur,3]) ,1,res[nrow.facteur,1],lower.tail=FALSE) )/2)*sign(res2[1])
     coeff[varendo-firstvar+1,nb.modalite] <-  res2[1]
     adjmean[varendo-firstvar+1,] <- moy+coeff[varendo-firstvar+1,]
   }
@@ -81,11 +101,28 @@
     result$resF = resF
     result$resT = resT
   }
-  if (graph){
-    aux.sort = result$adjmean[rownames(magicsort(result$tabT)), colnames(magicsort(result$tabT))]
-    if (is.null(nbrow)) nbrow = nrow(aux.sort)
-    if (is.null(nbcol)) nbcol = ncol(aux.sort)
-    coltable(aux.sort, magicsort(result$tabT),col.lower = col.lower, col.upper = col.upper, level.lower = qnorm(proba/2), level.upper = -qnorm(proba/2), nbrow = nbrow, nbcol = nbcol, main.title = "Ajusted mean")
+  if (graph) {
+    if (is.null(nbrow)) nbrow = nrow(result$adjmean)
+    if (is.null(nbcol)) nbcol = ncol(result$adjmean)
+    if ((nrow(result$tabT)>2)&(ncol(result$tabT)>1)){
+      aux.sort = result$adjmean[rownames(magicsort(result$tabT)),
+          colnames(magicsort(result$tabT))]
+      aux.col = magicsort(result$tabT)
+    }
+    else {
+      if (nrow(result$tabT)==2){
+        aux.sort = result$adjmean[, names(sort(result$tabT[1,]))]
+        aux.col = result$tabT[, names(sort(result$tabT[1,]))]
+      }
+      if (ncol(result$tabT)==1){
+        aux.sort = as.matrix(result$adjmean[names(sort(result$tabT[,1])),])
+        aux.col = as.matrix(result$tabT[names(sort(result$tabT[,1])),])
+      }
+    }  
+    coltable(aux.sort, aux.col, col.lower = col.lower,
+        col.upper = col.upper, level.lower = qnorm(proba/2),
+        level.upper = -qnorm(proba/2), nbrow = nbrow, nbcol = nbcol,
+        main.title = "Ajusted mean")
   }
 
   if (length(select1) == 0) print("Warning: No variables are discriminant")

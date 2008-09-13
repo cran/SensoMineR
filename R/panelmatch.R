@@ -181,7 +181,7 @@ for (group in 1:nbpanel){
  comp.simul$moy$P = cbind.data.frame(resafmh$ind$coord[,1:max(coord)],rownames(resafmh$ind$coord))
  comp.simul$partiel$P = cbind.data.frame(aux4[,1:max(coord)],rownames(aux4))
   if (nivpanel == length(hierar)){
-  get(getOption("device"))(width=12,height=8)
+  dev.new()
   plotellipse(comp.simul,alpha=alpha,eig=signif(eig,4),coord=coord,color=color,cex=cex)  
   if (length(names(donnee))==0) legend("bottomleft",legend=paste("Panel",1:nbpanel,sep=" "),lty=1:nbpanel,cex=0.8,bg="white")
   if (length(names(donnee))!=0) legend("bottomleft",legend=names(donnee),lty=1:nbpanel,cex=0.8,bg="white")
@@ -205,12 +205,12 @@ for (group in 1:nbpanel){
       if (k!=1) comp.simul2$partiel$simul=rbind.data.frame(comp.simul2$partiel$simul,cbind.data.frame(aux6,as.factor(paste("R",k,"_",rep(labprod,each=nbsimul),sep=""))))
     }
 
-    get(getOption("device"))(width=12,height=8)
+    dev.new()
     plotellipse(comp.simul2,alpha=alpha,eig=eig,coord=coord,color=color,cex=cex) 
     title(sub="Grouping panels") 
     legend("bottomleft",legend=paste("Grouping panels",1:length(hierar[[nivpanel+1]]),sep=" "),lty=1:length(hierar[[nivpanel+1]]),cex=0.8,bg="white")
 
-    get(getOption("device"))(width=12,height=8)
+     dev.new()
     plotellipseinterhmfa(comp.simul,alpha=alpha,coord=coord,nbgroup=nbpanel,eig=eig,color=color,cex=cex,hmfa=list(hierar,resafmh$partial))
     title(sub="Panels") 
     if (length(names(donnee))==0) legend("bottomleft",legend=paste("Panel",1:nbpanel,sep=" "),lty=1:nbpanel,cex=0.8,bg="white")

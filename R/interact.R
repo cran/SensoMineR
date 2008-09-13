@@ -31,7 +31,7 @@ dimnames(tab) = list(levels(donnee[,col.p]),levels(donnee[,col.j]),labels(donnee
 
 for (k in 1:dim(tab)[[3]]){
   plotinteract(tab[,,k],main=colnames(donnee)[firstvar+k-1],xlab=colnames(donnee)[col.j],ylab=paste(colnames(donnee)[col.p],"-",colnames(donnee)[col.j],"interaction coefficients"))
-  if (k != dim(tab)[[3]]) get(getOption("device"))()
+  if (k != dim(tab)[[3]]) dev.new()
 }
 barrow(t(apply(tab^2,c(1,3),sum)/matrix(rep(apply(tab^2,3,sum),nrow(tab)),byrow=TRUE,nrow=nrow(tab))))
 

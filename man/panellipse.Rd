@@ -7,11 +7,11 @@
 confidence ellipses around products.}
 
 \usage{
-panellipse(donnee, col.p, col.j, firstvar, lastvar = ncol(donnee), 
-    alpha = 0.05, coord = c(1,2), scale.unit = TRUE, nbsimul = 500, 
-    nbchoix = NULL, group = NULL, name.group = NULL, 
-    level.search.desc = 0.2, centerbypanelist = TRUE, 
-    scalebypanelist = FALSE, name.panelist = FALSE, 
+panellipse(donnee, col.p, col.j, firstvar, lastvar = ncol(donnee),
+    alpha = 0.05, coord = c(1,2), scale.unit = TRUE, nbsimul = 500,
+    nbchoix = NULL, group = NULL, name.group = NULL,
+    level.search.desc = 0.2, centerbypanelist = TRUE,
+    scalebypanelist = FALSE, name.panelist = FALSE,
     variability.variable = TRUE, cex = 1, color = NULL)
 }
 
@@ -26,8 +26,8 @@ panellipse(donnee, col.p, col.j, firstvar, lastvar = ncol(donnee),
   \item{coord}{a length 2 vector specifying the components to plot}
   \item{scale.unit}{boolean, if T the descriptors are scaled to unit variance}
   \item{nbsimul}{the number of simulations (corresponding to the number of virtual panels) used to compute the ellipses}
-  \item{nbchoix}{the number of panelists forming a virtual panel, by default the number of panelists in the original panel}  
-  \item{group}{the number of variables in each group of variables when multiple factor analysis is performed (by default this parameter equals NULL and a PCA is performed)}  
+  \item{nbchoix}{the number of panelists forming a virtual panel, by default the number of panelists in the original panel}
+  \item{group}{the number of variables in each group of variables when multiple factor analysis is performed (by default this parameter equals NULL and a PCA is performed)}
   \item{name.group}{the names of the groups of variables when mfa is performed (if \code{group} differs from NULL)}  
   \item{level.search.desc}{the threshold above which a descriptor is not considered as discriminant according to AOV model \code{"descriptor=Product+Panelist"}}
   \item{centerbypanelist}{boolean, if T center the data by panelist before the construction of the axes}

@@ -15,13 +15,15 @@ cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,sc
     nbjuge <- ncol(hedo)
     nbdesc <- ncol(senso)
 
-  hc <- hclust(dist(t(hedo)),method="ward")
-  plot(as.dendrogram(hc),main="Cluster Dendrogram",xlab="Panelists",leaflab="none") 
-  if (nb.clusters==0){
-    classif=hopach(t(hedo),d="euclid",K=10,mss="mean")
-    nb.clusters=classif$clustering$k
-  }
-  clusters=pam(t(hedo),k=nb.clusters)$clustering
+  classif <- agnes(dist(t(hedo)),method="ward")
+  plot(as.dendrogram(classif),main="Cluster Dendrogram",xlab="Panelists",which.plots=2) 
+    if (nb.clusters==0){
+       classif2 <- as.hclust(classif)
+       nb.clusters = which.max(rev(diff(classif2$height))) + 1
+#      classif=hopach(t(MatH),d="euclid",K=10,mss="mean")
+#      nb.clusters=classif$clustering$k
+    }
+  clusters=kmeans(t(hedo),centers=nb.clusters)$cluster
   mat <- matrix(0,nb.clusters,nrow(hedo))
   dimnames(mat) <- list(1:nb.clusters,rownames(hedo))
   for (i in 1:nb.clusters){
@@ -48,7 +50,7 @@ cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,sc
     colnames(coef) <- colnames(senso)
     B <- cbind.data.frame(rbind.data.frame(hedo.pca$ind$coord,hedo.pca$ind.sup$coord[1:nb.clusters,]),coef)
     for (d in 1:nbdesc) {
-      get(getOption("device"))(width=9,height=7)
+dev.new()
       par(mar = c(4.2,4.1,3.5,2))
       colplot(as.matrix(B), k=nb.clusters,coord, (nrow(hedo)+d),col=col, xlab=paste("Dim",coord[1]," (",signif(hedo.pca$eig[coord[1],2],4),"%)",sep=""), ylab=paste("Dim",coord[2]," (",signif(hedo.pca$eig[coord[2],2],4),"%)",sep=""))
       points(hedo.pca$ind.sup$coord[nb.clusters+d,coord[1]],hedo.pca$ind.sup$coord[nb.clusters+d,coord[2]],col="red",pch=15,cex=0.8)

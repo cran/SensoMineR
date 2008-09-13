@@ -26,24 +26,6 @@ options(contrasts=c("contr.sum", "contr.sum"))
 
   for (varendo in firstvar:lastvar) {
       formule <- paste(lab[varendo],"~",equation[2])
-##    formule <- paste(lab[varendo],"~ C(")
-##    aux2 <- equation[2]
-##    aux3 <- strsplit(aux2,"+",extended=FALSE)[[1]]
-##
-##    for (i in 1:length(aux3)) {
-##      if (any(grep("%",aux3[i]))) {
-##            formule <- paste(formule,strsplit(aux3[i],"%",extended=FALSE)[[1]][1],",sum)%in%C(",strsplit(aux3[i],"%",extended=FALSE)[[1]][3],",sum)")
-##      }
-##      else
-##      if (any(grep(":",aux3[i]))) {
-##         formule <- paste(formule,strsplit(aux3[i],":",extended=FALSE)[[1]][1],",sum) : C(",strsplit(aux3[i],":",extended=FALSE)[[1]][2],",sum)")
-##      }
-##      else {
-##      formule <- paste(formule,aux3[i],",sum)")
-##      }
-##      if (i < length(aux3))  formule <- paste (formule, "+C(")
-##    }
-
     formule <- as.formula(formule)
     aux1 <- aov( formule , data = donnee, subset=subset,na.action =na.exclude)
     aux <- summary(aux1)[[1]]

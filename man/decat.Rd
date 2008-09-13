@@ -18,7 +18,7 @@
 \usage{
 decat(donnee, formul, firstvar, lastvar = length(colnames(donnee)), 
     proba = 0.05, graph = TRUE, col.lower = "mistyrose", 
-    col.upper = "lightblue", nbrow = NULL, nbcol = NULL)
+    col.upper = "lightblue", nbrow = NULL, nbcol = NULL, random = TRUE)
 }
 
 \arguments{
@@ -33,6 +33,7 @@ decat(donnee, formul, firstvar, lastvar = length(colnames(donnee)),
   \item{col.upper}{the color used for 'upper.lower'. Only useful if \code{graph} is TRUE}
   \item{nbrow}{the number of rows to be displayed (by default, all the values are displayed). Only useful if \code{graph} is TRUE}
   \item{nbcol}{the number of columns to be displayed (by default, all the values are displayed). Only useful if \code{graph} is TRUE}
+  \item{random}{boolean, effect should be possible as fixed or random (default as random)}
 }
 
 \details{

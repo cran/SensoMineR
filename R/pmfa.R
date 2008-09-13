@@ -1,15 +1,6 @@
 pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
     graph.ind = TRUE, graph.mfa = TRUE, lim = c(60, 40), coord = c(1, 2), cex = 0.8)
 {
-    coeffRV <- function(X, Y) {
-        X <- scale(X, scale = FALSE)
-        Y <- scale(Y, scale = FALSE)
-        W1 <- X %*% t(X)
-        W2 <- Y %*% t(Y)
-        rv <- sum(diag(W1 %*% W2))/(sum(diag(W1 %*% W1)) * sum(diag(W2 %*%
-            W2)))^0.5
-        return(rv)
-    }
     procrustes <- function(amat, target, orthogonal = F, translate = F,
         magnify = F) {
         for (i in nrow(amat):1) {
@@ -95,7 +86,7 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
             magnify <- res.procrustes$magnify
         }
         tourne <- scale(atourner,scale=FALSE) %*% res.procrustes$tmat * magnify
-        res[j] <- coeffRV(mean.conf, tourne)
+        res[j] <- coeffRV(mean.conf, tourne)$rv
         if (graph.ind == T) {
             dd = cbind(mean.conf, tourne)
             nappe <- rbind((matrix(c(0, 0, 0, lim[2], lim[1], lim[2], lim[1], 0),ncol=2,byrow = T)
@@ -103,7 +94,7 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
                 
                
             if (j != 1)
-                get(getOption("device"))()
+            dev.new()
             plot(rbind(tourne, mean.conf, nappe), type = "n",
                 xlab = paste("Dim", coord[1]), ylab = paste("Dim",
                   coord[2]), asp = 1, main = colnames(matrice)[2 *

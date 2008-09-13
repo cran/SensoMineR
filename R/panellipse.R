@@ -31,7 +31,6 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
   for (j in 1:nbjuge) tab.byjudge[,,j] <- as.matrix(tab[(j*nbprod+1):((j+1)*nbprod),-(1:2)])
   correl = array(NA,dim=c(nbdesc,nbdesc,nbsimul))
   res = array(NA,dim=c(nbsimul,ncol(tab.moy),nbcoord))
-  get(getOption("device"))(width=8,height=8)
   for (k in 1:nbsimul){
      Xb = apply(tab.byjudge[,,echantillon[k,]],c(1,2),mean)
      correl[,,k] = cor(Xb)
@@ -45,14 +44,10 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
        res[k,,] = as.matrix(resAF$quanti.var.sup$cor)
      }
      if (k==1){
-        plot(res[k,,coord[1]],res[k,,coord[2]],xlim=c(-1.7,1.1),ylim=c(-1.1,1.1),col=color[1:ncol(tab.moy)],xlab=paste("Dimension",coord[1]," (",round(resAF$eig[coord[1],2],2),"%)"),ylab=paste("Dimension",coord[2]," (",round(resAF$eig[coord[2],2],2),"%)"),pch=15,cex=0.3,asp=1)
-        title(main = "Variability of the variables")
-        symbols(0, 0, circles = 1, inches = FALSE, add = TRUE)
-        abline(h=0,lty=2)
-        abline(v=0,lty=2)
+        plot(resAF,choix="var", invisible="quanti.sup")
         legend("topleft",legend=colnames(tab.moy),fill=color[1:ncol(tab.moy)],cex=0.7)
      }
-     if (k!=1) points(res[k,,coord[1]],res[k,,coord[2]],col=color[1:ncol(tab.moy)],pch=15,cex=0.3)
+     points(res[k,,coord[1]],res[k,,coord[2]],col=color[1:ncol(tab.moy)],pch=15,cex=0.3)
   }
 
   mini=maxi=matrix(0,ncol(tab.moy),ncol(tab.moy))
@@ -134,7 +129,7 @@ if (length(group)>1) {
   if (long.group==0) long.group <- 1
   simul <- simulation(axe,nbgroup=long.group,nbchoix=nbchoix,nbsimul=nbsimul)
   if (variability.variable) auxil <- variab.variable(don.interesting,simul$sample,mfa=FALSE,coord=coord,scale.unit=scale.unit,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,color=color)
-  get(getOption("device"))(width=12,height=8)
+dev.new()
   plotellipse(simul,alpha=alpha,coord=coord,eig=signif(axe$eig,4),color=color,cex=cex)  
   res <- list()
   res$eig= axe[[length(names(axe))]]

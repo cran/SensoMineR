@@ -6,7 +6,8 @@
   oo <- order(matrice[,1])
   matrice <- matrice[oo,]
 
-  nbjuge <- sum(as.integer(summary(matrice[,1])!=0))
+  nbjuge <- nlevels(matrice[,1])
+  if (0%in% summary(matrice[,1])) nbjuge <- nbjuge-1
   nbprod <- length(levels(matrice[,2]))
   nbdesc <- ncol(matrice)-2
 

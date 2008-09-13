@@ -87,12 +87,12 @@ for (i in 1:dim(d)[3]) d[,,i] <- dist2full(dist(matrice[,(2*i-1):(2*i)]))
       names(r2ind) <- subjects
       dimnames(X) <- list(stimuli, paste("Dim", 1:k))
       dimnames(W) <- list(subjects, paste("Dim", 1:k))
-  get(getOption("device"))()
+dev.new()
   plot( W[,coord], xlim=c(0,1),ylim=c(0,1),type="n",xlab=paste("Dim",coord[1]),ylab=paste("Dim",coord[2]), main = "Weight representation")
   points(W[,coord[1]],W[,coord[2]],cex=1.2,pch=20)
   text( W[,coord[1]], W[,coord[2]], labels=subjects, cex = 0.8, pos = 4, offset = 0.2)
 
-  get(getOption("device"))()
+dev.new()
   X <- as.matrix(X[,])
   aa=cor(matrice,X[,coord])
 
@@ -116,7 +116,7 @@ for (i in 1:dim(d)[3]) d[,,i] <- dist2full(dist(matrice[,(2*i-1):(2*i)]))
     }
   }
 
-  get(getOption("device"))()
+dev.new()
   plot(X[,coord], main = "Stimuli map", xlab = paste("Dim",coord[1]), ylab = paste("Dim",coord[2]), asp=1, cex=0.8, pch=20)
   text( X[,coord[1]], X[,coord[2]], labels = stimuli, cex = 0.8, pos = 4, offset = 0.2)
   abline(v=0,lty=2)

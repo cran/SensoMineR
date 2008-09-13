@@ -28,6 +28,6 @@ lines(step, dnorm(step, mean(donnee[,nb+firstvar-1], na.rm = TRUE),sd(donnee[,nb
 lines(density(donnee[,nb+firstvar-1], na.rm = TRUE,adjust=adjust), lwd = 1,col="red")
                               } 
                    }
-if (m < mult) get(getOption("device"))()
+if (m < mult) dev.new()
           }  #for (m in 0:mult) {
                                   }

@@ -42,8 +42,8 @@ Returns as many superimposed representations of individual configurations as the
 }
 
 \references{
-Morand, E., Pagès, J. (accepted) Procrustes multiple factor analysis to analyze the overall perception of food products.
-\emph{Food Quality and Preference}
+Morand, E., Pagès, J. Procrustes multiple factor analysis to analyze the overall perception of food products.
+\emph{Food Quality and Preference} 14, 182-188.
 }
 
 \author{François Husson, Sébastien Lê}

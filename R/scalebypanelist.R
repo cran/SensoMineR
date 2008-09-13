@@ -10,7 +10,8 @@ for (j in 1 :(firstvar-1))  matrice[,j] <- as.factor(matrice[,j])
   matrice <- matrice[oo,]
   matrice <- matrice[,c(col.j,col.p,firstvar:lastvar)]
 
-  nbjuge <- sum(as.integer(summary(matrice[,1])!=0))
+  nbjuge <- nlevels(matrice[,1])
+  if (0 %in% summary(matrice[,1])) nbjuge <- nbjuge - 1
   nbprod <- length(levels(matrice[,2]))
   nbdesc <- ncol(matrice)-2
 
