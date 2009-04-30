@@ -17,12 +17,12 @@ options(contrasts=c("contr.sum", "contr.sum"))
 
   dim.donnee <- ncol(donnee)
   for (i in 1:dim.donnee) {
-    if (gsub(" ","",strsplit(equation,split="+",extended=FALSE)[[2]][1])==lab[i]) col.p <- i
-    if (gsub(" ","",strsplit(equation,split="+",extended=FALSE)[[2]][2])==lab[i]) col.j <- i
+    if (gsub(" ","",strsplit(equation,split="+",fixed=TRUE)[[2]][1])==lab[i]) col.p <- i
+    if (gsub(" ","",strsplit(equation,split="+",fixed=TRUE)[[2]][2])==lab[i]) col.j <- i
   }
   res <- matrix(0,lastvar+1-firstvar,1)
   r2 <- matrix(0,lastvar+1-firstvar,1)
-  variab <- perf <- matrix(0,lastvar+1-firstvar,length(strsplit(equation[2],"+",extended=FALSE)[[1]]))
+  variab <- perf <- matrix(0,lastvar+1-firstvar,length(strsplit(equation[2],"+",fixed=TRUE)[[1]]))
 
   for (varendo in firstvar:lastvar) {
       formule <- paste(lab[varendo],"~",equation[2])
@@ -48,7 +48,7 @@ options(contrasts=c("contr.sum", "contr.sum"))
       }
     }
   }
-aa <- strsplit(as.character(formule),split="~",extended=FALSE)[[3]]
+aa <- strsplit(as.character(formule),split="~",fixed=TRUE)[[3]]
 dimnames(variab) <- dimnames(perf) <- list(lab.sauv[firstvar:lastvar],rownames(aux)[-nrow(aux)])
 dimnames(res) <- list(lab.sauv[firstvar:lastvar],"stdev residual")
 dimnames(r2) <- list(lab.sauv[firstvar:lastvar],"r2")

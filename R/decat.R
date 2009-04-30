@@ -18,11 +18,11 @@ decat <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba 
 
     dim.donnee <- dim(donnee)[2]
 
-    if (length(strsplit(equation,split="+",extended=FALSE)[[2]]) == 1) random = FALSE # if there is 1 effect, there is not random effect
+    if (length(strsplit(equation,split="+",fixed=TRUE)[[2]]) == 1) random = FALSE # if there is 1 effect, there is not random effect
     for (i in 1:dim.donnee) {
-      if (gsub(" ","",strsplit(equation,split="+",extended=FALSE)[[2]][1])==lab[i]) col.p <- i
+      if (gsub(" ","",strsplit(equation,split="+",fixed=TRUE)[[2]][1])==lab[i]) col.p <- i
       if (random){
-        if (gsub(" ","",strsplit(equation,split="+",extended=FALSE)[[2]][2])==lab[i]) col.j <- i
+        if (gsub(" ","",strsplit(equation,split="+",fixed=TRUE)[[2]][2])==lab[i]) col.j <- i
       }
     }
     nb.modalite <- nlevels(donnee[,col.p])

@@ -18,7 +18,7 @@ options(contrasts=c("contr.sum", "contr.sum"))
   equation <- as.character(as.formula(equation))
   
   for (i in 1:dim.donnee) {
-    if (gsub(" ","",strsplit(equation,split="+",extended=FALSE)[[2]][1])==lab[i]) col.p <- i
+    if (gsub(" ","",strsplit(equation,split="+",fixed=TRUE)[[2]][1])==lab[i]) col.p <- i
   }
   r2 <- prob <- vtest <- res <- matrix(0,length(levels(donnee[,col.j])),lastvar+1-firstvar)
 
@@ -27,15 +27,15 @@ options(contrasts=c("contr.sum", "contr.sum"))
       formule <- paste(lab[varendo],"~",equation[2])
 ##      formule <- paste(lab[varendo],"~ C(")
 ##      aux2 <- equation[2]
-##      aux3 <- strsplit(aux2,"+",extended=FALSE)[[1]]
+##      aux3 <- strsplit(aux2,"+",fixed=TRUE)[[1]]
 ##
 ##      for (i in 1:length(aux3)) {
 ##        if (any(grep("%",aux3[i]))) {
-##              formule <- paste(formule,strsplit(aux3[i],"%",extended=FALSE)[[1]][1],",sum)%in%C(",strsplit(aux3[i],"%",extended=FALSE)[[1]][3],",sum)")
+##              formule <- paste(formule,strsplit(aux3[i],"%",fixed=TRUE)[[1]][1],",sum)%in%C(",strsplit(aux3[i],"%",fixed=TRUE)[[1]][3],",sum)")
 ##        }
 ##        else
 ##        if (any(grep(":",aux3[i]))) {
-##           formule <- paste(formule,strsplit(aux3[i],":",extended=FALSE)[[1]][1],",sum) : C(",strsplit(aux3[i],":",extended=FALSE)[[1]][2],",sum)")
+##           formule <- paste(formule,strsplit(aux3[i],":",fixed=TRUE)[[1]][1],",sum) : C(",strsplit(aux3[i],":",fixed=TRUE)[[1]][2],",sum)")
 ##        }
 ##        else {
 ##        formule <- paste(formule,aux3[i],",sum)")

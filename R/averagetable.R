@@ -18,8 +18,8 @@ equation <- as.character(as.formula(equation))
 
 dim.donnee <- ncol(donnee)
 for (i in 1:dim.donnee) {
-  if (gsub(" ","",strsplit(equation,split="+",extended=FALSE)[[2]][1])==lab[i]) col.p <- i
-  if (gsub(" ","",strsplit(equation,split="*",extended=FALSE)[[2]][1])==lab[i]) col.p <- i
+  if (gsub(" ","",strsplit(equation,split="+",fixed=TRUE)[[2]][1])==lab[i]) col.p <- i
+  if (gsub(" ","",strsplit(equation,split="*",fixed=TRUE)[[2]][1])==lab[i]) col.p <- i
 }
 nbprod <- length(levels(donnee[,col.p]))
 tab<-matrix(NA,nbprod,lastvar-firstvar+1)
