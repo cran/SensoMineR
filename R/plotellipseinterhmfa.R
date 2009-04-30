@@ -1,7 +1,7 @@
 "plotellipseinterhmfa" <- function(mat,alpha=0.05,coord=c(1,2),nbgroup=1,eig,cex=1,color=NULL,hmfa){
 
 #################################################################
-"ellipse" <- function(loc, cov,alpha)
+"ellipse2" <- function(loc, cov,alpha)
       {
             A <- cov
            detA <- A[1, 1] * A[2, 2] - A[1, 2]^2
@@ -43,7 +43,7 @@ nbsimul <-  nrow(matsimul)/nrow(matP)
 
 for (i in 1:nbp){
   VX <- var(matsimul[((i-1)*nbsimul+1):(i*nbsimul),1:2])
-  coord.ellipse.a.tracer[,(1+2*(i-1)):(2*i)] <- ellipse(t(matP[i,1:2]),VX,alpha)
+  coord.ellipse.a.tracer[,(1+2*(i-1)):(2*i)] <- ellipse2(t(matP[i,1:2]),VX,alpha)
 }
 
 minx <- min(coord.ellipse.a.tracer[,1+2*(0:(nbp-1))],na.rm=TRUE)

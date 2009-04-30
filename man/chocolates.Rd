@@ -20,13 +20,13 @@ sensory descriptors.
 \format{
 
 There are three data frames:
-\item{sensochoc}{a data frame with 348 rows and 19 columns: 5 qualitative variables
- (Panelist, Session, Form, Rank, Product) and 14 sensory descriptors;}
-\item{hedochoc}{ a data frame with 6 rows and 222 columns: each row corresponds to a chocolate
- and each column to the hedonic scores given by one of the 222 consumers participating in the study;}
-\item{sensopanels}{a data frame with 6 rows and 98 columns: each row corresponds to a chocolate
+- sensochoc: a data frame with 348 rows and 19 columns: 5 qualitative variables
+ (Panelist, Session, Form, Rank, Product) and 14 sensory descriptors;\cr
+- hedochoc: a data frame with 6 rows and 222 columns: each row corresponds to a chocolate
+ and each column to the hedonic scores given by one of the 222 consumers participating in the study;\cr
+- sensopanels: a data frame with 6 rows and 98 columns: each row corresponds to a chocolate
  and each column to the mean over the panelists of a given panel 
- according to a sensory descriptor.}
+ according to a sensory descriptor.
 }
 
 \usage{data(chocolates)}

@@ -39,7 +39,7 @@ for (i in 1:dim(d)[3]) d[,,i] <- dist2full(dist(matrice[,(2*i-1):(2*i)]))
       delta <- 1
       it <- numeric(1)
       record <- numeric(maxit)
-      storage.mode(d) <- "single"
+      mode(d) <- "single"
       storage.mode(n) <- "integer"
       for(i in 1:m) b[, , i] <- transformdw(d[,,i])
 

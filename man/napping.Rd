@@ -16,12 +16,12 @@ They were asked to describe each wine using their own word list.
 
 \format{
 There are two data frames:
-\item{napping.don}{A data frame of dimension (10,22): each row represents
+- napping.don: A data frame of dimension (10,22): each row represents
  a French wine, each couple (Xi,Yi) represents the 
- coordinates of the wines positioned on a tableclothe for a given panelist;}
-\item{napping.words}{A data frame of dimension (10,14): each row represents
+ coordinates of the wines positioned on a tableclothe for a given panelist;\cr
+- napping.words: A data frame of dimension (10,14): each row represents
  a French wine, each column an attribute, each cell the number of times
- a given attribute was quoted for a given wine.}
+ a given attribute was quoted for a given wine.
 }
 
 \source{

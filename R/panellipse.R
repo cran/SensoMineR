@@ -39,8 +39,8 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
        res[k,,] = as.matrix(resAF$quanti.sup$cor)
      }
      if (mfa){
-       if (scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("s",2*length(group)),num.group.sup=length(group):(2*length(group)),graph=FALSE,ncp=nbcoord,scale.unit=scale.unit)
-       if (!scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("c",2*length(group)),num.group.sup=length(group):(2*length(group)),graph=FALSE,ncp=nbcoord,scale.unit=scale.unit)
+       if (scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("s",2*length(group)),num.group.sup=length(group):(2*length(group)),graph=FALSE,ncp=nbcoord)
+       if (!scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("c",2*length(group)),num.group.sup=length(group):(2*length(group)),graph=FALSE,ncp=nbcoord)
        res[k,,] = as.matrix(resAF$quanti.var.sup$cor)
      }
      if (k==1){

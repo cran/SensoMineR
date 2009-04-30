@@ -1,5 +1,31 @@
 cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,scale.unit=FALSE,name.panelist=TRUE,col=terrain.colors(45)[1:41]) {
 
+colplot<-function(mat, k=0,coord, z, level=41, col = terrain.colors(level+level%/%10)[1:level], xlab="", ylab="") { #heat.colors(level)
+
+    abs <- coord[1]
+    ord <- coord[2]
+    x <- mat[,abs]
+    y <- mat[,ord]
+    z <- mat[,z]
+#    x1 <- min(z)
+#    x2 <- max(z)
+    x1 <- -1
+    x2 <- 1
+    plot(mat[,abs],mat[,ord],xlab=xlab, ylab=ylab,asp=1,type="n")
+    legend("topleft",legend=c(1,0.75,0.5,0.25,0,-0.25,-0.5,-0.75,-1),fill=c(col[level],col[(level%/%2)+(level%/%4)+(level%/%8)+1],col[(level%/%2)+(level%/%4)+1],col[(level%/%2)+(level%/%8)+1],col[(level%/%2)+1],col[(level%/%4)+(level%/%8)+1],col[(level%/%4)+1],col[(level%/%8)+1],col[1]),cex=0.7)
+    abline(v=0,lty=2)
+    abline(h=0,lty=2)
+####rect(0, levels[-length(levels)], 1, levels[-1], col = col)
+    n <- nrow(mat)
+    h <- (x2-x1)/level
+
+    for (ind in 1:(n-k)) points(x[ind],y[ind],col=col[max(1,(z[ind]-x1)%/%h)],pch=20)
+    for (ind in (n-k+1):n) points(x[ind],y[ind],col=col[max(1,(z[ind]-x1)%/%h)],pch=15,cex=1)
+    for (ind in (n-k+1):n) text(x[ind],y[ind],col=col[max(1,(z[ind]-x1)%/%h)],rownames(mat)[ind],cex=1,pos = 1, offset = 0.05)
+}
+
+### Main program
+
     if (max(coord) > (nrow(hedo)-1)) {
       print (paste("Problem with coord. Max (coord) must be less than",nrow(hedo)-1," Axes 1-2 will be taken",sep=""))
       coord=c(1,2)
@@ -68,26 +94,3 @@ dev.new()
     return(res)
 }
 
-colplot<-function(mat, k=0,coord, z, level=41, col = terrain.colors(level+level%/%10)[1:level], xlab="", ylab="") { #heat.colors(level)
-
-    abs <- coord[1]
-    ord <- coord[2]
-    x <- mat[,abs]
-    y <- mat[,ord]
-    z <- mat[,z]
-#    x1 <- min(z)
-#    x2 <- max(z)
-    x1 <- -1
-    x2 <- 1
-    plot(mat[,abs],mat[,ord],xlab=xlab, ylab=ylab,asp=1,type="n")
-    legend("topleft",legend=c(1,0.75,0.5,0.25,0,-0.25,-0.5,-0.75,-1),fill=c(col[level],col[(level%/%2)+(level%/%4)+(level%/%8)+1],col[(level%/%2)+(level%/%4)+1],col[(level%/%2)+(level%/%8)+1],col[(level%/%2)+1],col[(level%/%4)+(level%/%8)+1],col[(level%/%4)+1],col[(level%/%8)+1],col[1]),cex=0.7)
-    abline(v=0,lty=2)
-    abline(h=0,lty=2)
-####rect(0, levels[-length(levels)], 1, levels[-1], col = col)
-    n <- nrow(mat)
-    h <- (x2-x1)/level
-
-    for (ind in 1:(n-k)) points(x[ind],y[ind],col=col[max(1,(z[ind]-x1)%/%h)],pch=20)
-    for (ind in (n-k+1):n) points(x[ind],y[ind],col=col[max(1,(z[ind]-x1)%/%h)],pch=15,cex=1)
-    for (ind in (n-k+1):n) text(x[ind],y[ind],col=col[max(1,(z[ind]-x1)%/%h)],rownames(mat)[ind],cex=1,pos = 1, offset = 0.05)
-}

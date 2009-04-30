@@ -14,11 +14,11 @@ panelmatch(donnee, col.p, col.j, firstvar,
 }
 
 \arguments{
-  \item{donnee}{a data frame made up of at least two qualitative variables 
+  \item{donnee}{a list of data frames, each one made up of at least two qualitative variables 
   (\emph{product}, \emph{panelist}) and a set of quantitative variables (sensory descriptors)}  
-  \item{col.p}{the position of the \emph{product} variable}
-  \item{col.j}{the position of the \emph{panelist} variable}
-  \item{firstvar}{the position of the first sensory descriptor}
+  \item{col.p}{the position of the \emph{product} variable (in each data frame, the same position)}
+  \item{col.j}{the position of the \emph{panelist} variable (in each data frame, the same position)}
+  \item{firstvar}{the position of the first sensory descriptor (in each data frame, the same position)}
   \item{alpha}{the confidence level of the ellipses}
   \item{coord}{a length 2 vector specifying the components to plot}
   \item{scale.unit}{boolean, if T the descriptors are scaled to unit variance}
@@ -35,8 +35,6 @@ panelmatch(donnee, col.p, col.j, firstvar,
 }
 
 
-\details{
-}
 \value{
 A list containing the following elements:
   \item{eig}{a matrix with the component of the factor analysis (in row) and the eigenvalues, the inertia and the cumulative inertia for each component}

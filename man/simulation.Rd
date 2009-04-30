@@ -21,9 +21,6 @@ simulation(axeAFM, nbchoix = NULL, nbgroup = 1, nbsimul = 500)
 Called by the simulation procedure
 }
 
-\value{
-
-}
 \references{Husson, F., Le Dien, S. & Pagès, J.  (2005). Confidence ellipse for the sensory profiles obtained by Principal Components Analysis. Food Quality and Preference.  16 (3). pp. 245-250.
 }
 

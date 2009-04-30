@@ -22,11 +22,11 @@ by 100 consumers, according to their liking (0) or disliking (10).
 
 \format{
 There are three data frames:
-\item{compo.cocktail}{a data frame with 16 rows and 4 columns: the composition of each cocktail is given for the 4 ingredients;}
-\item{senso.cocktail}{a data frame with 16 rows and 13 columns: each cocktail was evaluated by 12 panelists according to 13
-sensory descriptors;}
-\item{hedo.cocktail}{ a data frame with 16 rows and 100 columns: each cocktail was evaluated on a structured scale from 0 to 10, 
-by 100 consumers, according to their liking (0) or disliking (10).}
+- compo.cocktail: a data frame with 16 rows and 4 columns: the composition of each cocktail is given for the 4 ingredients;\cr
+- senso.cocktail: a data frame with 16 rows and 13 columns: each cocktail was evaluated by 12 panelists according to 13
+sensory descriptors;\cr
+hedo.cocktail: a data frame with 16 rows and 100 columns: each cocktail was evaluated on a structured scale from 0 to 10, 
+by 100 consumers, according to their liking (0) or disliking (10).
 }
 
 \source{

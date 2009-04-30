@@ -8,10 +8,11 @@ dim1 <- dim(matrice)[1]
 dim2 <- dim(matrice)[2] 
 for (i in 0:dim1) rect(0,1-i*(1/(nbrow+1)),1/(nbcol+1),1-(i+1)*(1/(nbrow+1)),col="white",border=NULL)
 for (j in 1:(dim2-1)) rect(j*(1/(nbcol+1)),1,(j+1)*(1/(nbcol+1)),1-(1/(nbrow+1)),col="white",border=NULL)
-
 for (j in 1:(dim2-1)){ for (i in 1:dim1){
 if (is.na(col.mat[i,j+1])) { rect(j*(1/(nbcol+1)),1-i*(1/(nbrow+1)),(j+1)*(1/(nbcol+1)),1-(i+1)*(1/(nbrow+1)),col="gray",border=NULL) }
-  else { if (col.mat[i,j+1]<=level.lower2) { rect(j*(1/(nbcol+1)),1-i*(1/(nbrow+1)),(j+1)*(1/(nbcol+1)),1-(i+1)*(1/(nbrow+1)),col=col.lower2,border=NULL)}
+  else { if ((col.mat[i,j+1]<=level.lower2)) { 
+   rect(j*(1/(nbcol+1)),1-i*(1/(nbrow+1)),(j+1)*(1/(nbcol+1)),1-(i+1)*(1/(nbrow+1)),col=col.lower2,border=NULL)
+   }
          else {if (col.mat[i,j+1]<=level.lower) { rect(j*(1/(nbcol+1)),1-i*(1/(nbrow+1)),(j+1)*(1/(nbcol+1)),1-(i+1)*(1/(nbrow+1)),col=col.lower,border=NULL)}
              else { if (col.mat[i,j+1]>=level.upper2) { rect(j*(1/(nbcol+1)),1-i*(1/(nbrow+1)),(j+1)*(1/(nbcol+1)),1-(i+1)*(1/(nbrow+1)),col=col.upper2,border=NULL)}
                    else { if (col.mat[i,j+1]>=level.upper) {rect(j*(1/(nbcol+1)),1-i*(1/(nbrow+1)),(j+1)*(1/(nbcol+1)),1-(i+1)*(1/(nbrow+1)),col=col.upper,border=NULL)}
@@ -40,7 +41,7 @@ if (!novalue){
 
 ################################################################
 "police" <- function(matrice,nbrow,nbcol,nbdec) {
-dev.new()
+x11()
     par(mar=c(0,0,2,0))
     plot.new() ; title(main=main.title);
     a <- c(rownames(matrice),colnames(matrice))
@@ -56,9 +57,9 @@ dev.new()
 if (sum(dim(matrice)==dim(col.mat))!=2) stop("The matrices matrice and col.mat should have the same dimensions")
 if (level.lower2 > level.lower) stop("level.lower2 should be less than level.lower")
 if (level.upper2 < level.upper) stop("level.upper2 should be greater than level.upper")
-matrice <- signif(matrice,nbdec)
+if (is.numeric(matrice)) matrice <- signif(matrice,nbdec)
 matrice=cbind.data.frame(rownames(matrice),matrice)
-col.mat <- signif(col.mat,nbdec)
+if (is.numeric(col.mat)) col.mat <- signif(col.mat,nbdec)
 col.mat=cbind.data.frame(rownames(col.mat),col.mat)
 colnames(matrice)[1]=" "
 dim1 <- nrow(matrice)
@@ -79,7 +80,7 @@ if (dim2%/%nbcol==dim2/nbcol) {
         B.col <- cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          dev.new()
+          x11()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -96,7 +97,7 @@ if (dim2%/%nbcol==dim2/nbcol) {
       B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-         dev.new()
+         x11()
          par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -117,7 +118,7 @@ else {
         B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          dev.new()
+          x11()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -133,7 +134,7 @@ else {
         B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          dev.new()
+          x11()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -153,7 +154,7 @@ else {
       B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          dev.new()
+          x11()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -173,7 +174,7 @@ else {
       B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          dev.new()
+          x11()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }

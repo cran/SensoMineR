@@ -6,7 +6,8 @@ for (j in 1:(firstvar-1))  donnee[,j] <- as.factor(donnee[,j])
 
 formul = as.formula(formul)
 lab.sauv <- lab <- colnames(donnee)
-for (i in 1:length(lab)) lab[i] = chartr("(), ?;/:'!$§%=+\n;{}<>[]@-",".........................", lab[i])
+for (i in 1:length(lab)) lab[i] = chartr("(), ?;/:'!$=+\n;{}<>[]-","......................", lab[i])
+#for (i in 1:length(lab)) lab[i] = chartr("(), ?;/:'!$§%=+\n;{}<>[]@-",".........................", lab[i])
 ## for (i in 1:length(lab)) lab[i] = chartr(" '", "..", lab[i])
 colnames(donnee) = lab
 equation <- as.character(formul)
