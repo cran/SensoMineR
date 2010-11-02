@@ -12,7 +12,7 @@ the consumers is also very easy to obtain.
 
 \usage{
 cpa(senso, hedo, coord=c(1,2), center = TRUE, scale = TRUE, 
-    nb.clusters = 0, scale.unit = FALSE, name.panelist = TRUE,
+    nb.clusters = 0, scale.unit = FALSE, 
     col = terrain.colors(45)[1:41])
 }
 
@@ -26,7 +26,6 @@ number of consumers or panelists}
 \item{scale}{boolean, if TRUE then data are scaled to unit variance}
 \item{nb.clusters}{number of clusters to use (by default, 0 and the optimal numer of clusters is calculated}
 \item{scale.unit}{boolean, if TRUE then PCA is made on scaled data}
-\item{name.panelist}{boolean, if TRUE then the name of the panelist is written}
 \item{col}{color palette}
 }
 
@@ -46,7 +45,7 @@ Return the following results:
 \item{result}{the coordinates of the panelists, of the clusters, of the archetypes}
 \item{prod.clusters}{a list with as many elements as there are clusters; each element of the list gathers
 the specific products for its corresponding cluster}
-\item{des.clusters}{the correlation coefficients between the average hedonic scores per cluster and the sensory descriptors}
+\item{desc.clusters}{the correlation coefficients between the average hedonic scores per cluster and the sensory descriptors}
 A dendogram which highlight the clustering, a correlation circle that displays the hedonic scores, a graph of the consumers such as two consumers are all 
 the more close that they do like the same products, as many graphs as there are variables: for a given variable, 
 each consumer is colored according to the coefficient of correlation based on his hedonic scores and the variable.

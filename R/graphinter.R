@@ -37,7 +37,9 @@ for (m in 0:mult) {
               title(variable.names(moy)[nb])
             }
         } 
-    legend("topleft",legend=paste(colnames(donnee)[col.j],1:length(levels(donnee[,col.j])),sep=" "),text.col=1:length(levels(donnee[,col.j])),cex=0.8,bg="white")
+    
+  legend("topleft", legend = paste(colnames(donnee)[col.j],levels(donnee[, col.j]), sep = " "),
+               text.col = 1:length(levels(donnee[, col.j])),cex = 0.8, bg = "white")     
     }
 if (m < mult) dev.new()
 }

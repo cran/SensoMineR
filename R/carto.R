@@ -99,8 +99,7 @@ dev.new()
     }
     depasse <- round(depasse/nbconso * 100)
     dimnames(depasse) <- list(as.character(f1), as.character(f2))
-    image(f1, f2, depasse, col = terrain.colors(200), xlab = "Dim 1",
-        ylab = "Dim 2", main = "Preference mapping", font.main = font,
+    image(f1, f2, depasse, col = terrain.colors(200), xlab=paste("Dim",coord[1]), ylab=paste("Dim",coord[2]), main = "Preference mapping", font.main = font,
         col.main = col, cex.main = cex, asp = asp)
     contour(f1, f2, depasse, nlevels = 9, levels = c(20, 30,
         40, 50, 60, 70, 80, 90, 95), add =TRUE, labex = 0)

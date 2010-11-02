@@ -57,7 +57,6 @@ options(contrasts=c("contr.sum", "contr.sum"))
   aa <- averagetable(donnee,formul=formul,firstvar=firstvar,lastvar=lastvar)
   agree <- matrix(NA,length(lab.j),lastvar-firstvar+1)
   for (j in 1:length(lab.j)){
-print(j)
       bb <- averagetable(donnee,formul=formul.j,subset=(donnee[,col.j]==lab.j[j]),firstvar=firstvar,lastvar=lastvar)
       for (k in 1:ncol(bb)) if (var(bb[,k],na.rm=T)!=0) agree[j,k]=cor(aa[,k],bb[,k],use="pairwise.complete.obs")
     }

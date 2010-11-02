@@ -53,9 +53,11 @@ A list containing the following elements:
   \item{resF}{the V-test and the P-value for each descriptor resulting from the analysis of variance model, sorted in ascending order}
   \item{resT}{a list which elements are data frames, one data frame per product: 
   the coefficient, the P-value and the Vtest for each significant descriptor resulting from the analysis of variance model, sorted in descending order}
+  \item{adjmean}{a (products,descriptors) data frame, in which each cell is the adjusted mean resulting
+  from the analysis of variance model for a given product and a given descriptor}
 
 A barplot of the P-values associated with the F-test of the product effet.\cr
-A colored table with the adjusted means of the categorical variable: the values significantly different from the general mean are colored (singnificantly
+A colored table with the adjusted means of the categorical variable: the values significantly different from the general mean are colored (significantly
 different with the \code{proba} level); the significantly less are colored in red (by default) and the significantly great are colored in blue. 
 }
 

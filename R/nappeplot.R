@@ -4,8 +4,8 @@ nbjuge <- ncol(donnee)/2
 mult <- nbjuge %/% (numr*numc)
 
 if (nbjuge==(nbjuge%/% (numr*numc))*(numr*numc)) mult=mult-1
+par(mfrow = c(numr,numc))
 for (m in 0:mult) {
-    par(mfrow = c(numr,numc))
 
     for (nbd in 1:(numr*numc)) {
       nb <- (m*(numr*numc)+nbd)
@@ -18,4 +18,5 @@ text(donnee[,(2*(nb-1)+1):(2*nb)],label=rownames(donnee),col=color,cex=0.8,pos =
 if (m < mult) dev.new()
               }
 par(las=0)
+par(mfrow = c(1,1))
 }

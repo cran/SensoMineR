@@ -9,7 +9,7 @@ Print Factorial Approach for Sorting Task data (FAST) results.
 }
 
 \usage{
-print.fast(x, file = NULL, sep = ";", \dots)
+\method{print}{fast}(x, file = NULL, sep = ";", \dots)
 }
 
 \arguments{

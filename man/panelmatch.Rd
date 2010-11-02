@@ -65,9 +65,9 @@ Pagès J. & Husson F. (2005). Multiple Factor Analysis with confidence ellipses: 
 \examples{
 \dontrun{
 data(chocolates)
-Panel1= sensochoc[sensochoc[,1]<11,]
-Panel2= sensochoc[(sensochoc[,1]<21)&(sensochoc[,1]>10),]
-Panel3= sensochoc[sensochoc[,1]>20,]
+Panel1=sensochoc[as.numeric(sensochoc[,1])<11,]
+Panel2=sensochoc[as.numeric(sensochoc[,1])<21 & as.numeric(sensochoc[,1])>10,]
+Panel3=sensochoc[as.numeric(sensochoc[,1])>20,]
 res <- panelmatch(list(P1=Panel1,P2=Panel2,P3=Panel3), col.p = 4, col.j = 1, firstvar = 5)
 }
 }

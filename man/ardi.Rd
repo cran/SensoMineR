@@ -58,9 +58,6 @@ François Husson, Sébastien Lê
 \dontrun{
 data(chocolates)
 ardi(sensochoc, col.p = 4, col.j = 1, firstvar = 5)
-
-## In the case where there's one particular variable of interest
-ardi(sensochoc, col.p = 4, col.j = 1, firstvar = 7, lastvar = 7)
 }
   }
 \keyword{univar}

@@ -5,6 +5,7 @@ hotelling <- function(d1,d2,n1=nrow(d1),n2=nrow(d2)){
     xbar1 <- apply(d1,2,mean)
     xbar2 <- apply(d2,2,mean)
     dbar <- xbar2-xbar1
+    if (n1+n2<3) return(NA)
     v <- ((n1-1)*var(d1)+(n2-1)*var(d2))/(n1+n2-2)
     if (sum(v^2) < 1/10^10) return (NA)
     else t2 <- n1*n2*dbar%*%solve(v)%*%dbar/(n1+n2)
@@ -36,15 +37,15 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
      correl[,,k] = cor(Xb)
      if (!mfa){
        resAF <-PCA(cbind(tab.moy,Xb),quanti.sup=(ncol(tab.moy)+1):(2*ncol(tab.moy)),graph=FALSE,ncp=nbcoord,scale.unit=scale.unit)
-       res[k,,] = as.matrix(resAF$quanti.sup$cor)
+       res[k,,] = as.matrix(resAF$quanti.sup$coord)
      }
      if (mfa){
-       if (scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("s",2*length(group)),num.group.sup=length(group):(2*length(group)),graph=FALSE,ncp=nbcoord)
-       if (!scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("c",2*length(group)),num.group.sup=length(group):(2*length(group)),graph=FALSE,ncp=nbcoord)
+       if (scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("s",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord)
+       if (!scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("c",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord)
        res[k,,] = as.matrix(resAF$quanti.var.sup$cor)
      }
      if (k==1){
-        plot(resAF,choix="var", invisible="quanti.sup")
+        plot(resAF,choix="var", invisible=c("quanti.sup","sup"))
         legend("topleft",legend=colnames(tab.moy),fill=color[1:ncol(tab.moy)],cex=0.7)
      }
      points(res[k,,coord[1]],res[k,,coord[2]],col=color[1:ncol(tab.moy)],pch=15,cex=0.3)
@@ -128,7 +129,7 @@ if (length(group)>1) {
   long.group <- length(group)
   if (long.group==0) long.group <- 1
   simul <- simulation(axe,nbgroup=long.group,nbchoix=nbchoix,nbsimul=nbsimul)
-  if (variability.variable) auxil <- variab.variable(don.interesting,simul$sample,mfa=FALSE,coord=coord,scale.unit=scale.unit,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,color=color)
+  if (variability.variable) auxil <- variab.variable(don.interesting,simul$sample,mfa=(!is.null(group)),coord=coord,scale.unit=scale.unit,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,color=color)
 dev.new()
   plotellipse(simul,alpha=alpha,coord=coord,eig=signif(axe$eig,4),color=color,cex=cex)  
   res <- list()

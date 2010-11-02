@@ -1,4 +1,4 @@
-cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,scale.unit=FALSE,name.panelist=TRUE,col=terrain.colors(45)[1:41]) {
+cpa<- function(senso, hedo, coord=c(1,2),center=TRUE,scale=TRUE,nb.clusters=0,scale.unit=FALSE,col=terrain.colors(45)[1:41]) {
 
 colplot<-function(mat, k=0,coord, z, level=41, col = terrain.colors(level+level%/%10)[1:level], xlab="", ylab="") { #heat.colors(level)
 
@@ -42,7 +42,7 @@ colplot<-function(mat, k=0,coord, z, level=41, col = terrain.colors(level+level%
     nbdesc <- ncol(senso)
 
   classif <- agnes(dist(t(hedo)),method="ward")
-  plot(as.dendrogram(classif),main="Cluster Dendrogram",xlab="Panelists",which.plots=2) 
+  plot(as.dendrogram(classif),main="Cluster Dendrogram",xlab="Panelists") 
     if (nb.clusters==0){
        classif2 <- as.hclust(classif)
        nb.clusters = which.max(rev(diff(classif2$height))) + 1

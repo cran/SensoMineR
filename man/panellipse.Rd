@@ -58,9 +58,10 @@ A list containing the following elements:
   \item{coordinates}{a list with: the coordinates of the products with respect to the panel and to each panelists
  and the coordinates of the \emph{partial} products with respect to the panel and to each panelists}
   \item{hotelling}{Returns a matrix with the P-values of the Hotelling's T2 tests for each pair of products: this matrix allows to find the
-product which are significatnly different for the 2-components sensory description; if an MFA is done, \emph{hotelling} returns as many matrices 
+product which are significantly different for the 2-components sensory description; if an MFA is done, \emph{hotelling} returns as many matrices 
 as there are group, these matrices allows to find the product which are significantly different for the 2-components sensory description of the
 group, and it returns also a \emph{global} matrix corresponding to the P-values for the tests corresponding to the mean product.}
+\item{correl}{a list with: the matrix of the estimated correlation coefficients and two matrices corresponding to the confidence intervals, min and max, of the correlation coefficients calculated by bootstrap.}
 
 Returns a graph of the products as well as a correlation circle of the descriptors.\cr
 

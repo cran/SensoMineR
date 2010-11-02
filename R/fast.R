@@ -1,9 +1,12 @@
-fast=function(don,alpha=0.05,mot_min=2,graph=TRUE,ncp=5,B=200){
+fast=function(don,alpha=0.05,sep.words=";",word.min=5,graph=TRUE,axes=c(1,2),ncp=5,B=200,val=FALSE, B.val=200,label.miss=NULL){
 #don : fichier de données
 #alpha : intervalle de confiance pour les ellipses
-#mot_min : fréquence des mots qu'on enlève
+#sep.words: séparateur de mots
+#word.min : fréquence des mots qu'on enlève
 #ncp : nombre de composantes principales
 #B : nombre de simulations
+#val: éléments de validité
+#label.miss: label des données incomplètes s'il y en a
 
 don=as.data.frame(don)
 I=nrow(don)
@@ -15,23 +18,24 @@ don[,i]=as.factor(don[,i])}
 
 #ACM
 acm=MCA(don,graph=F,ncp=ncp)
-#rownames(acm$var$coord)=colnames(tab.disjonctif(don))
-if (graph){
-plot.MCA(acm,choix="ind",invisible="var") 
-plot.MCA(acm,choix="ind",invisible="ind") 
-plot.MCA(acm,choix="ind") }
 
-#ENlisib pour les modalités
+if (graph){
+plot.MCA(acm,choix="ind",invisible="var",axes=axes) 
+plot.MCA(acm,choix="ind",invisible="ind",axes=axes) 
+plot.MCA(acm,choix="ind",axes=axes) 
+plot.MCA(acm,choix="var",axes=axes)}
+
+########################ENlisib pour les modalités (affiche une partie des modalités)
 X=0.05 #Pourcentage de modalités au milieu
 tab=as.matrix(acm$var$v.test)                       				  #récupération des vtests des modalités dans un tableau
-vtestmean1=mean(tab[,1])                 					  #calcul de la moyenne des vtests
-vtestmean2=mean(tab[,2])                 					  #calcul de la moyenne des vtests
-vtestsd1=sd(tab[,1])                     					  #calcul de l'écart-type des vtests
-vtestsd2=sd(tab[,2])                     					  #calcul de l'écart-type des vtests
+vtestmean1=mean(tab[,axes[1]])                 					  #calcul de la moyenne des vtests
+vtestmean2=mean(tab[,axes[2]])                 					  #calcul de la moyenne des vtests
+vtestsd1=sd(tab[,axes[1]])                     					  #calcul de l'écart-type des vtests
+vtestsd2=sd(tab[,axes[2]])                     					  #calcul de l'écart-type des vtests
 seuil1=vtestmean1+vtestsd1                            				  #seuil=moyenne+écart-type
 seuil2=vtestmean2+vtestsd2                            				  #seuil=moyenne+écart-type
-modext=which(abs(tab[,1])>=seuil1 | abs(tab[,2])>=seuil2)          #récupération des modalités dont la vtest est supérieure au seuil
-tab2=which(abs(tab[,1])<seuil1 & abs(tab[,2])<seuil2)               #récupération des modalités dont la vtest est inférieure au seuil
+modext=which(abs(tab[,axes[1]])>=seuil1 | abs(tab[,axes[2]])>=seuil2)          #récupération des modalités dont la vtest est supérieure au seuil
+tab2=which(abs(tab[,axes[1]])<seuil1 & abs(tab[,axes[2]])<seuil2)               #récupération des modalités dont la vtest est inférieure au seuil
 modmoy=tab2[sample(1:length(tab2),X*length(tab2))]       					  #tirage au hasard des modalités récupérées à l'étape précédente
 mod_kept=cbind(t(modext),t(modmoy))
 res=acm                                     					  #remplissage du résultat avec seulement les individus et modalités sélectionnés
@@ -40,25 +44,47 @@ res$var$cos2=acm$var$cos2[mod_kept,]
 res$var$contrib=acm$var$contrib[mod_kept,]
 res$var$v.test=acm$var$v.test[mod_kept,]
 if (graph){
-plot.MCA(res,choix="ind",invisible="ind") }                    #plot individus
-              	
+plot.MCA(res,choix="ind",invisible="ind",axes=axes) }                    #plot individus
+########################Fin ENlisib pour les modalités              	
 
-
-#Matrice de cooccurrence
-compte=matrix(0,I,I)
+########################Graphiques préliminaires
+#Nombre de groupes formés par chaque juge
+lev=rep(NA,J)
 for (i in 1:J){
-for (j in 1:I){
-for (k in j:I){
-if (don[j,i]==don[k,i]){
-compte[j,k]=compte[j,k]+1}}}}
+lev[i]=nlevels(don[,i])}
+lev2=as.factor(lev)
+if (graph){
+x11()
+plot(lev2,main="Number of groups formed from sorting tasks") }
 
-for (i in 1:I){
-for (j in i:I){
-compte[j,i]=compte[i,j]}}
-colnames(compte)=rownames(compte)=rownames(don)
+#Nombre de produits par groupe
+nb_prod_grp=rep(NA,sum(lev))
+grp=0
+for (i in 1:J){
+nb_prod_grp[(grp+1):(grp+lev[i])]=table(don[,i])
+grp=grp+lev[i]}
+nb_prod_grp2=as.factor(nb_prod_grp)
+if (graph){
+x11()
+plot(nb_prod_grp2,main="Number of products per group")}
+########################Fin graphiques préliminaires
 
 
-#Matrice des coefficients de Cramer
+########################Matrice de cooccurrence réordonnée
+#Matrice de cooccurrences
+tdc=tab.disjonctif(don)
+compte=tdc%*%t(tdc)
+
+#Ordre des produits
+ordre_prod=order(acm$ind$coord[,1])
+
+#réordonnement matrice cooccurrence
+compte2=compte[ordre_prod,]
+compte2=compte2[,ordre_prod]
+########################Fin matrice de cooccurrence réordonnée
+
+########################Matrice ordonnée des coefficients de Cramer
+#Fonction du chi2
 chi2_t=function(x,y){
 obs=table(x,y)
 chi=matrix(NA,length(levels(x)),length(levels(y)))
@@ -69,6 +95,7 @@ chi[i,j]=(obs[i,j]-(sum(obs[i,])*sum(obs[,j])/length(x)))^2/(sum(obs[i,])*sum(ob
 chi2=sum(rowSums(chi))
 return(chi2)}
 
+#Fonction du coefficient de Cramer
 cramer=function(x, y) {
 chi2=chi2_t(x,y)
 n=length(x)
@@ -78,6 +105,7 @@ m=min(p - 1, q - 1)
 V=sqrt(chi2/(n * m))
 return(V)
 }
+
 res=matrix(NA,J,J)
 for (i in 1:J){
 for (j in i:J){
@@ -89,21 +117,10 @@ afc=CA(res,graph=F)
 ord=order(afc$row$coord[,1])
 res2=res[ord,]
 res2=res2[,ord]
+########################Matrice ordonnée des coefficients de Cramer
 
-
-#Réordonnement de la matrice des données
-afm=MFA(don,group=rep(1,J),type=rep("n",J),graph=F,name.group=colnames(don))
-
-if (graph){
-plot.MFA(afm,choix="group")}
-
-ordre_prod=order(acm$ind$coord[,1])
-
-#changement des numérotation
+########################Tableau des données réordonné
 out=matrix(NA,I,J)
-lev=rep(NA,J)
-for (i in 1:J){
-lev[i]=length(levels(don[,i]))}
 tdc=tab.disjonctif(don)
 gp=0
 for (i in 1:J){
@@ -127,60 +144,77 @@ catego_num2=out[ordre_prod,]
 catego_num2=catego_num2[,ord]
 rownames(catego_num2)=rownames(don)[ordre_prod]
 colnames(catego_num2)=colnames(don)[ord]
-
-#réordonnement matrice cooccurrence
-compte2=compte[ordre_prod,]
-compte2=compte2[,ordre_prod]
+########################Tableau des données réordonné
 
 
-lev2=as.factor(lev)
-if (graph){
-x11()
-plot(lev2,main="Number of groups formed from sorting tasks") }
+#########################Ellipses
+out_axe=function(don,acm){
+I=nrow(don)
+J=ncol(don)
+tdc=tab.disjonctif(don)
 
-#Ellipses
-out1=matrix(NA,(I*J),4)
+axe=vector(mode="list")
+axe$eig=acm$eig
+
+vect_prod=rep(rownames(acm$ind$coord),each=J)
+vect_juge=rep(1:J,I)
+vect_prod_juge=data.frame(vect_prod,vect_juge)
+colnames(vect_prod_juge)=c("Product","Panelist")
+
+coord=matrix(NA,(I*J),ncp)
+coord=data.frame(coord)
+colnames(coord)=paste("Dim",1:ncp,sep=" ")
 lev=rep(NA,J)
 for (i in 1:J){
 lev[i]=length(levels(don[,i]))}
-tdc=tab.disjonctif(don)
 gp=0
 for (i in 1:J){
-out1[((i-1)*I+1):(i*I),1:2]=tdc[,(1+gp):(gp+lev[i])]%*%acm$var$coord[(1+gp):(gp+lev[i]),1:2]
+coord[((i-1)*I+1):(i*I),]=tdc[,(1+gp):(gp+lev[i])]%*%acm$var$coord[(1+gp):(gp+lev[i]),1:ncp]
 gp=gp+lev[i]}
 
-#Répétition des produits
-prod=rep(rownames(don),J)
-#Répétition des juges
-jug=rep(colnames(don),each=I)
+#Pour avoir les produits au barycentre des mots
+for (i in 1:ncp){
+coord[,i]=coord[,i]/sqrt(acm$eig[i,1])}
 
-out2=data.frame(out1)
-out2[,3]=prod
-out2[,4]=jug
-out2[,3]=as.factor(out2[,3])
-out2[,4]=as.factor(out2[,4])
+coord.partial=data.frame(coord,vect_prod_juge)
 
-d12=acm$ind$coord[,1:2]
-pr=rownames(don)
-ju=rep("0",I)
-out22=data.frame(d12,pr,ju)
-colnames(out22)=colnames(out2)
-out3=rbind(out22,out2)
-out3[,3]=as.factor(out3[,3])
-out3[,4]=as.factor(out3[,4])
-out4=out3
-out4[-c(1:I),1]=out3[-c(1:I),1]/sqrt(acm$eig[1,1])
-out4[-c(1:I),2]=out3[-c(1:I),2]/sqrt(acm$eig[2,1])
-out5=out4
-out5$moyen=out5
+vect_prod_moy=rownames(acm$ind$coord)
+vect_juge_moy=rep(0,I)
+vect_prod_juge_moy=data.frame(vect_prod_moy,vect_juge_moy)
+colnames(vect_prod_juge_moy)=c("Product","Panelist")
+coord.partial_moy=data.frame(acm$ind$coord[,1:ncp],vect_prod_juge_moy)
 
-sim=simulation(out5,nbsimul=B)
+axe$moyen=rbind(coord.partial_moy,coord.partial)
+axe$moyen[,"Panelist"]=as.factor(axe$moyen[,"Panelist"])
+ 
+return(axe)}
+
+res.axe=out_axe(don,acm)
+
+sim=simulation(res.axe,nbsimul=B)
 if (graph){
 x11()
-plotellipse (sim, alpha = alpha, eig = signif(acm$eig,4))}
+color =  c("black", "red", "green3", "blue", "cyan", "magenta", 
+            "darkgray", "darkgoldenrod", "darkgreen", "violet", 
+            "turquoise", "orange", "lightpink", "lavender", "yellow", 
+            "lightgreen", "lightgrey", "lightblue", "darkkhaki", 
+            "darkmagenta", "darkolivegreen", "lightcyan", "darkorange", 
+            "darkorchid", "darkred", "darksalmon", "darkseagreen", 
+            "darkslateblue", "darkslategray", "darkslategrey", 
+            "darkturquoise", "darkviolet", "lightgray", "lightsalmon", 
+            "lightyellow", "maroon")
+repet=I/length(color)
+color=rep(color,ceiling(repet))
+plotellipse (sim, alpha = alpha, eig = signif(acm$eig,4),coord=axes,color=color)}
+
+#Calcul du rapport
+inter=sum(tapply(sim[[1]][[3]][,1],sim[[1]][[3]][,3],mean)^2)/I
+tot=sum(sim[[1]][[3]][,1]^2)/(B*I)
+ratio=inter/tot
+###########################Fin ellipses
 
 
-#Analyse textuelle
+###########################Analyse textuelle
 texte=matrix(NA,(I*J),3)
 texte=data.frame(texte)
 texte[,1]=rep(rownames(don),J)
@@ -188,58 +222,97 @@ texte[,2]=rep(colnames(don),each=I)
 for (i in 1:J){
 texte[((I*(i-1))+1):(I*i),3]=paste(don[,i])}
 #On ne prend pas le tiret comme séparateur, ni l'apostrophe
-#restext=textual(texte,3,1,sep.word="(), ?;/:'!$=+\n;{}<>[]-")
-#restext=textual(texte,3,1,sep.word="(), ?;/:!$=+\n;{}<>[]")
+restext=textual(texte,3,1,sep.word=sep.words)
+
+#Suppression des modalité g1, ..., g99 (attention tout est mis en minuscule avce textual)
+mod.suppr=paste("g",1:99,sep="")
+mod.suppr=intersect(colnames(restext$cont.table),mod.suppr)
+if (length(mod.suppr)!=0){
+num.mod.suppr=which(colnames(restext$cont.table)%in%mod.suppr)
+restext$cont.table=restext$cont.table[,-num.mod.suppr]
+num.mod.suppr2=which(rownames(restext$nb.words)%in%mod.suppr)
+restext$nb.words=restext$nb.words[-num.mod.suppr2,] }
 
 #Nombre de mots différents
-#nb_mot_diff=nrow(restext$nb.words)
-#cat("Number of different words : ",nb_mot_diff,"\n")
-
-#Nombre de parfums par classe
-nbp=strsplit(summary(don,maxsum=max(lev)),":")
-agg=rep(0,J*max(lev))
-for (i in 1:(J*max(lev))){
-agg[i]=nbp[[i]][2]}
-agg2=na.omit(agg)
-agg2=as.factor(agg2)
-if (graph){
-x11()
-plot(agg2,main="Number of products per group")}
+nb_mot_diff=nrow(restext$nb.words)
+cat("Number of different words : ",nb_mot_diff,"\n")
 
 #Nombre de mots par classe
-#nb_mot=rep(0,J*max(lev))
-#for (i in 1:(J*max(lev))){
-#nb_mot[i]=nbp[[i]][1]}
-#nb_mot2=na.omit(nb_mot)
-#nb_mot2=as.factor(nb_mot2)
-#nb_mot3=as.character(nb_mot2)
-#nb_mot4=chartr("123456789", "444444444", nb_mot3)
-#nb_m=rep(NA,length(nb_mot4))
-#for (i in 1:length(nb_mot4)){
-#nb_m[i]=length(which((strsplit(nb_mot4," ")[i][[1]]!="")&((strsplit(nb_mot4," ")[i][[1]]!="Gr4"))))}
-#nb_m=as.factor(nb_m)
-#
-##Seuil minimum à mettre en paramètre...
-#freq_min=which(apply(restext$cont.table,2,sum)<=mot_min)
-#if (length(freq_min)!=0){
-#restext$cont.table=restext$cont.table[,-freq_min]}
-#
+mots=rep(NA,sum(lev))
+grp=0
+for (i in 1:J){
+mots[(grp+1):(grp+lev[i])]=levels(don[,i])
+grp=grp+lev[i]}
+mots_split=strsplit(mots,split=sep.words)
+nb_mots=rep(NA,length(mots_split))
+for (i in 1:length(mots_split)){
+if (mots_split[[i]][1] %in% paste("G",1:99,sep="")){
+nb_mots[i]=0}
+else {
+nb_mots[i]=length(mots_split[[i]])}}
+nb_mots2=as.factor(nb_mots)
 
-#juxt=matrix(NA,sum(restext$cont.table),2)
-#gp=0
-#for (i in 1:nrow(restext$cont.table)){
-#for (j in 1:ncol(restext$cont.table)){
-#if (restext$cont.table[i,j]!=0){
-#juxt[(gp+1):(gp+restext$cont.table[i,j]),1]=rownames(restext$cont.table)[i]
-#juxt[(gp+1):(gp+restext$cont.table[i,j]),2]=colnames(restext$cont.table)[j]
-#gp=gp+restext$cont.table[i,j]}}}
-#restexttot=catdes(data.frame(juxt),1)
+if (graph){
+x11()
+plot(nb_mots2,main="Number of words per group")}
+
+#Seuil minimum à mettre en paramètre...
+freq_min=which(apply(restext$cont.table,2,sum)<=word.min)
+if (length(freq_min)!=0){
+restext$cont.table=restext$cont.table[,-freq_min]}
+
+juxt=matrix(NA,sum(restext$cont.table),2)
+colnames(juxt)=c("Product","Word")
+gp=0
+for (i in 1:nrow(restext$cont.table)){
+for (j in 1:ncol(restext$cont.table)){
+if (restext$cont.table[i,j]!=0){
+juxt[(gp+1):(gp+restext$cont.table[i,j]),1]=rownames(restext$cont.table)[i]
+juxt[(gp+1):(gp+restext$cont.table[i,j]),2]=colnames(restext$cont.table)[j]
+gp=gp+restext$cont.table[i,j]}}}
+caract_prod=catdes(data.frame(juxt),1)
+###########################Analyse textuelle
 
 
-#Résultats en sortie
-acm_call=list(X=acm$call$X,marge.col=acm$call$marge.col,marge.row=acm$call$marge.row,ncp=acm$call$ncp,quali=acm$call$quali,name.group=afm$call$name.group,sim=sim)
-group_afm=list(coord=afm$group$coord,cos2=afm$group$cos2,contrib=afm$group$contrib)
-res=list(eig=acm$eig,var=acm$var,ind=acm$ind,group=group_afm,call=acm_call,cooccur=compte2,reord=catego_num2,cramer=res2)                                                       
+##################Elements of validity
+if (val==TRUE){
+eig_perm=ratio_perm=rep(NA,B.val)
+for (i in 1:B.val){
+don_perm=don
+for (j in 1:J){
+if (!is.null(label.miss)){
+don_perm[which(don[,j]==label.miss),j]=don[which(don[,j]==label.miss),j]
+don_perm[which(don[,j]!=label.miss),j]=don[sample(which(don[,j]!=label.miss)),j]}
+else {
+don_perm[,j]=don[sample(1:I,I),j]}}
+acm_perm=MCA(don_perm,graph=F)
+eig_perm[i]=acm_perm$eig[1,1]
+res.axe_perm=out_axe(don_perm,acm_perm)
+sim_perm=simulation(res.axe_perm,nbsimul=B)
+inter_perm=sum(tapply(sim_perm[[1]][[3]][,1],sim_perm[[1]][[3]][,3],mean)^2)/I
+tot_perm=sum(sim_perm[[1]][[3]][,1]^2)/(B*I)
+ratio_perm[i]=inter_perm/tot_perm
+}
+eig_p.value=length(which(eig_perm>acm$eig[1,1]))/B.val
+ratio_p.value=length(which(ratio_perm>ratio))/B.val
+}
+##################End elements of validity
+
+##################Sorties
+acm_call=list(X=acm$call$X,marge.col=acm$call$marge.col,marge.row=acm$call$marge.row,ncp=acm$call$ncp,quali=acm$call$quali,mca=acm,sim=sim)
+group_afm=list(coord=acm$var$eta2)
+if(val==TRUE){
+validity=vector(mode="list")
+validity$eig=vector(mode="list")
+validity$ratio=vector(mode="list")
+validity$eig$value=acm$eig[1,1]
+validity$eig$p.value=eig_p.value
+validity$eig$permut=eig_perm
+validity$ratio$value=ratio
+validity$ratio$p.value=ratio_p.value
+validity$ratio$permut=ratio_perm}
+else {
+validity=NULL}
+res=list(eig=acm$eig,var=acm$var,ind=acm$ind,group=group_afm,acm=acm,call=acm_call,cooccur=compte2,reord=catego_num2,cramer=res2,textual=caract_prod,validity=validity)                                                       
 class(res) <- c("catego", "list ")
 return(res)}
-

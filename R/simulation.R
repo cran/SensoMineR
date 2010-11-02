@@ -34,7 +34,7 @@
   nbjuge <- length(levels(axeAFM$moyen[,ncol(axeAFM$moyen)]))-1
   nbprod <- length(levels(axeAFM$moyen[,ncol(axeAFM$moyen)-1]))
   if (length(nbchoix)==0) nbchoix <- nbjuge
-  print(paste("Number of panelists in the virtual panel: ",nbchoix,"  (in the real panel: ",nbjuge,")."))
+#  print(paste("Number of panelists in the virtual panel: ",nbchoix,"  (in the real panel: ",nbjuge,")."))
   echantillon <- matrix(0,nbsimul,nbchoix)
   for (j in 1:nbsimul) echantillon[j,] <- sample(nbjuge,nbchoix,replace=TRUE)
 
