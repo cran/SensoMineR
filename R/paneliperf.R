@@ -58,7 +58,7 @@ options(contrasts=c("contr.sum", "contr.sum"))
   agree <- matrix(NA,length(lab.j),lastvar-firstvar+1)
   for (j in 1:length(lab.j)){
       bb <- averagetable(donnee,formul=formul.j,subset=(donnee[,col.j]==lab.j[j]),firstvar=firstvar,lastvar=lastvar)
-      for (k in 1:ncol(bb)) if (var(bb[,k],na.rm=T)!=0) agree[j,k]=cor(aa[,k],bb[,k],use="pairwise.complete.obs")
+      for (k in 1:ncol(bb)) if (var(bb[,k],na.rm=TRUE)!=0) agree[j,k]=cor(aa[,k],bb[,k],use="pairwise.complete.obs")
     }
   dimnames(agree) <- list(lab.j,lab.sauv[firstvar:lastvar])  
 
@@ -83,7 +83,7 @@ options(contrasts=c("contr.sum", "contr.sum"))
 
   if (synthesis){
     bb=panelperf(donnee,formul=formul,subset=NULL,firstvar=firstvar,lastvar=lastvar,random=random)
-    aux=cbind(-qnorm(bb$p.value/2),apply(agree,2,median,na.rm=T),apply(prob,2,median,na.rm=T),bb$res,bb$r2)
+    aux=cbind(-qnorm(bb$p.value/2),apply(agree,2,median,na.rm=TRUE),apply(prob,2,median,na.rm=TRUE),bb$res,bb$r2)
     colnames(aux)=c(colnames(bb$p.value),"median(agree)","median(prob.ind)","stdev Res","R2")
     if (graph) {
       res.pca = PCA(aux,quanti.sup=(ncol(aux)-3):ncol(aux),graph=FALSE)

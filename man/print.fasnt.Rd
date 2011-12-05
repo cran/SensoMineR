@@ -26,7 +26,7 @@ Print Factorial Approach for Sorting Napping Task data (FASNT) results.
 \examples{
 \dontrun{
 data(smoothies)
-res.fasnt <- fasnt(smoothies, first="catego",graph=F)
+res.fasnt <- fasnt(smoothies, first="nappe",graph=F)
 print.fasnt(res.fasnt, file="c:/fasnt.csv", sep = ";")
 }
 }

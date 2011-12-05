@@ -27,7 +27,7 @@ Département de mathématiques appliquées, AGROCAMPUS OUEST Centre de Rennes
 \dontrun{
 data(smoothies)
 ## Example of FASNT
-res.fasnt<-fasnt(smoothies,first="catego")
+res.fasnt<-fasnt(smoothies,first="nappe")
 }
 }
 

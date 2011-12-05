@@ -9,7 +9,7 @@ triangle.design <- function(nbprod , nbpanelist, bypanelist = nbprod*(nbprod-1)/
       aux[numligne,2] = labprod[j]
     }
   }
-  aux = aux[order(runif(nrow(aux))),]
+  aux = aux[sample(nrow(aux)),]
   plan = as.data.frame(matrix(0,nbpanelist*bypanelist,4))
  
   num.test = 0
@@ -23,29 +23,30 @@ triangle.design <- function(nbprod , nbpanelist, bypanelist = nbprod*(nbprod-1)/
       plan[num.test,2:3] = aux[ligne.aux,]
     }
   }
-  for (i in 1:(nbpanelist*bypanelist)){
-    if (i - 6*floor(i/6) == 1){
+  plan <- plan[order(plan[,2],plan[,3]),]
+  for (i in 1:(nrow(plan))){
+    if (i%%6 == 1) plan[i,4] = plan[i,2]
+    if (i%%6 == 2) plan[i,4] = plan[i,3]
+    if (i%%6 == 3){
       plan[i,4] = plan[i,3]
       plan[i,3] = plan[i,2]
     }
-    if (i - 6*floor(i/6) == 2){
+    if (i%%6 == 4){
+      plan[i,4] = plan[i,2]
+      plan[i,2] = plan[i,3]
+      plan[i,3] = plan[i,4]
+    }
+    if (i%%6 == 5){
       plan[i,4] = plan[i,3]
       plan[i,3] = plan[i,2]
       plan[i,2] = plan[i,4]
     }
-    if (i - 6*floor(i/6) == 3){
-      plan[i,4] = plan[i,2]
-      plan[i,2] = plan[i,3]
-      plan[i,3] = plan[i,2]
-    }
-    if (i - 6*floor(i/6) == 4) plan[i,4] = plan[i,2]
-    if (i - 6*floor(i/6) == 5) plan[i,4] = plan[i,3]
-    if (i - 6*floor(i/6) == 0){
+    if (i%%6 == 0){
       plan[i,4] = plan[i,2]
       plan[i,2] = plan[i,3]
     }
   }
-  plan = plan[order(runif(nrow(plan))),]
+  plan = plan[sample(nrow(plan)),]
   plan = plan[order(plan[,1]),]
   
   row.names(plan) = paste("Panelist",plan[,1],".Test",1:bypanelist,sep="")

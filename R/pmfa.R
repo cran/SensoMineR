@@ -2,7 +2,7 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
     graph.ind = TRUE, graph.mfa = TRUE, lim = c(60, 40), coord = c(1, 2), cex = 0.8)
 {
     procrustes <- function(amat, target, orthogonal = F, translate = F,
-        magnify = F) {
+        magnify = FALSE) {
         for (i in nrow(amat):1) {
             if (any(is.na(amat)[i, ]) | any(is.na(target)[i,
                 ])) {
@@ -24,8 +24,8 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
                 target.m <- (rep(1/p, p) %*% target)[, ]
                 amat.m <- (rep(1/p, p) %*% amat)[, ]
                 target.c <- scale(target, center = target.m,
-                  scale = F)
-                amat.c <- scale(amat, center = amat.m, scale = F)
+                  scale = FALSE)
+                amat.c <- scale(amat, center = amat.m, scale = FALSE)
                 j <- svd(crossprod(target.c, amat.c))
             }
             else {
@@ -77,19 +77,19 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
         if ((dilat == TRUE) & (do.mfa == TRUE)) {
             eig <- eigen(1/nrow(atourner) * t(scale(atourner,scale=FALSE)) %*% scale(atourner,scale=FALSE))
             res.procrustes <- procrustes(atourner, mean.conf,
-                orthogonal = T, translate = T, magnify = F)
+                orthogonal = TRUE, translate = TRUE, magnify = FALSE)
             magnify <- sqrt(res.afm$eig[1,1])/sqrt(eig$values[1])
         }
         else {
             res.procrustes <- procrustes(atourner, mean.conf,
-                orthogonal = T, translate = T, magnify = T)
+                orthogonal = TRUE, translate = TRUE, magnify = TRUE)
             magnify <- res.procrustes$magnify
         }
         tourne <- scale(atourner,scale=FALSE) %*% res.procrustes$tmat * magnify
         res[j] <- coeffRV(mean.conf, tourne)$rv
-        if (graph.ind == T) {
+        if (graph.ind == TRUE) {
             dd = cbind(mean.conf, tourne)
-            nappe <- rbind((matrix(c(0, 0, 0, lim[2], lim[1], lim[2], lim[1], 0),ncol=2,byrow = T)
+            nappe <- rbind((matrix(c(0, 0, 0, lim[2], lim[1], lim[2], lim[1], 0),ncol=2,byrow = TRUE)
                         -cbind(rep( matricemoyenne[(2 * (j - 1) + 1)],4),rep( matricemoyenne[(2 * j)],4))) %*% res.procrustes$tmat * magnify)
                 
                

@@ -50,8 +50,9 @@ Returns the products factor map, the categories factor map, the coordinates fact
 
 \examples{
 data(smoothies)
-res.fasnt <- fasnt(smoothies, first="catego",graph=FALSE)
-plot.fasnt(res.fasnt,choix="ind",invisible="var",habillage=13,title="Objects colored according to the groups provided by consumer 5")
+res.fasnt <- fasnt(smoothies, first="nappe",graph=FALSE)
+plot.fasnt(res.fasnt,choix="ind",invisible="var",habillage=15,
+  title="Objects colored according to the groups provided by consumer 5")
 plot.fasnt(res.fasnt,choix="partial",lab.partial=FALSE)
 }
 

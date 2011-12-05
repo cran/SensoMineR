@@ -3,10 +3,12 @@
 ########################################################################
 searchvalue <- function(mat,nbval){
   aa <- rev(order(mat))[1:nbval]
-  res <- as.data.frame(matrix(0,0,2))
-  for (i in 1:nbval){
+  bb <- (aa[1]-0.1)%/%nrow(mat)
+  res <- data.frame(colnames(mat)[bb+1],rownames(mat)[aa[1]-nrow(mat)*bb])
+  for (i in 1:2) res[,i]=as.character(res[,i])
+  for (i in 2:nbval){
     bb <- (aa[i]-0.1)%/%nrow(mat)
-    res <- rbind(res,c(colnames(mat)[bb+1],rownames(mat)[aa[i]-nrow(mat)*bb]))
+    res <- rbind.data.frame(res,c(colnames(mat)[bb+1],rownames(mat)[aa[i]-nrow(mat)*bb]))
   }
   res <- cbind.data.frame(res,mat[aa])
 }

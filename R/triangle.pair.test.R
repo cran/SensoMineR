@@ -7,7 +7,7 @@ triangle.pair.test <- function(nb.good,nb.answer){
   aux = matrix(0,nb.good+1,1)
   for (k in 0:nb.good) aux[k] = dbinom(nb.good-k,nb.answer-k,1/3)
   minimum = 0
-  for (k in round(nb.answer/3):nb.answer) if(minimum==0 & (pbinom(k-1,nb.answer,1/3,lower.tail=F)<0.05)) minimum=k
+  for (k in round(nb.answer/3):nb.answer) if(minimum==0 & (pbinom(k-1,nb.answer,1/3,lower.tail=FALSE)<0.05)) minimum=k
   print(paste("The estimation (by  Maximum Likelihood) of panelist which really perceived the difference between the two products is:", rev(order(aux))[1]-1))
   print(paste("The  Maximum Likelihood is: ",round(max(aux),5)))
   print(paste("The minimum of panelists who should detect the odd product to can say that panelists perceive the difference between the products is:",minimum))

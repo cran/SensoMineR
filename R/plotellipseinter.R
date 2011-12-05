@@ -1,11 +1,11 @@
-"plotellipseinter" <- function(mat,alpha=0.05,coord=c(1,2),nbgroup=1,moy=TRUE,eig,cex=1,color=NULL){
+"plotellipseinter" <- function(mat,alpha=0.05,coord=c(1,2),nbgroup=1,moy=TRUE,eig,cex=1,color=NULL,title=NULL){
 
 #################################################################
 "ellipse2" <- function(loc, cov,alpha)
       {
             A <- cov
             detA <- A[1, 1] * A[2, 2] - A[1, 2]^2
-            dist <- sqrt(qchisq(1-alpha/2, 2))
+            dist <- sqrt(qchisq(1-alpha, 2))
             ylimit <- sqrt(A[2, 2]) * dist
             y <- seq( - ylimit, ylimit, 0.01 * ylimit)
             sqrt.discr <- sqrt(detA/A[2, 2]^2 * abs(A[2, 2] * dist^2 - y^2))
@@ -55,8 +55,10 @@ miny <- min(coord.ellipse.a.tracer[,2*(1:nbp)],na.rm=TRUE)
 maxy <- max(coord.ellipse.a.tracer[,2*(1:nbp)],na.rm=TRUE)
 
   plot(0, 0, xlab = paste("Dim ",coord[1]," (",eig[coord[1],2],"%)",sep=""), ylab = paste("Dim ",coord[2]," (",eig[coord[2],2],"%)",sep=""), xlim = c(minx*1.05,maxx*1.05), ylim = c(1.05*miny,1.05*maxy), col = "white", asp=1)
-  if (moy==TRUE) title(main = "Confidence ellipses for the mean points")
-  if (moy==FALSE) title(main = "Confidence ellipses for the partial points")
+  if (is.null(title)){
+    if (moy==TRUE) title(main = "Confidence ellipses for the mean points")
+    if (moy==FALSE) title(main = "Confidence ellipses for the partial points")
+  } else {title(main=title)}
   abline(v=0,lty=2)
   abline(h=0,lty=2)
   if (moy==FALSE){

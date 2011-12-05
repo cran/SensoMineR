@@ -30,7 +30,7 @@ by 100 consumers, according to their liking (0) or disliking (10).
 }
 
 \source{
-Département de mathématiques appliquées, Agrocampus Rennes
+Applied Mathematics Department, Agrocampus Rennes
 }
 
 \examples{

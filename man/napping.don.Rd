@@ -27,6 +27,8 @@ Département de mathématiques appliquées, Agrocampus Rennes
 \dontrun{
 data(napping)
 nappeplot(napping.don)
+res <- pmfa(napping.don, napping.words)
+res2 <- boot(napping.don,method="napping")
 }
 }
 \keyword{datasets}

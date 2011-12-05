@@ -87,6 +87,7 @@ Husson F., Lê S. & Pagès J.  Variability of the representation of the variables 
 François Husson, Sébastien Lê}
 
 \examples{
+\dontrun{
 data(chocolates)
 res <- panellipse.session(sensochoc, col.p = 4, col.j = 1, col.s = 2, 
     firstvar = 5)
@@ -94,5 +95,6 @@ magicsort(res$variability)
 for (i in 1:dim(res$hotelling$bysession)[3]) coltable(res$hotelling$bysession[,,i], 
     main.title = paste("P-values for the Hotelling's T2 tests (",
     dimnames(res$hotelling$bysession)[3][[1]][i],")",sep=""))
+}
 }
 \keyword{multivariate}

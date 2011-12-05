@@ -112,7 +112,7 @@ for (j in i:J){
 res[i,j]=res[j,i]=cramer(don[,i],don[,j])}}
 colnames(res)=rownames(res)=colnames(don)
 
-afc=CA(res,graph=F)
+afc=CA(res,graph=FALSE)
 
 ord=order(afc$row$coord[,1])
 res2=res[ord,]
@@ -285,7 +285,7 @@ don_perm[which(don[,j]==label.miss),j]=don[which(don[,j]==label.miss),j]
 don_perm[which(don[,j]!=label.miss),j]=don[sample(which(don[,j]!=label.miss)),j]}
 else {
 don_perm[,j]=don[sample(1:I,I),j]}}
-acm_perm=MCA(don_perm,graph=F)
+acm_perm=MCA(don_perm,graph=FALSE)
 eig_perm[i]=acm_perm$eig[1,1]
 res.axe_perm=out_axe(don_perm,acm_perm)
 sim_perm=simulation(res.axe_perm,nbsimul=B)

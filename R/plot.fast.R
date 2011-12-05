@@ -126,8 +126,7 @@ plot.fast=function (x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, inv
     else sub.titre <- "SortingTask factor map"
     if (is.na(test.invisible[1]) | is.na(test.invisible[2]) |
         is.na(test.invisible[4]) | is.na(test.invisible[5])) {
-        if (new.plot)
-            dev.new()
+        if (new.plot) dev.new()
         plot(0, 0, main = titre, xlab = paste("Dim ", axes[1],
             " (", signif(res.mca$eig[axes[1], 2], 4), "%)", sep = ""),
             ylab = paste("Dim ", axes[2], " (", signif(res.mca$eig[axes[2],

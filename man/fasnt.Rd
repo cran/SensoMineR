@@ -9,7 +9,8 @@ Perform Factorial Approach for Sorting Napping Task data (FASNT) on a table wher
 For the partitionning variable, the label associated with a group can be an arbirary label (for example G1 for group 1, \emph{etc.}) or the words associated with the group in the case of qualified sorted napping.}
 
 
-\usage{fasnt(don,first="nappe",alpha=0.05,sep.word=";",word.min=5,graph=TRUE,axes=c(1,2),ncp=5,name.group=NULL,B=100,val=FALSE, B.val=200)}
+\usage{fasnt(don,first="nappe",alpha=0.05,sep.word=";",word.min=5,graph=TRUE,axes=c(1,2),
+    ncp=5,name.group=NULL,B=100,val=FALSE, B.val=200)}
         
 \arguments{
   \item{don}{a data frame with n rows (products) and p columns (assesor : categorical variables)}
@@ -50,7 +51,7 @@ Cadoret, M., L\^e, S., Pag\`es, J. (2009) \emph{Combining the best of two worlds
 \dontrun{
 data(smoothies)
 ## Example of FASNT results
-res.fasnt<-fasnt(smoothies,first="catego")
+res.fasnt<-fasnt(smoothies,first="nappe")
 }
 }
 \keyword{multivariate}

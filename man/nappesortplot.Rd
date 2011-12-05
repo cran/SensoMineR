@@ -33,7 +33,7 @@ Pag\`es, J., L\^e, S., Cadoret, M. (2010) \emph{The Sorted Napping: a new holist
 \examples{
 \dontrun{
 data(smoothies)
-nappesortplot(smoothies,first="catego")
+nappesortplot(smoothies,first="nappe")
 }
 }
 \keyword{multivariate}

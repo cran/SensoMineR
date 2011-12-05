@@ -18,14 +18,14 @@ A data frame with 12 rows (the number of perfumes) and 30 columns (the number of
 }
 
 \source{
-Département de mathématiques appliquées, AGROCAMPUS OUEST Centre de Rennes
+Applied Mathematics Department, AGROCAMPUS OUEST Centre de Rennes
 }
 
 \examples{
 data(perfume)
 
 ## Example of FAST
-res.fast = fast(perfume)
+res.fast <- fast(perfume)
 
 }
 

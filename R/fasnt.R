@@ -247,7 +247,7 @@ etendue.Y=max.Y-min.Y
 res.pca=matrix(NA,2,J)
 dimen=rep(NA,J)
 for (i in 1:J){
-acp=PCA(don[,(2*(i-1)+1):(2*i)],graph=F,scale.unit=F)
+acp=PCA(don[,(2*(i-1)+1):(2*i)],graph=FALSE,scale.unit=FALSE)
 res.pca[,i]=acp$eig[,1]
 dimen[i]=1+(res.pca[2,i]^2/res.pca[1,i]^2)}
 
@@ -280,15 +280,15 @@ resultat=matrix(NA,3,2)
 rownames(resultat)=c("PCA X","PCA Y","PCA F1")
 colnames(resultat)=c("% inertia dim 1","% inertia plane 1-2")
 
-acp.X=PCA(X,scale.unit=T,graph=F)
-acp.Y=PCA(Y,scale.unit=T,graph=F)
+acp.X=PCA(X,scale.unit=TRUE,graph=FALSE)
+acp.Y=PCA(Y,scale.unit=TRUE,graph=FALSE)
 
 res.pca=matrix(NA,I,J)
 for (i in 1:J){
-acp=PCA(don[,(2*(i-1)+1):(2*i)],graph=F,scale.unit=F)
+acp=PCA(don[,(2*(i-1)+1):(2*i)],graph=FALSE,scale.unit=FALSE)
 res.pca[,i]=acp$ind$coord[,1]}
 
-acp.F1=PCA(res.pca,scale.unit=T,graph=F)
+acp.F1=PCA(res.pca,scale.unit=TRUE,graph=FALSE)
 
 resultat[1,1]=acp.X$eig[1,2]
 resultat[1,2]=acp.X$eig[2,3]
@@ -404,8 +404,8 @@ for (i in 1:B.val){
 don_perm=don
 num_juge=0
 for (j in 1:J){
-don_perm[,(3*(j-1)+1):(3*j)]=don[sample(1:I,I,replace=F),(3*(j-1)+1):(3*j)]}
-hmfa_perm=HMFA(don_perm,H=hierar,type=rep(c("c","n"),J),graph=F)
+don_perm[,(3*(j-1)+1):(3*j)]=don[sample(1:I,I,replace=FALSE),(3*(j-1)+1):(3*j)]}
+hmfa_perm=HMFA(don_perm,H=hierar,type=rep(c("c","n"),J),graph=FALSE)
 eig_perm[i]=hmfa_perm$eig[1,1]
 
 res.axe_perm=out_axe_mfa(don_perm,hmfa_perm)
