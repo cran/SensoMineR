@@ -9,7 +9,7 @@ Plot the graphs for Factorial Approach for Sorting Task data (FAST).
 }
 
 \usage{
-plot.fast(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, invisible = NULL,
+\method{plot}{fast}(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, invisible = NULL,
     col.ind = "blue", col.var = "red", col.quali.sup = "darkred", 
     col.ind.sup ="darkblue", col.quanti.sup = "black",label = "all",
     cex = 1,lab.grpe = TRUE, title = NULL, habillage = "none", palette = NULL,

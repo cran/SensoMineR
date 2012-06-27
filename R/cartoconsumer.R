@@ -13,7 +13,12 @@ cartoconsumer <- function(res,data.pref,nb.clust=0,seuil=0.8,consol=TRUE,ncp=5,s
     	else character(0L)
 	}
 
-	data.pref <- t(data.pref)
+	if (any(is.na(data.pref))){
+	  missing <- which(is.na(data.pref))
+	  data.pref[missing] <- (matrix(rep(apply(data.pref,1,mean,na.rm=T),ncol(data.pref)),ncol=ncol(data.pref))
+	  +matrix(rep(apply(data.pref,2,mean,na.rm=T),each=nrow(data.pref)),ncol=ncol(data.pref))-matrix(rep(mean(data.pref,na.rm=TRUE),ncol(data.pref)*nrow(data.pref)),ncol=ncol(data.pref)))[missing]
+	}
+data.pref <- t(data.pref)
 #	if (scale.conso) data.pref=t(scale(t(data.pref)))
 	res.pca=PCA(data.pref,graph=FALSE,scale.unit=scale.conso,ncp=ncp)
 	if (graph.hcpc==FALSE) nb.clust=-1

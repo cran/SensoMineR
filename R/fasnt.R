@@ -1,11 +1,7 @@
-fasnt=function(don,first="nappe",alpha=0.05,sep.word=";",word.min=5,graph=TRUE,axes=c(1,2),ncp=5,name.group=NULL,B=100,val=FALSE, B.val=200){
-#don : jeu de données
-#B : nombre de réechantillonnages pour les ellipses
-#B_vp : nombre de réechantillonnages pour tester la première valeur propre de l'AFMH
+fasnt=function(don,first="nappe",B=100,axes=c(1,2),alpha=0.05,ncp=5,graph=TRUE,name.group=NULL,sep.word=" ",word.min=5,ncp.boot=2){
+
 don=data.frame(don)
-#I : nombre de produits
 I=nrow(don)
-#J : nombre de sujets
 J=ncol(don)/3
 
 #Si pour chaque sujet d'abord la catégorisation  puis la nappe
@@ -38,7 +34,7 @@ plot.HMFA.group.niv1 <- function(res.hmfa, coord = c(1, 2),title = NULL, cex = 1
             title <- "Groups representation"
         else sub.title <- "Groups representation"
 
-            coord.actif <- res.hmfa$group[[1]][, coord]
+            coord.actif <- res.hmfa$group$coord[[1]][, coord]
              gp=rep(c("1","2"),(length(coord.actif[,1])/2))
                 plot(coord.actif, xlab = lab.x, ylab = lab.y,
                   xlim = c(0, 1), ylim = c(0, 1), pch = 17, col = color[2],
@@ -120,7 +116,7 @@ text(afmh$ind$coord[, axes[1]],afmh$ind$coord[, axes[2]],col=1:I, rownames(afmh$
 
 for (j in 1:J) {
 points(afmh$partial[[2]][, axes, j], col=rep(1:I,times=J),pch = 20, cex = 0.8)
-text(afmh$partial[[2]][, axes, j], col=rep(1:I,times=J),labels=rownames(afmh$group[[2]])[j],pos=3,cex=0.5)
+text(afmh$partial[[2]][, axes, j], col=rep(1:I,times=J),labels=rownames(afmh$group$coord[[2]])[j],pos=3,cex=0.5)
 for (i in 1:nrow(afmh$partial[[2]]))
   lines(c(afmh$ind$coord[i,axes[1]], afmh$partial[[2]][i, axes[1],j]), c(afmh$ind$coord[i, axes[2]], afmh$partial[[2]][i,axes[2], j]),col=i)
 }
@@ -152,14 +148,14 @@ for (v in 1:nrow(coord.var)) {
 }
 
 #graph des sujets
-coord.actif <- afmh$group[[2]][, axes]
+coord.actif <- afmh$group$coord[[2]][, axes]
 dev.new()
 plot(coord.actif, xlab = lab.x, ylab = lab.y,xlim = c(0, 1), ylim = c(0, 1), pch = 17, col = color[2], main = "Subjects representation", asp = 1)
 points(coord.actif[, 1], coord.actif[, 2], col = color[2],pch = 17)
 text(coord.actif[, 1], y = coord.actif[, 2],labels = rownames(coord.actif), pos = 3, col = color[2])
 
 #graph des méthodes
-coord.actif <- afmh$group[[1]][, axes]
+coord.actif <- afmh$group$coord[[1]][, axes]
 gp=rep(c("1","2"),(length(coord.actif[,1])/2))
 dev.new()
 plot(coord.actif, xlab = lab.x, ylab = lab.y,xlim = c(0, 1), ylim = c(0, 1), pch = 17, col = color[2],main = "Method's representation", asp = 1)
@@ -169,49 +165,10 @@ text(coord.actif[, 1], y = coord.actif[, 2],labels = rownames(coord.actif), pos 
 
 
 ########################################Ellipses
-out_axe_mfa=function(don,afmh){
-I=nrow(don)
-J=nrow(afmh$group[[2]])
 
-axe=vector(mode="list")
-axe$eig=afmh$eig
-
-vect_prod=rep(rownames(afmh$ind$coord),each=J)
-vect_juge=rep(1:J,I)
-vect_prod_juge=data.frame(vect_prod,vect_juge)
-colnames(vect_prod_juge)=c("Product","Panelist")
-afmh.coord.part=afmh$partial[[2]][,,1][1,]
-for (i in 1:I){
-for (j in 1:J){
-afmh.coord.part=rbind(afmh.coord.part,afmh$partial[[2]][,,j][i,])}}
-afmh.coord.part=afmh.coord.part[-1,]
-coord.partial=data.frame(afmh.coord.part,vect_prod_juge)
-
-
-vect_prod_moy=rownames(afmh$ind$coord)
-vect_juge_moy=rep(0,I)
-vect_prod_juge_moy=data.frame(vect_prod_moy,vect_juge_moy)
-colnames(vect_prod_juge_moy)=c("Product","Panelist")
-coord.partial_moy=data.frame(afmh$ind$coord[,1:ncp],vect_prod_juge_moy)
-colnames(coord.partial_moy)=colnames(coord.partial)
-
-axe$moyen=rbind(coord.partial_moy,coord.partial)
-axe$moyen[,"Panelist"]=as.factor(axe$moyen[,"Panelist"])
-
-axe$moyen=axe$moyen[order(axe$moyen[,ncol(axe$moyen)]),]
-
-return(axe)}
-#####################
-res.axe=out_axe_mfa(don,afmh)
-simul <- simulation(res.axe,nbsimul =B)
 if (graph){
-dev.new()
-plotellipse (simul, alpha = alpha,coord =axes, eig = signif(res.axe$eig,4))}
+boot (don,method="sortnapping", level.conf = 1-alpha,nbsim=B,ncp=ncp.boot)}
 
-#Calcul du rapport sur l'axe 1
-inter=sum(tapply(simul$moy$simul[,1],simul$moy$simul[,(ncp+1)],mean)^2)/I
-tot=sum(simul$moy$simul[,1]^2)/(B*I)
-ratio=inter/tot
 
 
 #Indicateurs du napping
@@ -247,7 +204,7 @@ etendue.Y=max.Y-min.Y
 res.pca=matrix(NA,2,J)
 dimen=rep(NA,J)
 for (i in 1:J){
-acp=PCA(don[,(2*(i-1)+1):(2*i)],graph=FALSE,scale.unit=FALSE)
+acp=PCA(don[,(2*(i-1)+1):(2*i)],graph=F,scale.unit=F)
 res.pca[,i]=acp$eig[,1]
 dimen[i]=1+(res.pca[2,i]^2/res.pca[1,i]^2)}
 
@@ -280,15 +237,15 @@ resultat=matrix(NA,3,2)
 rownames(resultat)=c("PCA X","PCA Y","PCA F1")
 colnames(resultat)=c("% inertia dim 1","% inertia plane 1-2")
 
-acp.X=PCA(X,scale.unit=TRUE,graph=FALSE)
-acp.Y=PCA(Y,scale.unit=TRUE,graph=FALSE)
+acp.X=PCA(X,scale.unit=T,graph=F)
+acp.Y=PCA(Y,scale.unit=T,graph=F)
 
 res.pca=matrix(NA,I,J)
 for (i in 1:J){
-acp=PCA(don[,(2*(i-1)+1):(2*i)],graph=FALSE,scale.unit=FALSE)
+acp=PCA(don[,(2*(i-1)+1):(2*i)],graph=F,scale.unit=F)
 res.pca[,i]=acp$ind$coord[,1]}
 
-acp.F1=PCA(res.pca,scale.unit=TRUE,graph=FALSE)
+acp.F1=PCA(res.pca,scale.unit=T,graph=F)
 
 resultat[1,1]=acp.X$eig[1,2]
 resultat[1,2]=acp.X$eig[2,3]
@@ -323,13 +280,13 @@ agg[i]=nbp[[i]][2]}
 agg2=na.omit(agg)
 agg2=as.factor(agg2)
 if (graph){
-x11()
+dev.new()
 plot(agg2,main="Number of products per group",xlab=c("Number of products"),ylab=c("Frequency"))}
 
 #Nombre de groupes
 lev2=as.factor(lev)
 if (graph){
-x11()
+dev.new()
 plot(lev2,main="Number of groups provided during sorting task",xlab=c("Number of groups"),ylab=c("Frequency"))}
 
 
@@ -374,7 +331,7 @@ nb_mots[i]=length(mots_split[[i]])}}
 nb_mots2=as.factor(nb_mots)
 
 if (graph){
-x11()
+dev.new()
 plot(nb_mots2,main="Number of words per group")}
 
 #Seuil minimum à mettre en paramètre...
@@ -382,64 +339,19 @@ freq_min=which(apply(restext$cont.table,2,sum)<=word.min)
 if (length(freq_min)!=0){
 restext$cont.table=restext$cont.table[,-freq_min]}
 
-juxt=matrix(NA,sum(restext$cont.table),2)
-colnames(juxt)=c("Product","Word")
-gp=0
-for (i in 1:nrow(restext$cont.table)){
-for (j in 1:ncol(restext$cont.table)){
-if (restext$cont.table[i,j]!=0){
-juxt[(gp+1):(gp+restext$cont.table[i,j]),1]=rownames(restext$cont.table)[i]
-juxt[(gp+1):(gp+restext$cont.table[i,j]),2]=colnames(restext$cont.table)[j]
-gp=gp+restext$cont.table[i,j]}}}
-caract_prod=catdes(data.frame(juxt),1)
+
+caract_prod=descfreq(restext$cont.table)
 ###########################Analyse textuelle
 
 
 
-##################Elements of validity
-if (val==TRUE){
-print("The procedure for the elements of validity can be time-consuming")
-eig_perm=ratio_perm=rep(NA,B.val)
-for (i in 1:B.val){
-don_perm=don
-num_juge=0
-for (j in 1:J){
-don_perm[,(3*(j-1)+1):(3*j)]=don[sample(1:I,I,replace=FALSE),(3*(j-1)+1):(3*j)]}
-hmfa_perm=HMFA(don_perm,H=hierar,type=rep(c("c","n"),J),graph=FALSE)
-eig_perm[i]=hmfa_perm$eig[1,1]
-
-res.axe_perm=out_axe_mfa(don_perm,hmfa_perm)
-sim_perm=simulation(res.axe_perm,nbsimul=B)
-inter_perm=sum(tapply(sim_perm$moy$simul[,1],sim_perm$moy$simul[,(ncp+1)],mean)^2)/I
-tot_perm=sum(sim_perm$moy$simul[,1]^2)/(B*I)
-ratio_perm[i]=inter_perm/tot_perm
-}
-eig_p.value=length(which(eig_perm>afmh$eig[1,1]))/B.val
-ratio_p.value=length(which(ratio_perm>ratio))/B.val
-}
-##################End elements of validity
-
-
-if(val==TRUE){
-validity=vector(mode="list")
-validity$eig=vector(mode="list")
-validity$ratio=vector(mode="list")
-validity$eig$value=afmh$eig[1,1]
-validity$eig$p.value=eig_p.value
-validity$eig$permut=eig_perm
-validity$ratio$value=ratio                                 
-validity$ratio$p.value=ratio_p.value
-validity$ratio$permut=ratio_perm}
-else {
-validity=NULL}
-
 indicator=list(catego=coocc_reord,napping=list(res1_nappe,res2_nappe[[1]]))
 
-call=list(simul=simul,hmfa=afmh,X=don_input)
+call=list(hmfa=afmh,X=don_input)
 
 ind=list(coord=afmh$ind$coord,cos2=afmh$ind$cos2,contrib=afmh$ind$contrib,partial=afmh$partial)
 
-res = list(eig=afmh$eig,ind=ind,quali.var=afmh$quali.var,quanti.var=afmh$quanti.var,group=afmh$group,indicator=indicator,textual=caract_prod, validity=validity,call=call)
+res = list(eig=afmh$eig,ind=ind,quali.var=afmh$quali.var,quanti.var=afmh$quanti.var,group=afmh$group,indicator=indicator,textual=caract_prod,call=call)
 
 class(res) <- c("fasnt", "list ")
 

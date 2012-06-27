@@ -58,7 +58,7 @@ options(contrasts=c("contr.sum", "contr.sum"))
   agree <- matrix(NA,length(lab.j),lastvar-firstvar+1)
   for (j in 1:length(lab.j)){
       bb <- averagetable(donnee,formul=formul.j,subset=(donnee[,col.j]==lab.j[j]),firstvar=firstvar,lastvar=lastvar)
-      for (k in 1:ncol(bb)) if (var(bb[,k],na.rm=TRUE)!=0) agree[j,k]=cor(aa[,k],bb[,k],use="pairwise.complete.obs")
+      for (k in 1:ncol(bb)) if (var(bb[,k],na.rm=TRUE)>1e-20) agree[j,k]=cor(aa[,k],bb[,k],use="pairwise.complete.obs")
     }
   dimnames(agree) <- list(lab.j,lab.sauv[firstvar:lastvar])  
 

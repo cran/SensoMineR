@@ -43,6 +43,7 @@ Returns a list with estim.ncp which corresponds to the output of the estim_ncp f
 \author{Marine Cadoret and François Husson}
 
 \examples{
+\dontrun{
 ######## Napping example
 data(napping)
 res <- boot(napping.don,method="napping")
@@ -64,6 +65,6 @@ res <- boot(cards,method="hsort", group=group.cards)
 data(perfume_fcp)
 res <- boot(perfume_fcp, method="freechoice", group = c(12,7,7,7,6,8))
 }
-
+}
 \keyword{multivariate}
 \keyword{dplot}

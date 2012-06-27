@@ -22,11 +22,11 @@ Applied Mathematics Department, AGROCAMPUS OUEST Centre de Rennes
 }
 
 \examples{
+\dontrun{
 data(perfume)
-
 ## Example of FAST
 res.fast <- fast(perfume)
-
+}
 }
 
 \keyword{datasets}

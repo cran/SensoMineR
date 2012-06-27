@@ -18,8 +18,10 @@ A data frame with 12 rows (the number of perfumes) and 47 columns.
 }
 
 \examples{
+\dontrun{
 data(perfume_fcp)
 res <- fcp(perfume_fcp, group = c(12,7,7,7,6,8))
+}
 }
 
 \keyword{datasets}

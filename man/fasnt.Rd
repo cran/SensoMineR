@@ -9,22 +9,21 @@ Perform Factorial Approach for Sorting Napping Task data (FASNT) on a table wher
 For the partitionning variable, the label associated with a group can be an arbirary label (for example G1 for group 1, \emph{etc.}) or the words associated with the group in the case of qualified sorted napping.}
 
 
-\usage{fasnt(don,first="nappe",alpha=0.05,sep.word=";",word.min=5,graph=TRUE,axes=c(1,2),
-    ncp=5,name.group=NULL,B=100,val=FALSE, B.val=200)}
-        
+\usage{fasnt(don,first="nappe",B=100,axes=c(1,2),alpha=0.05,ncp=5,
+     graph=TRUE,name.group=NULL,sep.word=" ",word.min=5,ncp.boot=2)}
+
 \arguments{
   \item{don}{a data frame with n rows (products) and p columns (assesor : categorical variables)}
-  \item{first}{2 possibilities: "nappe" if the napping variables first appear for each consumer or "catego" if it is the categorization variable} 
-  \item{alpha}{the confidence level of the ellipses}   
+  \item{first}{2 possibilities: "nappe" if the napping variables first appear for each consumer or "catego" if it is the categorization variable}
+  \item{B}{the number of simulations (corresponding to the number of virtual panels) used to compute the ellipses}
+  \item{axes}{a length 2 vector specifying the components to plot}
+  \item{alpha}{the confidence level of the ellipses}
+  \item{ncp}{number of dimensions kept in the results (by default 5)}
+  \item{graph}{boolean, if TRUE a graph is displayed}
+  \item{name.group}{a vector containing the name of the consumers (by default, NULL and the group are named J1, J2 and so on)}
   \item{sep.word}{the word separator character in the case of qualified sorted napping}
   \item{word.min}{minimum sample size for the word selection in textual analysis}
-  \item{graph}{boolean, if TRUE a graph is displayed}
-  \item{axes}{a length 2 vector specifying the components to plot}
-  \item{ncp}{number of dimensions kept in the results (by default 5)}
-  \item{name.group}{a vector containing the name of the consumers (by default, NULL and the group are named J1, J2 and so on)}
-  \item{B}{the number of simulations (corresponding to the number of virtual panels) used to compute the ellipses}  
-  \item{val}{boolean, if TRUE elements of validity are calculating (it is time consuming)}
-  \item{B.val}{the number of simulations used to obtain the elements of validity}
+  \item{ncp.boot}{number of dimensions used for the Procrustean rotations to build confidence ellipses (by default 2)}
 }
 
 \value{
@@ -36,7 +35,6 @@ A list containing the following elements:
   \item{group}{a list of matrices containing all the results for consumers (coordinates, square cosine, contributions)}
   \item{indicator}{a list of matrices containing different indicators for napping and categorization}
   \item{textual}{the results of the textual analysis for the products}
-  \item{validity}{the elements of validity calculated for the first eigenvalue and the ellipses}
   \item{call}{a list with some statistics}
 }
 
@@ -51,7 +49,7 @@ Cadoret, M., L\^e, S., Pag\`es, J. (2009) \emph{Combining the best of two worlds
 \dontrun{
 data(smoothies)
 ## Example of FASNT results
-res.fasnt<-fasnt(smoothies,first="nappe")
+res.fasnt<-fasnt(smoothies,first="nappe",sep.word=";")
 }
 }
 \keyword{multivariate}

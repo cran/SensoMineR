@@ -112,7 +112,7 @@ if (choix=="ind"){
     }
 }
 
-group=nrow(res.fasnt$group[[2]])
+group=nrow(res.fasnt$group$coord[[2]])
 
 if (choix == "group") {
         if (new.plot)
@@ -120,7 +120,7 @@ if (choix == "group") {
         if (is.null(title))
             title <- "Subjects representation"
         else sub.title <- "Subjects representation"
-        coord.actif <- res.fasnt$group[[2]][, axes]
+        coord.actif <- res.fasnt$group$coord[[2]][, axes]
 
         plot(coord.actif, xlab = paste("Dim ", axes[1], " (", signif(res.fasnt$eig[axes[1],
                 2], 4), "%)", sep = ""), ylab = paste("Dim ", axes[2], " (", signif(res.fasnt$eig[axes[2],
@@ -182,8 +182,8 @@ if (choix=="partial"){
         coord.ind <- res.fasnt$ind$coord[, axes]
 
         if (is.null(xlim)) {
-        inter <- res.fasnt$ind$partial[[2]][, axes, 1]
-        for (i in 2:nrow(res.fasnt$group[[2]])) inter <- rbind(inter, res.fasnt$ind$partial[[2]][,axes, i])
+        inter <- res.fasnt$ind$partial[[2]][,, 1][,axes]
+        for (i in 2:nrow(res.fasnt$group$coord[[2]])) inter <- rbind(inter, res.fasnt$ind$partial[[2]][,, i][,axes])
         xmin <- min(res.fasnt$ind$coord[, axes[1]],inter[, axes[1]])
         xmax <- max(res.fasnt$ind$coord[, axes[1]],inter[, axes[1]])
         ymin <- min(res.fasnt$ind$coord[, axes[2]],inter[, axes[2]])
@@ -203,12 +203,12 @@ if (choix=="partial"){
         if (lab.ind)
         text(res.fasnt$ind$coord[, axes[1]],res.fasnt$ind$coord[, axes[2]],col=1:nrow(res.fasnt$ind$coord), rownames(res.fasnt$ind$coord),pos = 3, offset = 0.2, cex = 0.8*cex)
 
-        for (j in 1:nrow(res.fasnt$group[[2]])) {
-        points(res.fasnt$ind$partial[[2]][, axes, j], col=rep(1:nrow(res.fasnt$ind$coord),times=nrow(res.fasnt$group[[2]])),pch = 20, cex = 0.8*cex)
+        for (j in 1:nrow(res.fasnt$group$coord[[2]])) {
+        points(res.fasnt$ind$partial[[2]][,, j][,axes], col=rep(1:nrow(res.fasnt$ind$coord),times=nrow(res.fasnt$group$coord[[2]])),pch = 20, cex = 0.8*cex)
         if (lab.partial)
-        text(res.fasnt$ind$partial[[2]][, axes, j], col=rep(1:nrow(res.fasnt$ind$coord),times=nrow(res.fasnt$group[[2]])),labels=rownames(res.fasnt$group[[2]])[j],pos=3,cex=0.5*cex)
+        text(res.fasnt$ind$partial[[2]][,, j][,axes], col=rep(1:nrow(res.fasnt$ind$coord),times=nrow(res.fasnt$group$coord[[2]])),labels=rownames(res.fasnt$group$coord[[2]])[j],pos=3,cex=0.5*cex)
         for (i in 1:nrow(res.fasnt$ind$partial[[2]]))
-        lines(c(res.fasnt$ind$coord[i,axes[1]], res.fasnt$ind$partial[[2]][i, axes[1],j]), c(res.fasnt$ind$coord[i, axes[2]], res.fasnt$ind$partial[[2]][i,axes[2], j]),col=i)
+        lines(c(res.fasnt$ind$coord[i,axes[1]], res.fasnt$ind$partial[[2]][,,j][i, axes[1]]), c(res.fasnt$ind$coord[i, axes[2]], res.fasnt$ind$partial[[2]][,, j][i,axes[2]]),col=i)
         }
 
 

@@ -9,7 +9,7 @@ Plot the graphs for Factorial Approach for Hierarchical Sorting Task data (FAHST
 }
 
 \usage{
-plot.fahst(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, invisible = NULL,
+\method{plot}{fahst}(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, invisible = NULL,
     col.ind = "blue", col.var = "red", lab.ind=TRUE,lab.var=TRUE, cex = 1,
     lab.lev=TRUE,lab.grpe = TRUE, title = NULL, habillage = "none", habillage.lev = "none",
     traj = FALSE, palette = NULL, new.plot = TRUE, \dots)

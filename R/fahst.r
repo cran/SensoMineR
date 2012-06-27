@@ -1,27 +1,17 @@
-####################################Function for hierarchical sorting task
-fahst=function(don,group,alpha=0.05,graph=TRUE,axes=c(1,2),name.group=NULL,ncp=5,B=100,val=FALSE, B.val=200){
-#don: jeu de données
-#group: vecteur du nombre de hiérarchie pour chaque sujet
-#alpha: intervalle de confiance pour les ellipses
-#graph: graphique ou non en sortie
-#axes: dimensions représentées sur les graphs
-#ncp: nombre de composantes principales
-#B: nombre de rééchantillonnages pour les ellipses
-#val: éléments de validité
-#B.val: nombre de réechantillonnage pour les éléments de validité
+fahst=function(don,group,alpha=0.05,graph=TRUE,axes=c(1,2),name.group=NULL,ncp=5,B=200,ncp.boot=2){
 
 don=as.data.frame(don)
 I=nrow(don)
 J=length(group)
 
-#Mise en facteur des variables si ça n'a pas été fait avant
+
 for (i in 1:ncol(don)){
 don[,i]=as.factor(don[,i])}
 
 if (is.null(name.group)) 
 name.group <- paste("Sj", 1:length(group), sep = ".")
 
-########################################Preliminary graphs
+########################################Graphiques préliminaires
 if (graph){
 
 #Nombre de niveaux par sujet
@@ -97,28 +87,20 @@ coord.niv[i,]=apply(afm$ind$coord,2,eta2,don[,i])}
 ########################################Graphiques de l'AFM
 if (graph){
 #Graph des individus
-plot.MFA(afm,choix="ind",invisible="quali",axes=axes)
+plot.MFA(afm,choix="ind",invisible="quali",axes=axes,new.plot=TRUE)
 #Graph des mots
-plot.MFA(afm,choix="ind",invisible="ind",axes=axes)
+plot.MFA(afm,choix="ind",invisible="ind",axes=axes,new.plot=TRUE)
 #Graph des individus et des mots
-plot.MFA(afm,choix="ind",axes=axes)
+plot.MFA(afm,choix="ind",axes=axes,new.plot=TRUE)
 #Graph des groupes au niveau des sujets
-plot.MFA(afm,choix="group",axes=axes)
-#Graph des groupes au niveau des sujets et des niveaux
-#plot.MFA(afm,choix="group",habillage="group",axes=axes)
-#points(coord.niv[,axes],pch=2,col=rep(2:(J+1),times=group))
-#text(coord.niv[,axes],label=rownames(coord.niv),col=rep(2:(J+1),times=group),pos=3)
+plot.MFA(afm,choix="group",axes=axes,new.plot=TRUE)
 #Graph des niveaux
 dev.new(width = 8, height = 8)
-plot(coord.niv[,axes], xlab = paste("Dim ", axes[1], " (", signif(afm$eig[axes[1],
-2], 4), "%)", sep = ""), ylab = paste("Dim ", axes[2], " (", signif(afm$eig[axes[2],
-2], 4), "%)", sep = ""), xlim = c(0,1), ylim = c(0, 1), pch = 17, main = "Levels representation")
+plot(coord.niv[,axes], xlab = paste("Dim ", axes[1], " (", signif(afm$eig[axes[1],2], 4), "%)", sep = ""), ylab = paste("Dim ", axes[2], " (", signif(afm$eig[axes[2],2], 4), "%)", sep = ""), xlim = c(0,1), ylim = c(0, 1), pch = 17, main = "Levels representation")
 text(coord.niv[, axes[1]], y = coord.niv[, axes[2]], labels = rownames(coord.niv),pos = 3)
 #Graph des niveaux et trajectoires
 dev.new(width = 8, height = 8)
-plot(coord.niv[,axes], xlab = paste("Dim ", axes[1], " (", signif(afm$eig[axes[1],
-2], 4), "%)", sep = ""), ylab = paste("Dim ", axes[2], " (", signif(afm$eig[axes[2],
-2], 4), "%)", sep = ""), xlim = c(0,1), ylim = c(0, 1), pch = 17, main = "Levels representation and trajectories")
+plot(coord.niv[,axes], xlab = paste("Dim ", axes[1], " (", signif(afm$eig[axes[1],2], 4), "%)", sep = ""), ylab = paste("Dim ", axes[2], " (", signif(afm$eig[axes[2],2], 4), "%)", sep = ""), xlim = c(0,1), ylim = c(0, 1), pch = 17, main = "Levels representation and trajectories")
 text(coord.niv[, axes[1]], y = coord.niv[, axes[2]], labels = rownames(coord.niv),pos = 3)
 subj=0 
 for (j in 1:length(group)){
@@ -131,87 +113,16 @@ subj=subj+group[j]
 ########################################Fin graphiques de l'AFM
 
 ########################################Ellipses
-out_axe_mfa=function(don,mfa){
-I=nrow(don)
-J=nrow(mfa$group$coord)
-
-axe=vector(mode="list")
-axe$eig=mfa$eig
-
-vect_prod=rep(rownames(mfa$ind$coord),each=J)
-vect_juge=rep(1:J,I)
-vect_prod_juge=data.frame(vect_prod,vect_juge)
-colnames(vect_prod_juge)=c("Product","Panelist")
-coord.partial=data.frame(mfa$ind$coord.partiel[,1:ncp],vect_prod_juge)
-
-vect_prod_moy=rownames(mfa$ind$coord)
-vect_juge_moy=rep(0,I)
-vect_prod_juge_moy=data.frame(vect_prod_moy,vect_juge_moy)
-colnames(vect_prod_juge_moy)=c("Product","Panelist")
-coord.partial_moy=data.frame(mfa$ind$coord[,1:ncp],vect_prod_juge_moy)
-
-axe$moyen=rbind(coord.partial_moy,coord.partial)
-axe$moyen[,"Panelist"]=as.factor(axe$moyen[,"Panelist"])
-
-axe$moyen=axe$moyen[order(axe$moyen[,ncol(axe$moyen)]),]
-
-return(axe)}
-
-res.axe=out_axe_mfa(don,afm)
-simul <- simulation(res.axe,nbsimul =B)
 if (graph){
-dev.new()
-plotellipse (simul, alpha = alpha,coord =axes, eig = signif(res.axe$eig,4))}
-
-#Calcul du rapport sur l'axe 1
-inter=sum(tapply(simul$moy$simul[,1],simul$moy$simul[,(ncp+1)],mean)^2)/I
-tot=sum(simul$moy$simul[,1]^2)/(B*I)
-ratio=inter/tot
+boot (don,method="hsort",group=group,ncp=ncp.boot,nbsim=B, level.conf= 1-alpha)}
 ########################################Ellipses
-
-##################Elements of validity
-if (val==TRUE){
-print("The procedure for the elements of validity can be time-consuming")
-eig_perm=ratio_perm=rep(NA,B.val)
-for (i in 1:B.val){
-don_perm=don
-num_juge=0
-for (j in 1:J){
-don_perm[,(num_juge+1):(num_juge+group[j])]=don[sample(1:I,I),(num_juge+1):(num_juge+group[j])]
-num_juge=num_juge+group[j]}
-mfa_perm=MFA(don_perm,group=group,type=rep("n",J),graph=FALSE)
-eig_perm[i]=mfa_perm$eig[1,1]
-
-res.axe_perm=out_axe_mfa(don_perm,mfa_perm)
-sim_perm=simulation(res.axe_perm,nbsimul=B)
-inter_perm=sum(tapply(sim_perm$moy$simul[,1],sim_perm$moy$simul[,(ncp+1)],mean)^2)/I
-tot_perm=sum(sim_perm$moy$simul[,1]^2)/(B*I)
-ratio_perm[i]=inter_perm/tot_perm
-}
-eig_p.value=length(which(eig_perm>afm$eig[1,1]))/B.val
-ratio_p.value=length(which(ratio_perm>ratio))/B.val
-}
-##################End elements of validity
-
-if(val==TRUE){
-validity=vector(mode="list")
-validity$eig=vector(mode="list")
-validity$ratio=vector(mode="list")
-validity$eig$value=afm$eig[1,1]
-validity$eig$p.value=eig_p.value
-validity$eig$permut=eig_perm
-validity$ratio$value=ratio
-validity$ratio$p.value=ratio_p.value
-validity$ratio$permut=ratio_perm}
-else {
-validity=NULL}
 
 afm_call = list(X = afm$call$X, col.w = afm$call$col.w, 
         row.w = afm$call$row.w, ncp = afm$call$ncp, 
-        name.group = afm$call$name.group, simul = simul,group=group,mfa=afm)
+        name.group = afm$call$name.group,group=group,mfa=afm)
 var_afm = list(coord=afm$quali.var$coord,contrib=afm$quali.var$contrib,cos2=afm$quali.var$cos2,v.test=afm$quali.var$v.test,coord.lev=coord.niv)
 
-res = list(eig = afm$eig, var = var_afm, ind = afm$ind, group = afm$group, validity=validity,
+res = list(eig = afm$eig, var = var_afm, ind = afm$ind, group = afm$group,
         call = afm_call)
 class(res) <- c("fahst", "list ")
 

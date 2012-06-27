@@ -45,7 +45,8 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
        res[k,,] = as.matrix(resAF$quanti.var.sup$cor)
      }
      if (k==1){
-        plot(resAF,choix="var", invisible=c("quanti.sup","sup"))
+        dev.new(width=12,height=8)
+		plot(resAF,choix="var", invisible=c("quanti.sup","sup"),new.plot = FALSE)
         legend("topleft",legend=colnames(tab.moy),fill=color[1:ncol(tab.moy)],cex=0.7)
      }
      points(res[k,,coord[1]],res[k,,coord[2]],col=color[1:ncol(tab.moy)],pch=15,cex=0.3)

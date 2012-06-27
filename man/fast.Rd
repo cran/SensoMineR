@@ -9,7 +9,7 @@ Perform Factorial Approach for Sorting Task data (FAST) on a table where the row
 A cell (i,j) corresponds either to the number of the group to which the product i belongs for the consumer j, or, in the case of "qualified" categorization, to the sequence of words associted with the group to which the product i belongs for the consumer j.
 }
 
-\usage{fast(don,alpha=0.05,sep.words=";",word.min=5,graph=TRUE,axes=c(1,2),ncp=5,B=200,val=FALSE, B.val=200,label.miss=NULL)}
+\usage{fast(don,alpha=0.05,sep.words=" ",word.min=5,graph=TRUE,axes=c(1,2),ncp=5,B=200,label.miss=NULL,ncp.boot=2)}
 
 \arguments{
   \item{don}{a data frame with n rows (products) and p columns (assesor : categorical variables)}  
@@ -20,10 +20,10 @@ A cell (i,j) corresponds either to the number of the group to which the product 
   \item{axes}{a length 2 vector specifying the components to plot}
   \item{ncp}{number of dimensions kept in the results (by default 5)}
   \item{B}{the number of simulations (corresponding to the number of virtual panels) used to compute the ellipses}
-  \item{val}{boolean, if TRUE elements of validity are calculating (it is time consuming)}
-  \item{B.val}{the number of simulations used to obtain the elements of validity}
   \item{label.miss}{label associated with missing groups in the case of incomplete data set}
+  \item{ncp.boot}{number of dimensions used for the Procrustean rotations to build confidence ellipses (by default 2)}
 }
+
 
 \value{
 A list containing the following elements:
@@ -36,7 +36,6 @@ A list containing the following elements:
   \item{reord}{the reordered matrix products*consumers}
   \item{cramer}{the Cramer's V matrix between all the consumers}
   \item{textual}{the results of the textual analysis for the products}
-  \item{validity}{the elements of validity calculated for the first eigenvalue and the ellipses}
   \item{call}{a list with some statistics}
 }
 
@@ -52,7 +51,7 @@ Cadoret, M., L\^e, S., Pag\`es, J. (2009) \emph{Missing values in categorization
 \dontrun{
 data(perfume)
 ## Example of FAST results
-res.fast<-fast(perfume)
+res.fast<-fast(perfume,sep.words=";")
 }
 }
 \keyword{multivariate}

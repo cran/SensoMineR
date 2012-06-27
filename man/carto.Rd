@@ -62,20 +62,20 @@ finding out a consumer optimal product, its sensory profile and the key sensory 
 }
 
 \author{
-Francois Husson \email{husson@agrocampus-rennes.fr} \cr
-Sebastien Le \email{Sebastien.Le@agrocampus-rennes.fr}
+Francois Husson \email{husson@agrocampus-ouest.fr} \cr
+Sebastien Le \email{Sebastien.Le@agrocampus-ouest.fr}
 }
 
 \seealso{\code{\link[FactoMineR]{MFA}}, \code{\link[FactoMineR]{GPA}}}
 
 \examples{
+\dontrun{
 ## Example 1: carto for the sensory descriptors
 data(cocktail)
 res.pca <- PCA(senso.cocktail)
 res.carto <- carto(res.pca$ind$coord[,1:2], hedo.cocktail)
 
 ## Example 2
-\dontrun{
 data(cocktail)
 res.mfa <- MFA(cbind.data.frame(senso.cocktail,compo.cocktail),
     group=c(ncol(senso.cocktail),ncol(compo.cocktail)),

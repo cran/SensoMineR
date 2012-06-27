@@ -28,7 +28,7 @@ d <- array(0, dim=c(nrow(matrice),nrow(matrice),ncol(matrice)/2))
 for (i in 1:dim(d)[3]) d[,,i] <- dist2full(dist(matrice[,(2*i-1):(2*i)]))
 
       call <- match.call()
-      call2 <- match.call(expand =FALSE)
+      call2 <- match.call(expand.dots =FALSE)
       n <- dim(d)[1]
       m <- dim(d)[3]
       b <- array(0, dim(d))

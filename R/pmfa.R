@@ -110,14 +110,14 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
         }
     }
     if (do.mfa&graph.mfa){
-      plot(res.afm,choix="var",habillage="var",axes=coord)
+      plot(res.afm,choix="var",habillage="var",axes=coord,new.plot=TRUE)
       if (!is.null(matrice.illu)){
-        plot(res.afm,choix="var",invisible="sup",habillage="var",axes=coord)
-        plot(res.afm,choix="var",invisible="actif",axes=coord)
+        plot(res.afm,choix="var",invisible="sup",habillage="var",axes=coord,new.plot=TRUE)
+        plot(res.afm,choix="var",invisible="actif",axes=coord,new.plot=TRUE)
       }
-      plot(res.afm,choix="ind",partial="all",habillage="group",axes=coord)
-      plot(res.afm,choix="ind",axes=coord)
-      plot(res.afm,choix="group",axes=coord)
+      plot(res.afm,choix="ind",partial="all",habillage="group",axes=coord,new.plot=TRUE)
+      plot(res.afm,choix="ind",axes=coord,new.plot=TRUE)
+      plot(res.afm,choix="group",axes=coord,new.plot=TRUE)
     }
     dimnames(res) <- list(colnames(matrice)[(1:(ncol(matrice)/2)) * 2], "RV coeff")
     return(res)

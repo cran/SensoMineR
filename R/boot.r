@@ -105,11 +105,10 @@ if (orthogonal) {
     X <- vrai$call$XTDC
     group <- vrai$call$group.mod
   }
-
   if (is.null(ponder)) ponder <- vrai$call$col.w
   estim.ncp <- estim_ncp(sweep(X,2,sqrt(ponder),FUN="*"),scale=FALSE,ncp.min=0,ncp.max=min(10,ncol(X)))
   if (is.null(ncp))  ncp <- max(estim.ncp$ncp,2,max(axes))
-  else ncp <- ncol(vrai$ind$coord)
+  else ncp <- min(ncp,ncol(vrai$ind$coord))
     
   listvar <- list()
   for (j in 1:length(group)) listvar[[j]] <- (cumsum(group)[j]-group[j]+1):cumsum(group)[j]
@@ -119,16 +118,17 @@ if (orthogonal) {
     choix <- sample(1:length(group),nbchoix,replace=TRUE)
     auxi <- X[,unlist(listvar[choix])]
     ponder.auxi <- ponder[unlist(listvar[choix])]
-    aux <- PCA(auxi,scale=FALSE,graph=FALSE,col.w=ponder.auxi,ncp=ncp)$ind$coord
+    aux <- PCA(auxi,scale.unit=FALSE,graph=FALSE,col.w=ponder.auxi,ncp=ncp)$ind$coord
     aux <- procrustes(as.matrix(aux),as.matrix(vrai$ind$coord[,1:ncp]),orthogonal = TRUE, translate = TRUE,magnify=FALSE)$rmat
     colnames(aux) <- colnames(vrai$ind$coord)[1:ncp]
     jdd = rbind.data.frame(jdd,aux)
   }
 
-  res.pca=PCA(jdd,ind.sup=(nrow(X)+1):nrow(jdd),ncp=ncp,scale.unit=FALSE,graph=FALSE)
+#  res.pca=PCA(jdd,ind.sup=(nrow(X)+1):nrow(jdd),ncp=ncp,scale.unit=FALSE,graph=FALSE)
 
   if (new.plot) dev.new()
-  truc=cbind.data.frame(res.pca$ind.sup$coord,rep(rownames(X),nbsim))
+#  truc=cbind.data.frame(res.pca$ind.sup$coord,rep(rownames(X),nbsim))
+  truc=cbind.data.frame(jdd[-(1:nrow(X)),],rep(rownames(X),nbsim))
   simul=list()
   simul$moy$simul= truc[order(truc[,ncol(truc)]),]
   simul$moy$P=cbind.data.frame(vrai$ind$coord,rownames(X))

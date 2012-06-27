@@ -37,6 +37,11 @@ cm.colors2=function (n, alpha = 1) {
             n1 * n1 + coeff[5] * n2 * n2 + coeff[6] * n1 * n2
     }
     if (!is.data.frame(MatH)) stop("Non convenient selection for MatH")
+	if (any(is.na(MatH))){
+	  missing <- which(is.na(MatH))
+	  MatH[missing] <- (matrix(rep(apply(MatH,1,mean,na.rm=T),ncol(MatH)),ncol=ncol(MatH))
+	  +matrix(rep(apply(MatH,2,mean,na.rm=T),each=nrow(MatH)),ncol=ncol(MatH))-matrix(rep(mean(MatH,na.rm=TRUE),ncol(MatH)*nrow(MatH)),ncol=ncol(MatH)))[missing]
+	}
     matrice <- cbind(row.names(MatH), Mat[rownames(MatH),],MatH)
     classif <- agnes(dist(t(MatH)),method="ward")
 if(graph.tree){

@@ -15,22 +15,22 @@ for (i in 1:nrow(design)){
   if ((i1==i2)&(answer[i]=="Z")){
     nb.good[i1,i3]=nb.good[i1,i3]+1
     if (length(preference)>0){
-      if (preference[i]!=3) pref[i3,i1] = pref[i3,i1] +1
-      if (preference[i]==3) pref[i1,i3] = pref[i1,i3] +1
+      if (preference[i]!="Z") pref[i3,i1] = pref[i3,i1] +1
+      if (preference[i]=="Z") pref[i1,i3] = pref[i1,i3] +1
     }
   }
   if ((i1==i3)&(answer[i]=="Y")){
     nb.good[i1,i2]=nb.good[i1,i2]+1
     if (length(preference)>0){
-      if (preference[i]!=2) pref[i2,i1] = pref[i2,i1] +1
-      if (preference[i]==2) pref[i1,i2] = pref[i1,i2] +1
+      if (preference[i]!="Y") pref[i2,i1] = pref[i2,i1] +1
+      if (preference[i]=="Y") pref[i1,i2] = pref[i1,i2] +1
     }
   }
   if ((i2==i3)&(answer[i]=="X")){
     nb.good[i1,i2]=nb.good[i1,i2]+1
     if (length(preference)>0){
-      if (preference[i]!=1) pref[i1,i2] = pref[i1,i2] +1
-      if (preference[i]==1) pref[i2,i1] = pref[i2,i1] +1
+      if (preference[i]!="X") pref[i1,i2] = pref[i1,i2] +1
+      if (preference[i]=="X") pref[i2,i1] = pref[i2,i1] +1
     }
   }
 }

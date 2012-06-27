@@ -34,8 +34,8 @@ Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983) \emph{Gra
 }
 
 \author{ 
-François Husson \email{François.Husson@agrocampus-rennes.fr} \cr
-Sébastien Lê \email{Sebastien.Le@agrocampus-rennes.fr}
+François Husson \email{François.Husson@agrocampus-ouest.fr} \cr
+Sébastien Lê \email{Sebastien.Le@agrocampus-ouest.fr}
 }
 
 \seealso{ 

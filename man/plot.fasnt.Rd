@@ -9,7 +9,7 @@ Plot the graphs for Factorial Approach for Sorting Napping Task data (FASNT).
 }
 
 \usage{
-plot.fasnt(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, invisible = NULL,
+\method{plot}{fasnt}(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, invisible = NULL,
     col.ind = "blue", col.var = "red", lab.ind=TRUE,lab.var=TRUE, lab.coord=TRUE, lab.partial=TRUE,
     cex = 1,lab.grpe = TRUE, title = NULL, habillage = "none", palette = NULL,
     new.plot = TRUE, \dots)
@@ -49,11 +49,12 @@ Returns the products factor map, the categories factor map, the coordinates fact
 \seealso{ \code{\link{fasnt}}}
 
 \examples{
+\dontrun{
 data(smoothies)
 res.fasnt <- fasnt(smoothies, first="nappe",graph=FALSE)
 plot.fasnt(res.fasnt,choix="ind",invisible="var",habillage=15,
   title="Objects colored according to the groups provided by consumer 5")
 plot.fasnt(res.fasnt,choix="partial",lab.partial=FALSE)
 }
-
+}
 \keyword{dplot}
