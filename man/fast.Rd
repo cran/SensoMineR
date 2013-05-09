@@ -9,7 +9,8 @@ Perform Factorial Approach for Sorting Task data (FAST) on a table where the row
 A cell (i,j) corresponds either to the number of the group to which the product i belongs for the consumer j, or, in the case of "qualified" categorization, to the sequence of words associted with the group to which the product i belongs for the consumer j.
 }
 
-\usage{fast(don,alpha=0.05,sep.words=" ",word.min=5,graph=TRUE,axes=c(1,2),ncp=5,B=200,label.miss=NULL,ncp.boot=2)}
+\usage{fast(don,alpha=0.05,sep.words=" ",word.min=5,graph=TRUE,axes=c(1,2),ncp=5,
+    B=200,label.miss=NULL,ncp.boot=2)}
 
 \arguments{
   \item{don}{a data frame with n rows (products) and p columns (assesor : categorical variables)}  
@@ -52,6 +53,7 @@ Cadoret, M., L\^e, S., Pag\`es, J. (2009) \emph{Missing values in categorization
 data(perfume)
 ## Example of FAST results
 res.fast<-fast(perfume,sep.words=";")
+res.consensual<-ConsensualWords(res.fast)
 }
 }
 \keyword{multivariate}

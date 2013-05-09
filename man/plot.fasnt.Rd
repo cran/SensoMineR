@@ -9,10 +9,10 @@ Plot the graphs for Factorial Approach for Sorting Napping Task data (FASNT).
 }
 
 \usage{
-\method{plot}{fasnt}(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, invisible = NULL,
-    col.ind = "blue", col.var = "red", lab.ind=TRUE,lab.var=TRUE, lab.coord=TRUE, lab.partial=TRUE,
-    cex = 1,lab.grpe = TRUE, title = NULL, habillage = "none", palette = NULL,
-    new.plot = TRUE, \dots)
+\method{plot}{fasnt}(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, 
+    invisible = NULL, col.ind = "blue", col.var = "red", lab.ind=TRUE,lab.var=TRUE, 
+	lab.coord=TRUE, lab.partial=TRUE, cex = 1,lab.grpe = TRUE, title = NULL, 
+	habillage = "none", palette = NULL, new.plot = TRUE, \dots)
     }
 
 

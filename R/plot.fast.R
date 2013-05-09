@@ -20,10 +20,8 @@ plot.fast=function (x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, inv
     lab.ind <- lab.var <- lab.quali.sup <- lab.ind.sup <- FALSE
     if (length(label) == 1 && label == "all")
         lab.ind <- lab.var <- lab.quali.sup <- lab.ind.sup <- TRUE
-    if ("ind" %in% label)
-        lab.ind <- TRUE
-    if ("var" %in% label)
-        lab.var <- TRUE
+    if ("ind" %in% label) lab.ind <- TRUE
+    if ("var" %in% label) lab.var <- TRUE
 #    if ("quali.sup" %in% label)
 #        lab.quali.sup <- TRUE
 #    if ("ind.sup" %in% label)
@@ -96,8 +94,7 @@ plot.fast=function (x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, inv
         aux = 1
         col.var = NULL
         for (j in res.mca$call$quali) {
-            col.var <- c(col.var, rep(aux, nlevels(res.mca$call$X[,
-                j])))
+            col.var <- c(col.var, rep(aux, nlevels(res.mca$call$X[, j])))
             aux = aux + 1
         }
         #if (!is.null(res.mca$call$quali.sup)) {

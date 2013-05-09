@@ -187,6 +187,6 @@ fast=function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE,
     res = list(eig = acm$eig, var = acm$var, ind = acm$ind, group = group_afm,
         acm = acm, call = acm_call, cooccur = compte2, reord = catego_num2,
         cramer = res2, textual = caract_prod, descriptor=data.frame(Occurrence=restext$nb.words[,1],row.names=rownames(restext$nb.words)))
-    class(res) <- c("catego", "list ")
+    class(res) <- c("fast", "list ")
     return(res)
 }

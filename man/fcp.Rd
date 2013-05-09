@@ -7,7 +7,9 @@
 \description{Free choice profiling with confidence ellipses}
 
 \usage{
-fcp(X,group,scale=TRUE, ncp = NULL, axes=c(1,2), name.group = NULL, level.conf = 0.95, nbsim=500, nbchoix=NULL, cex=1, color=NULL, title=NULL, new.plot=TRUE, graph=c("ind","var","ellipse"))
+fcp(X,group,scale=TRUE, ncp = NULL, axes=c(1,2), name.group = NULL, level.conf = 0.95, 
+    nbsim=500, nbchoix=NULL, cex=1, color=NULL, title=NULL, new.plot=TRUE, 
+	graph=c("ind","var","ellipse"))
 }
 
 \arguments{

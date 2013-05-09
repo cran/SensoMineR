@@ -9,10 +9,10 @@ Plot the graphs for Factorial Approach for Hierarchical Sorting Task data (FAHST
 }
 
 \usage{
-\method{plot}{fahst}(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, invisible = NULL,
-    col.ind = "blue", col.var = "red", lab.ind=TRUE,lab.var=TRUE, cex = 1,
-    lab.lev=TRUE,lab.grpe = TRUE, title = NULL, habillage = "none", habillage.lev = "none",
-    traj = FALSE, palette = NULL, new.plot = TRUE, \dots)
+\method{plot}{fahst}(x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, 
+    invisible = NULL, col.ind = "blue", col.var = "red", lab.ind=TRUE,lab.var=TRUE, 
+	cex = 1, lab.lev=TRUE,lab.grpe = TRUE, title = NULL, habillage = "none", 
+	habillage.lev = "none", traj = FALSE, palette = NULL, new.plot = TRUE, \dots)
     }
 
 \arguments{
@@ -51,7 +51,8 @@ Returns the products factor map, the categories factor map, the levels factor ma
 data(cards)
 group<-c(2,3,3,2,2,4,2,3,2,1,3,2,3,3,3,2,3,3,2,3,3,3,3,3,3,3,3,3,3,3)
 res.fahst <- fahst(cards,group,graph=FALSE)
-plot.fahst(res.fahst,choix="ind",invisible="var",habillage=2,title="Cards colored according to level 2 of subject 1")
+plot.fahst(res.fahst,choix="ind",invisible="var",habillage=2,
+    title="Cards colored according to level 2 of subject 1")
 plot.fahst(res.fahst,choix="level",traj=TRUE)
 }
 }

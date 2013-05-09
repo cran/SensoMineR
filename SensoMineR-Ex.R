@@ -4,7 +4,138 @@ options(warn = 1)
 options(pager = "console")
 library('SensoMineR')
 
-assign(".oldSearch", search(), pos = 'CheckExEnv')
+base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+cleanEx()
+nameEx("ConsensualWords")
+### * ConsensualWords
+
+flush(stderr()); flush(stdout())
+
+### Name: ConsensualWords
+### Title: Consensual words for Sorting Task data
+### Aliases: ConsensualWords
+### Keywords: multivariate
+
+### ** Examples
+
+## Not run: 
+##D data(perfume)
+##D ## Example of FAST results
+##D res.fast<-fast(perfume,sep.words=";")
+##D res.consensual<-ConsensualWords(res.fast)
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("ConsistencyIdeal")
+### * ConsistencyIdeal
+
+flush(stderr()); flush(stdout())
+
+### Name: ConsistencyIdeal
+### Title: Sensory and Hedonic consistency of the ideal data
+### Aliases: ConsistencyIdeal
+### Keywords: models
+
+### ** Examples
+
+## Not run: 
+##D data(perfume_ideal)
+##D res <- ConsistencyIdeal(perfume_ideal, col.p=2, col.j=1, 
+##D    col.lik=ncol(perfume_ideal), id.recogn="id_", 
+##D    type="both", nbsim=100)
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("IdMap")
+### * IdMap
+
+flush(stderr()); flush(stdout())
+
+### Name: IdMap
+### Title: Ideal Mapping (IdMap)
+### Aliases: IdMap
+### Keywords: multivariate
+
+### ** Examples
+
+## Not run: 
+##D data(perfume_ideal)
+##D #! For the IdMap
+##D res.IdMap <- IdMap(perfume_ideal, col.p=2, col.j=1, col.lik=ncol(perfume_ideal), 
+##D      id.recogn="id_", cons.eq=FALSE)
+##D plot.IdMap(res.IdMap, x=c(-7,10), y=c(-5,7), levels.contour=NULL, color=TRUE)
+##D 
+##D #! For the wIdMap
+##D res.wIdMap <- IdMap(perfume_ideal, col.p=2, col.j=1, col.lik=ncol(perfume_ideal), 
+##D      id.recogn="id_", cons.eq=TRUE)
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("MultiIdeal")
+### * MultiIdeal
+
+flush(stderr()); flush(stdout())
+
+### Name: MultiIdeal
+### Title: Single vs. Multiple Ideal
+### Aliases: MultiIdeal
+### Keywords: models
+
+### ** Examples
+
+## Not run: 
+##D data(perfume_ideal)
+##D res <- MultiIdeal(perfume_ideal, col.p=2, col.j=1, id.recogn="id_", 
+##D     level.search.desc=0.2, nbsimul=500, coord=c(1,2))
+##D 
+##D # To run the analysis with all the attributes
+##D res <- MultiIdeal(perfume_ideal, col.p=2, col.j=1, id.recogn="id_", 
+##D     level.search.desc=1, nbsimul=500, coord=c(1,2))
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("WilliamsDesign")
+### * WilliamsDesign
+
+flush(stderr()); flush(stdout())
+
+### Name: WilliamsDesign
+### Title: Construct a Williams design
+### Aliases: WilliamsDesign
+### Keywords: models
+
+### ** Examples
+
+ exemple1 <- WilliamsDesign(12)
+
+
+
+cleanEx()
+nameEx("WordCountAna")
+### * WordCountAna
+
+flush(stderr()); flush(stdout())
+
+### Name: WordCountAna
+### Title: Word-Count based methods Analysis (WordCountAna)
+### Aliases: WordCountAna
+### Keywords: multivariate
+
+### ** Examples
+
+data(perfume)
+res<-WordCountAna(base=perfume,sep.word=";")
+
+
+
 cleanEx()
 nameEx("ardi")
 ### * ardi
@@ -163,13 +294,13 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
-## Example 1: carto for the sensory descriptors
-data(cocktail)
-res.pca <- PCA(senso.cocktail)
-res.carto <- carto(res.pca$ind$coord[,1:2], hedo.cocktail)
-
-## Example 2
 ## Not run: 
+##D ## Example 1: carto for the sensory descriptors
+##D data(cocktail)
+##D res.pca <- PCA(senso.cocktail)
+##D res.carto <- carto(res.pca$ind$coord[,1:2], hedo.cocktail)
+##D 
+##D ## Example 2
 ##D data(cocktail)
 ##D res.mfa <- MFA(cbind.data.frame(senso.cocktail,compo.cocktail),
 ##D     group=c(ncol(senso.cocktail),ncol(compo.cocktail)),
@@ -447,6 +578,7 @@ flush(stderr()); flush(stdout())
 ##D data(perfume)
 ##D ## Example of FAST results
 ##D res.fast<-fast(perfume,sep.words=";")
+##D res.consensual<-ConsensualWords(res.fast)
 ## End(Not run)
 
 
@@ -763,7 +895,7 @@ flush(stderr()); flush(stdout())
 ### ** Examples
 
 ## Not run: 
-##D optimaldesign(nbPanelist=10,nbPanelistMin=8,nbProd=5,nbProdByPanelist=3)
+##D optimaldesign(nbPanelist=10,nbProd=5,nbProdByPanelist=3)
 ## End(Not run)
 
 
@@ -935,11 +1067,11 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
-data(perfume)
-
-## Example of FAST
-res.fast <- fast(perfume)
-
+## Not run: 
+##D data(perfume)
+##D ## Example of FAST
+##D res.fast <- fast(perfume)
+## End(Not run)
 
 
 
@@ -956,8 +1088,73 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
-data(perfume_fcp)
-res <- fcp(perfume_fcp, group = c(12,7,7,7,6,8))
+## Not run: 
+##D data(perfume_fcp)
+##D res <- fcp(perfume_fcp, group = c(12,7,7,7,6,8))
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("perfume_ideal")
+### * perfume_ideal
+
+flush(stderr()); flush(stdout())
+
+### Name: perfume_ideal
+### Title: Perfume Ideal Data
+### Aliases: perfume_ideal
+### Keywords: datasets
+
+### ** Examples
+
+data(perfume_ideal)
+decat(perfume_ideal, formul = "~product+user", firstvar = 3, graph = FALSE)
+
+
+
+cleanEx()
+nameEx("plot.IdMap")
+### * plot.IdMap
+
+flush(stderr()); flush(stdout())
+
+### Name: plot.IdMap
+### Title: Plot for the Ideal Mapping
+### Aliases: plot.IdMap
+### Keywords: dplot
+
+### ** Examples
+
+## Not run: 
+##D data(perfume_ideal)
+##D res <- IdMap(perfume_ideal, col.p=2, col.j=1, col.lik=ncol(perfume_ideal), id.recogn="id_")
+##D plot.IdMap(res, xlim=c(-7,10), ylim=c(-5,7), levels.contour=NULL, color=TRUE)
+##D plot.IdMap(res, xlim=c(-7,10), ylim=c(-5,7), levels.contour=NULL, color=FALSE, inverse=TRUE)
+## End(Not run)
+
+
+
+cleanEx()
+nameEx("plot.WordCountAna")
+### * plot.WordCountAna
+
+flush(stderr()); flush(stdout())
+
+### Name: plot.WordCountAna
+### Title: Word-Count based methods Analysis (WordCountAna) graphs
+### Aliases: plot.WordCountAna
+### Keywords: multivariate
+
+### ** Examples
+
+data(perfume)
+res<-WordCountAna(base=perfume,sep.word=";",graph=FALSE)
+plot.WordCountAna(res,choix="prod")
+plot.WordCountAna(res,choix="panel")
+plot.WordCountAna(res,choix="dist")
+plot.WordCountAna(res,choix="cons")
+plot.WordCountAna(res,choix="cons",proba=0.1)
 
 
 
@@ -979,7 +1176,8 @@ flush(stderr()); flush(stdout())
 ##D data(cards)
 ##D group<-c(2,3,3,2,2,4,2,3,2,1,3,2,3,3,3,2,3,3,2,3,3,3,3,3,3,3,3,3,3,3)
 ##D res.fahst <- fahst(cards,group,graph=FALSE)
-##D plot.fahst(res.fahst,choix="ind",invisible="var",habillage=2,title="Cards colored according to level 2 of subject 1")
+##D plot.fahst(res.fahst,choix="ind",invisible="var",habillage=2,
+##D     title="Cards colored according to level 2 of subject 1")
 ##D plot.fahst(res.fahst,choix="level",traj=TRUE)
 ## End(Not run)
 
@@ -1363,7 +1561,7 @@ triangle.test (design, answer)
 
 ### * <FOOTER>
 ###
-cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
 grDevices::dev.off()
 ###
 ### Local variables: ***
