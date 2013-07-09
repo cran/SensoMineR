@@ -1,6 +1,6 @@
 Package: SensoMineR
-Version: 1.17
-Date: 2013-05-09
+Version: 1.18
+Date: 2013-07-09
 Title: Sensory data analysis with R
 Author: Francois Husson, Sebastien Le, Marine Cadoret
 Maintainer: Francois Husson <husson@agrocampus-ouest.fr>
@@ -9,7 +9,7 @@ Description: an R package for analysing sensory data
 License: GPL (>= 2)
 URL: http://sensominer.free.fr
 Encoding: latin1
-Packaged: 2013-05-09 18:42:03 UTC; husson
+Packaged: 2013-07-09 12:16:47 UTC; husson
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2013-05-10 10:27:53
+Date/Publication: 2013-07-09 14:23:50

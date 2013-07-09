@@ -32,7 +32,7 @@ Département de mathématiques appliquées, Agrocampus Rennes
 \dontrun{
 data(napping)
 nappeplot(napping.don)
-x11()
+dev.new()
 pmfa(napping.don, napping.words)
 }
 }

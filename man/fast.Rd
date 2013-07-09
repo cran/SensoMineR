@@ -9,8 +9,8 @@ Perform Factorial Approach for Sorting Task data (FAST) on a table where the row
 A cell (i,j) corresponds either to the number of the group to which the product i belongs for the consumer j, or, in the case of "qualified" categorization, to the sequence of words associted with the group to which the product i belongs for the consumer j.
 }
 
-\usage{fast(don,alpha=0.05,sep.words=" ",word.min=5,graph=TRUE,axes=c(1,2),ncp=5,
-    B=200,label.miss=NULL,ncp.boot=2)}
+\usage{fast(don,alpha=0.05,sep.words=" ",word.min=5,graph=TRUE,axes=c(1,2),
+     ncp=5,B=200,label.miss=NULL,ncp.boot=NULL)}
 
 \arguments{
   \item{don}{a data frame with n rows (products) and p columns (assesor : categorical variables)}  
@@ -22,7 +22,7 @@ A cell (i,j) corresponds either to the number of the group to which the product 
   \item{ncp}{number of dimensions kept in the results (by default 5)}
   \item{B}{the number of simulations (corresponding to the number of virtual panels) used to compute the ellipses}
   \item{label.miss}{label associated with missing groups in the case of incomplete data set}
-  \item{ncp.boot}{number of dimensions used for the Procrustean rotations to build confidence ellipses (by default 2)}
+  \item{ncp.boot}{number of dimensions used for the Procrustean rotations to build confidence ellipses (by default NULL and the number of components is estimated)}
 }
 
 

@@ -26,8 +26,9 @@ OP&P Product Research, Utrecht, The Netherlands
 }
 
 \examples{
+\dontrun{
 data(perfume_ideal)
 decat(perfume_ideal, formul = "~product+user", firstvar = 3, graph = FALSE)
 }
-
+}
 \keyword{datasets}

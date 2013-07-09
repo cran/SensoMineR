@@ -41,7 +41,7 @@ if (!novalue){
 
 ################################################################
 "police" <- function(matrice,nbrow,nbcol,nbdec) {
-x11()
+dev.new()
     par(mar=c(0,0,2,0))
     plot.new() ; title(main=main.title);
     a <- c(rownames(matrice),colnames(matrice))
@@ -80,7 +80,7 @@ if (dim2%/%nbcol==dim2/nbcol) {
         B.col <- cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          x11()
+          dev.new()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -97,7 +97,7 @@ if (dim2%/%nbcol==dim2/nbcol) {
       B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-         x11()
+         dev.new()
          par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -118,7 +118,7 @@ else {
         B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          x11()
+          dev.new()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -134,7 +134,7 @@ else {
         B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          x11()
+          dev.new()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -154,7 +154,7 @@ else {
       B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          x11()
+          dev.new()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }
@@ -174,7 +174,7 @@ else {
       B.col<-cbind(A.col,B.col)
         if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
         else{
-          x11()
+          dev.new()
           par(mar=c(0,0,2,0))
           plot.new() ; title(main=main.title);
         }

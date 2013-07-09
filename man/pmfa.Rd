@@ -54,7 +54,7 @@ Morand, E., Pagès, J. Procrustes multiple factor analysis to analyze the overall
 \dontrun{
 data(napping)
 nappeplot(napping.don)
-x11()
+dev.new()
 pmfa(napping.don, napping.words)
 }
 }

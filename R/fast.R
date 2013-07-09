@@ -1,5 +1,5 @@
-fast=function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE,
-    axes = c(1, 2), ncp = 5, B = 200, label.miss = NULL,ncp.boot=2)
+fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE,
+    axes = c(1, 2), ncp = 5, B = 200, label.miss = NULL,ncp.boot=NULL)
 {
     don = as.data.frame(don)
     I = nrow(don)
@@ -119,7 +119,8 @@ fast=function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE,
     
     if (graph) {
     #ellipses
-    res.boot <- boot(don,method="sorting",ncp=ncp.boot,nbsim=B,level.conf=1-alpha)
+    res.boot <- boot(don,method="sorting",ncp=ncp.boot,nbsim=B,level.conf=1-alpha,
+    axes=axes)
     }
 
     texte = matrix(NA, (I * J), 3)

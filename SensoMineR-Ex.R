@@ -715,9 +715,9 @@ flush(stderr()); flush(stdout())
 ##D data(napping)
 ##D nappeplot(napping.don)
 ##D resindscal<- indscal(napping.don, napping.words)
-##D x11()
+##D dev.new()
 ##D prefpls(cbind(resindscal$points, napping.words))
-##D x11()
+##D dev.new()
 ##D pmfa(napping.don, napping.words, mean.conf = resindscal$points)
 ## End(Not run)
 
@@ -830,7 +830,7 @@ flush(stderr()); flush(stdout())
 ## Not run: 
 ##D data(napping)
 ##D nappeplot(napping.don)
-##D x11()
+##D dev.new()
 ##D pmfa(napping.don, napping.words)
 ## End(Not run)
 
@@ -875,7 +875,7 @@ flush(stderr()); flush(stdout())
 ## Not run: 
 ##D data(napping)
 ##D nappeplot(napping.don)
-##D x11()
+##D dev.new()
 ##D pmfa(napping.don, napping.words)
 ## End(Not run)
 
@@ -1108,8 +1108,10 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
-data(perfume_ideal)
-decat(perfume_ideal, formul = "~product+user", firstvar = 3, graph = FALSE)
+## Not run: 
+##D data(perfume_ideal)
+##D decat(perfume_ideal, formul = "~product+user", firstvar = 3, graph = FALSE)
+## End(Not run)
 
 
 
@@ -1293,7 +1295,7 @@ flush(stderr()); flush(stdout())
 ## Not run: 
 ##D data(napping)
 ##D nappeplot(napping.don)
-##D x11()
+##D dev.new()
 ##D pmfa(napping.don, napping.words)
 ## End(Not run)
 
