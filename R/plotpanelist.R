@@ -16,7 +16,6 @@ maxx <- max(mat[1:nbpoint,1],na.rm=TRUE)
 miny <- min(mat[1:nbpoint,2],na.rm=TRUE)
 maxy <- max(mat[1:nbpoint,2],na.rm=TRUE)
 
-dev.new()
   plot(0, 0, xlab = paste("Dim ",coord[1]," (",eig[coord[1],2],"%)",sep=""), ylab = paste("Dim ",coord[2]," (",eig[coord[2],2],"%)",sep=""), xlim = c(minx*1.05,maxx*1.05), ylim = c(1.05*miny,1.05*maxy), col = "white", asp=1)
   abline(v=0,lty=2)
   abline(h=0,lty=2)

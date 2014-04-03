@@ -38,7 +38,7 @@ a graph where the contribution to the (panelist,product) interaction coefficient
 }
 
 
-\author{François Husson}
+\author{Francois Husson}
 
 \seealso{\code{\link{aov}}}
 

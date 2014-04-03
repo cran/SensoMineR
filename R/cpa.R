@@ -41,7 +41,7 @@ colplot<-function(mat, k=0,coord, z, level=41, col = terrain.colors(level+level%
     nbjuge <- ncol(hedo)
     nbdesc <- ncol(senso)
 
-  classif <- agnes(dist(t(hedo)),method="ward")
+  classif <- cluster::agnes(dist(t(hedo)),method="ward")
   plot(as.dendrogram(classif),main="Cluster Dendrogram",xlab="Panelists") 
     if (nb.clusters==0){
        classif2 <- as.hclust(classif)

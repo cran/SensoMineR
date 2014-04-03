@@ -22,7 +22,7 @@ magicsort(matrice, sort.mat = matrice, method = "magic",
 Very useful function to compare results.
 }
 
-\author{François Husson, Sébastien Lê}
+\author{F Husson, S Le}
 
 \examples{
 ## Example 1

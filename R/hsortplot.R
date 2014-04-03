@@ -3,7 +3,7 @@ nb.juge=length(group)
 gp=0
 for(i in 1:nb.juge){
 distance=group[i]-tab.disjonctif(don[,(gp+1):(gp+group[i])])%*%t(tab.disjonctif(don[,(gp+1):(gp+group[i])]))
-cah=agnes(distance,method="single",diss=TRUE)
+cah=cluster::agnes(distance,method="single",diss=TRUE)
 if (((i-1)%%(numc*numr))==0){
 dev.new()
 par(mfrow = c(numr, numc))

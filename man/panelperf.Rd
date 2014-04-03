@@ -45,7 +45,7 @@ A list containing the following components:
 H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 }
 
-\author{François Husson, Sébastien Lê}
+\author{F Husson, S Le}
 
 \seealso{ \code{\link{paneliperf}}, \code{\link{aov}}}
 

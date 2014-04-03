@@ -1,4 +1,4 @@
-IdMap <- function(dataset,col.p,col.j,col.lik,id.recogn,nbchoix=NULL,nbsimul=500,alpha=0.05,coord=c(1,2),precision=0.1,levels.contour=NULL,color=FALSE,cons.eq=FALSE){
+IdMap <- function(dataset,col.p,col.j,col.lik,id.recogn,nbsimul=500,nbchoix=NULL,alpha=0.05,coord=c(1,2),precision=0.1,levels.contour=NULL,color=FALSE,cons.eq=FALSE){
 ################################################################################
 forprefmap <- function(dataset,col.p,col.j,col.lik,id.recogn,rm.j=TRUE){
     dataset[,col.p] <- as.factor(dataset[,col.p])
@@ -144,14 +144,14 @@ procrustes <- function(amat, target, orthogonal = FALSE, translate = FALSE, magn
     colnames(id.j.avg.cor) <- colnames(int.p.avg)
     data.pcab <- rbind.data.frame(int.p.avg,id.j.avg.cor)
     res.pcab <- PCA(data.pcab,ind.sup=c((nbprod+1):nrow(data.pcab)),graph=F,ncp=Inf)
-    plot.PCA(res.pcab,choix="ind",cex=0.8,label="ind.sup",new.plot=T,title="Projection of the individual averaged ideal profiles")
+    plot.PCA(res.pcab,choix="ind",cex=0.8,label="ind.sup",new.plot=T,title="Projection of the individual averaged ideal profiles",axes=coord)
     eig <- res.pca$eig
 
     data.pca2 <- merge(data.cut$senso,data.cut$hedo,all=T,by=0,sort=F)
     rownames(data.pca2) <- data.pca2[,1]
     data.pca2 <- data.pca2[,-1]
     res.pca2 <- PCA(data.pca2,quanti.sup=(ncol(data.cut$senso)+1):ncol(data.pca2),graph=F)
-    plot.PCA(res.pca2,choix="var",invisible="var",label="quanti.sup",cex=0.9,new.plot=T,title="Projection of the individual hedonic scores")
+    plot.PCA(res.pca2,choix="var",invisible="var",label="quanti.sup",cex=0.9,new.plot=T,title="Projection of the individual hedonic scores",axes=coord)
 #    layout(matrix(1:2,1,2))                                                                            
 #    plot.PCA(res.pca,choix="ind",label="none",new.plot=T)
 #    plot.PCA(res.pca2,choix="var",invisible="var",label="none",new.plot=T)
@@ -174,6 +174,7 @@ procrustes <- function(amat, target, orthogonal = FALSE, translate = FALSE, magn
 
     ponder=res.pcab$call$col.w
     estim.ncp <- max(max(coord),estim_ncp(sweep(int.p.avg, 2, sqrt(ponder), FUN = "*"),scale = FALSE, ncp.min = 0, ncp.max = min(10, ncol(int.p.avg)))$ncp)
+    estim.ncp <- max(estim.ncp,max(coord))
         
     target.pca <- res.pcab$ind.sup$coord[,1:estim.ncp]
     jdd <- target.pca
@@ -208,17 +209,17 @@ plotellipse2 <- function(mat,alpha=0.05,coord=c(1,2),eig,cex=1,color=NULL){
 }
 plotellipseinter2 <- function(mat,alpha=0.05,coord=c(1,2),nbgroup=1,moy=TRUE,eig,cex=1,color=NULL){
     if (moy == T){
-        matJ = cbind.data.frame(mat$moy$J[,1:2],mat$moy$J[,ncol(mat$moy$J)])
-        matJP = cbind.data.frame(mat$moy$JP[,1:2],mat$moy$JP[,ncol(mat$moy$JP)])
-        matsimul = cbind.data.frame(mat$moy$simul[,1:2],mat$moy$simul[,ncol(mat$moy$simul)])
+        matJ = cbind.data.frame(mat$moy$J[,coord],mat$moy$J[,ncol(mat$moy$J)])
+        matJP = cbind.data.frame(mat$moy$JP[,coord],mat$moy$JP[,ncol(mat$moy$JP)])
+        matsimul = cbind.data.frame(mat$moy$simul[,coord],mat$moy$simul[,ncol(mat$moy$simul)])
     }
     if (moy == F){
-        matmoyJ = cbind.data.frame(mat$moy$J[,1:2],mat$moy$J[,ncol(mat$moy$J)])
-        matmoyJP = cbind.data.frame(mat$moy$JP[,1:2],mat$moy$JP[,ncol(mat$moy$JP)])
-        matmoysimul = cbind.data.frame(mat$moy$simul[,1:2],mat$moy$simul[,ncol(mat$moy$simul)])
-        matJ=cbind.data.frame(mat$partiel$J[,1:2],mat$partiel$J[,ncol(mat$partiel$J)])
-        matJP = cbind.data.frame(mat$partiel$JP[,1:2],mat$partiel$JP[,ncol(mat$partiel$JP)])
-        matsimul = cbind.data.frame(mat$partiel$simul[,1:2],mat$partiel$simul[,ncol(mat$partiel$simul)])
+        matmoyJ = cbind.data.frame(mat$moy$J[,coord],mat$moy$J[,ncol(mat$moy$J)])
+        matmoyJP = cbind.data.frame(mat$moy$JP[,coord],mat$moy$JP[,ncol(mat$moy$JP)])
+        matmoysimul = cbind.data.frame(mat$moy$simul[,coord],mat$moy$simul[,ncol(mat$moy$simul)])
+        matJ=cbind.data.frame(mat$partiel$J[,coord],mat$partiel$J[,ncol(mat$partiel$J)])
+        matJP = cbind.data.frame(mat$partiel$JP[,coord],mat$partiel$JP[,ncol(mat$partiel$JP)])
+        matsimul = cbind.data.frame(mat$partiel$simul[,coord],mat$partiel$simul[,ncol(mat$partiel$simul)])
     }
     nbp <- nrow(matJ)
     nbjuge <- nbp/nbgroup

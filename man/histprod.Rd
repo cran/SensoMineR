@@ -29,7 +29,7 @@ estimated for each descriptor.
 }
 
 \author{
-Sébastien Lê
+S Le
 }
 
 \seealso{ 

@@ -172,6 +172,7 @@ for (group in 1:nbpanel){
  eig =   resafmh$eig
  auxi= cbind.data.frame(resafmh$ind$coord[,1:max(coord)],as.factor(indiv[1:nbprod,ncol(indiv)-1]),as.factor(rep(0,nbprod)))
  colnames(auxi) = colnames(indiv)
+ dev.new()
  plotpanelist(rbind.data.frame(auxi,indiv),eig=signif(eig,4),color=color,coord=coord,name=name.panelist,cex=cex)
  comp.simul$moy$simul=auxil[,1:max(coord)]
  aux4=as.matrix(resafmh$partial[[nivpanel]][,,1])

@@ -36,7 +36,7 @@ the whole panel and for each panelist (data may be scaled to unit variance or no
 parameter is set by users).
 }
 
-\author{François Husson}
+\author{Francois Husson}
 
 \examples{
 data(chocolates)

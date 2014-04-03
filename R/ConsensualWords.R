@@ -6,14 +6,15 @@ ConsensualWords <- function (res.fast, nbtimes = 3, nbsimul = 500, proba = 0.05,
 
 	mots <- rownames(res.fast$descriptor)
 	coord.mot.acm <- res.fast$acm$var$coord
-	nm <- rownames(coord.mot.acm)
+	nm <- tolower(rownames(coord.mot.acm))
 
 	nb.times <- numeric()
 	centroids <- matrix(0, ncol=ncp, 0)
 	within.inertia <- numeric()
 
-	WordinList <- function(mot,liste){ ## return a vector of boolean to knwo if the word belongs to the list 
-	  aa=sapply(liste,strsplit," ")
+	WordinList <- function(mot,liste){ ## return a vector of boolean to know if the word belongs to the list 
+	  aa=sapply(liste,strsplit,res.fast$call$sep.words)
+#	  aa=sapply(liste,strsplit," ")
 	  aa=lapply(lapply(aa,strsplit,"_"),unlist)
 	  bb= sapply(lapply(aa,match,mot,nomatch=0),sum)
 	  bb = as.logical(bb)
@@ -32,7 +33,7 @@ ConsensualWords <- function (res.fast, nbtimes = 3, nbsimul = 500, proba = 0.05,
 	within.inertia <- cbind(nb.times,within.inertia)
 	rownames(within.inertia) <- mots
 
-	## Cheking the words according to their frequency of use
+	## Checking the words according to their frequency of use
 	filtrer <- rownames(within.inertia[nb.times >= nbtimes,])
 
 	## Bootstrap

@@ -55,16 +55,16 @@ Returns also a correlation circle as well as a graph of individuals
 }
 
 \references{
-Escofier, B. and Pagès, J. (1990) 
-\emph{Analyses factorielles simples et multiples: objectifs, méthodes et interprétation} 
+Escofier, B. and Pages, J. (1990) 
+\emph{Analyses factorielles simples et multiples: objectifs, methodes et interpretation} 
 Dunod, Paris. 1--267. \cr
 
-Escofier, B. and Pagès, J. (1994) 
+Escofier, B. and Pages, J. (1994) 
 Multiple factor analysis (AFMULT package). 
 \emph{Computational Statistics and Data Analysis}, \bold{18}, 121--140.
 }
 
-\author{François Husson}
+\author{Francois Husson}
 
 \seealso{ \code{\link[FactoMineR]{MFA}}}
 

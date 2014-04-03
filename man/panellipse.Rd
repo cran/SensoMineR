@@ -78,11 +78,11 @@ Returns a graph where the variability of each variable is drawn on the correlati
 \seealso{ \code{\link{panellipse.session}}, \code{\link{panelmatch}}}
 
 \references{
-Husson F., Le Dien S. & Pagès J.  (2005). Confidence ellipse for the sensory profiles obtained by Principal Components Analysis. \emph{Food Quality and Preference}.  16 (3), 245-250. \cr
-Pagès J. & Husson F. (2005). Multiple Factor Analysis with confidence ellipses: a methodology to study the relationships between sensory and instrumental data. To be published in \emph{Journal of Chemometrics}. \cr
-Husson F., Lê S. & Pagès J.  Variability of the representation of the variables resulting from PCA in the case of a conventional sensory profile. \emph{Food Quality and Preference}.  16 (3), 245-250. 
+Husson F., Le Dien S. & Pages J.  (2005). Confidence ellipse for the sensory profiles obtained by Principal Components Analysis. \emph{Food Quality and Preference}.  16 (3), 245-250. \cr
+Pages J. & Husson F. (2005). Multiple Factor Analysis with confidence ellipses: a methodology to study the relationships between sensory and instrumental data. To be published in \emph{Journal of Chemometrics}. \cr
+Husson F., Le S. & Pages J.  Variability of the representation of the variables resulting from PCA in the case of a conventional sensory profile. \emph{Food Quality and Preference}.  16 (3), 245-250. 
 }
-\author{François Husson}
+\author{Francois Husson}
 
 \examples{
 \dontrun{

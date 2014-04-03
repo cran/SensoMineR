@@ -50,7 +50,7 @@ A list containing the following elements:
 
 
 \author{
-François Husson, Sébastien Lê
+F Husson, S Le
 }
 
 \seealso{\code{\link{decat}}}

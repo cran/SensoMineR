@@ -58,7 +58,7 @@ then the function averagetable returns the matrix of the means per category.
 H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 }
 
-\author{François Husson \email{François.Husson@agrocampus-ouest.fr}}
+\author{Francois Husson \email{husson@agrocampus-ouest.fr}}
 
 \seealso{ \code{\link{aov}}}
 

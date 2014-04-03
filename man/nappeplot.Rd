@@ -25,10 +25,10 @@ Returns as many graphs as there are panelists, each graph represents products
 positioned by a given panelist on a tablecloth
 }
 \references{
-Pagès J. (2005). Collection and analysis of perceived product inter-distances using multiple factor analysis; 
+Pages J. (2005). Collection and analysis of perceived product inter-distances using multiple factor analysis; 
 application to the study of ten white wines from the Loire Valley. \emph{Food Quality and Preference}. 16 (7) pp. 642-649.
 }
-\author{François Husson}
+\author{Francois Husson}
 
 \seealso{\code{\link{napping}}, \code{\link{pmfa}}, \code{\link{indscal}}}
 \examples{

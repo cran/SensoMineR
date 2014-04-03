@@ -79,10 +79,10 @@ A list containing the results for the sensory and hedonic consistency:\cr
 }
 
 \references{
-{Worch, T., Lê, S., Punter, P., & Pagès, J. (2012).
+{Worch, T., Le, S., Punter, P., & Pages, J. (2012).
 Assessment of the consistency of ideal profiles according to non-ideal data for IPM.
 \emph{Food Quality and Preference}, 24, 99-110.},
-{Worch, T., Lê, S., Punter, P., & Pagès, J. (2012).
+{Worch, T., Le, S., Punter, P., & Pages, J. (2012).
 Extension of the consistency of the data obtained with the Ideal Profile Method:
 Would the ideal products be more liked than the tested products?
 \emph{Food Quality and Preference}, 26, 74-80.}

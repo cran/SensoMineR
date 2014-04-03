@@ -45,7 +45,7 @@ This function is very useful especially when there are a lot of values to check.
 }
 
 \author{
-François Husson, Sébastien Lê
+F Husson, S Le
 }
 
 \examples{

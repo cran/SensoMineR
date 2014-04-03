@@ -65,7 +65,7 @@ different with the \code{proba} level); the significantly less are colored in re
 H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 }
 
-\author{François Husson}
+\author{Francois Husson}
 
 \seealso{ \code{\link{aov}}}
 

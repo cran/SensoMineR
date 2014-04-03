@@ -52,13 +52,13 @@ each consumer is colored according to the coefficient of correlation based on hi
 }
 
 \references{
-S. Lê, F. Husson, J. Pagès (2005). Another look at sensory data: how to "have your salmon and eat it, too!". 
+S. Le, F. Husson, J. Pages (2005). Another look at sensory data: how to "have your salmon and eat it, too!". 
 \emph{6th Pangborn sensory science symposium, August 7-11, 2005, Harrogate, UK.}
 }
 
 \author{
-François Husson \email{François.Husson@agrocampus-ouest.fr} \cr
-Sébastien Lê \email{Sebastien.Le@agrocampus-ouest.fr}
+F Husson \email{husson@agrocampus-ouest.fr} \cr
+S Le 
 }
 
 \examples{

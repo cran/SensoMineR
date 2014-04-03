@@ -31,6 +31,8 @@
     plot(res.af,choix="var",habillage="group",axes=coord)
   }
   plot(res.af,choix="ind",invisible="ind.sup",axes=coord)
+  dev.new()
+	plot(res.af,choix="var",axes=coord)
   dimnames(axe$moyen)[2][[1]]<-c (paste("Dim", 1:nbcoord, sep = ""),"Product","Panelist")
   axe$eig = res.af$eig
   return(axe)

@@ -20,7 +20,7 @@ They were asked to position the wines on a tableclothe of dimension (60,40).
 }
 
 \source{
-Département de mathématiques appliquées, Agrocampus Rennes
+Applied mathematics department, AGROCAMPUS OUEST
 }
 
 \examples{

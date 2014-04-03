@@ -34,7 +34,7 @@ Returns a list of matrices. Each matrix give the reult for all the pair of produ
 }
 
 
-\author{François Husson}
+\author{Francois Husson}
 
 \seealso{\code{\link{triangle.pair.test}}, \code{\link{triangle.design}}}
 

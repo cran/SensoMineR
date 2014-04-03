@@ -40,7 +40,7 @@ configuration and procrustes this configuration on the true configuration obtain
 Returns a list with estim.ncp which corresponds to the output of the estim_ncp function (function which estimates the number of components) and the simul object which can be used with the plotellipse function.
 }
 
-\author{Marine Cadoret and François Husson}
+\author{Marine Cadoret and Francois Husson}
 
 \examples{
 \dontrun{

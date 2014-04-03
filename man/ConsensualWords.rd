@@ -33,7 +33,7 @@ A list containing the following elements:
 }
 
 
-\author{François Husson}
+\author{Francois Husson}
 
 \examples{
 \dontrun{

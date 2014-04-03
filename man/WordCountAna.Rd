@@ -15,7 +15,7 @@ WordCountAna (base, sep.word = NULL, ncp = Inf, nb.panel = 3, nb.simul = 500,
 
 \arguments{
   \item{base}{a data frame with n rows (products) and p columns (panellists). Each cell corresponds to a free-text description used to describe a product by a panellist}
-  \item{sep.word}{a string with all the characters which correspond to separator of words (by default, NULL and is considered equal to "; (),?./:'!$§=+;{}<>[]@-")}
+  \item{sep.word}{a string with all the characters which correspond to separator of words (by default, NULL and is considered equal to "; (),?./:'!$=+;{}<>[]@-")}
   \item{ncp}{number of dimensions kept in the results and to compute the within-inertia}
   \item{nb.panel}{minimum number of panellists who used the same word in order to define consensual words (by default 3)}
   \item{nb.simul}{number of bootstrap simulations (by default 500)}

@@ -45,7 +45,7 @@ H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 }
 
 \author{
-François Husson, Sébastien Lê}
+F Husson, S Le}
 
 \seealso{ \code{\link{aov}}}
 

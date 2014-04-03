@@ -71,7 +71,7 @@ The PCA graphs for the complete output.\cr
 H. Sahai, M. I. Ageel. \emph{The analysis of variance}.
 }
 
-\author{François Husson, Sébastien Lê}
+\author{F Husson, S Le}
 
 \seealso{ \code{\link{panelperf}}, \code{\link{aov}}}
 

@@ -29,7 +29,7 @@ Returns
 }
 
 
-\author{François Husson}
+\author{Francois Husson}
 
 \seealso{\code{\link{triangle.test}}, \code{\link{triangle.design}}}
 

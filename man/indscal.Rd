@@ -43,7 +43,7 @@ Carroll, J.D. & J.J. Chang (1970). Analysis of individual differences in multidi
 }
 
 \author{Peter Ellis \cr
-François Husson}
+Francois Husson}
 
 \seealso{\code{\link{nappeplot}}, \code{\link{pmfa}}}
 

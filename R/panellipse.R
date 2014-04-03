@@ -85,7 +85,6 @@ if (!is.null(group)){
   nbprod = length(labprod)
   nbjuge = nlevels(as.factor(don.interesting[,1]))
   if (is.null(nbchoix)) nbchoix = nbjuge
-
 if (length(group)<2) {
   mat = matrix(NA,nbprod,nbprod)
     aa = axe$moyen[-(1:nbprod),]
@@ -126,7 +125,8 @@ if (length(group)>1) {
   dimnames(mat2)=list(c(paste("Group",1:length(group),sep=" ")),c(paste("Group",1:length(group),sep=" ")),labprod)
 }
 
-  plotpanelist(axe$moyen,coord=coord,eig=signif(axe$eig,4),color=color,name=name.panelist,cex=cex)
+  if (variability.variable==FALSE) dev.new()
+	plotpanelist(axe$moyen,coord=coord,eig=signif(axe$eig,4),color=color,name=name.panelist,cex=cex)
   long.group <- length(group)
   if (long.group==0) long.group <- 1
   simul <- simulation(axe,nbgroup=long.group,nbchoix=nbchoix,nbsimul=nbsimul)

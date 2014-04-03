@@ -57,10 +57,10 @@ When a Multiple Factor Analysis is performed, returns a graph where each partial
 \seealso{ \code{\link{panellipse}}, \code{\link{panellipse.session}}}
 
 \references{
-Husson F., Le Dien S. & Pagès J.  (2005). Confidence ellipse for the sensory profiles obtained by Principal Components Analysis. \emph{Food Quality and Preference}.  16 (3), 245-250. \cr
-Pagès J. & Husson F. (2005). Multiple Factor Analysis with confidence ellipses: a methodology to study the relationships between sensory and instrumental data. To be published in \emph{Journal of Chemometrics}.
+Husson F., Le Dien S. & Pages J.  (2005). Confidence ellipse for the sensory profiles obtained by Principal Components Analysis. \emph{Food Quality and Preference}.  16 (3), 245-250. \cr
+Pages J. & Husson F. (2005). Multiple Factor Analysis with confidence ellipses: a methodology to study the relationships between sensory and instrumental data. To be published in \emph{Journal of Chemometrics}.
 }
-\author{François Husson}
+\author{Francois Husson}
 
 \examples{
 \dontrun{

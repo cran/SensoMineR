@@ -25,7 +25,7 @@ There are two data frames:
 }
 
 \source{
-Département de mathématiques appliquées, Agrocampus Rennes
+Applied mathematics department, AGROCAMPUS OUEST
 }
 
 \examples{

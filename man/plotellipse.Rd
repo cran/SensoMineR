@@ -19,7 +19,7 @@ plotellipse(mat, alpha = 0.05, coord = c(1,2), eig, cex = 1,
   \item{color}{a vector with the colors used; by default there are 35 colors defined}
   \item{title}{string corresponding to the title of the graph you draw (by default NULL and a title is chosen)}
 }
-\author{François Husson}
+\author{Francois Husson}
 
 \examples{
 \dontrun{

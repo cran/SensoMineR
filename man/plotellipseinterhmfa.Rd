@@ -19,6 +19,6 @@ plotellipseinterhmfa(mat, alpha = 0.05, coord = c(1,2), nbgroup = 1,
   \item{hmfa}{a list with the hierarchy and the partial coordinates of the HMFA}
 }
 
-\author{François Husson}
+\author{Francois Husson}
 
 \keyword{internal}

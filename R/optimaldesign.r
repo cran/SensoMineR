@@ -1,6 +1,6 @@
 optimaldesign <- function(nbPanelist,nbProd,nbProdByPanelist=nbProd,seed=NULL){
 
-if (is.null(seed)) seed <- 1234
+if (is.null(seed)) seed <- sample(1:1000,1)
 set.seed(seed)
 
 coupe = nbProd%/%nbProdByPanelist

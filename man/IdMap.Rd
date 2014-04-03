@@ -9,9 +9,9 @@ Create the ideal map, a map based on the ideal profiles provided by the consumer
 }
 
 \usage{
-IdMap(dataset, col.p, col.j, col.lik, id.recogn, nbchoix=NULL, nbsimul=500,
-    alpha=0.05, coord=c(1,2), precision=0.1, levels.contour=NULL, color=FALSE, 
-	cons.eq=FALSE)
+IdMap(dataset, col.p, col.j, col.lik, id.recogn, nbsimul=500, nbchoix=NULL,
+      alpha=0.05, coord=c(1,2), precision=0.1, levels.contour=NULL, 
+	  color=FALSE, cons.eq=FALSE)
 }
 
 \arguments{
@@ -22,7 +22,7 @@ IdMap(dataset, col.p, col.j, col.lik, id.recogn, nbchoix=NULL, nbsimul=500,
   \item{col.lik}{The position of the \emph{liking} variable }
   \item{id.recogn}{The sequence in the variable names which distinguish the ideal
   variables from the sensory variables. This sequence should be fixed and unique. \cr
-  Each ideal variable should be preceeded by the corresponding perceived intensity variable. }
+  Each ideal variable should be preceded by the corresponding perceived intensity variable. }
   \item{nbchoix}{The number of consumers forming a virtual panel, by default the number of panelists in the original panel}
   \item{nbsimul}{The number of simulations (corresponding to the number of virtual panels) used to compute the ellipses}
   \item{alpha}{The confidence level of the ellipses}
@@ -49,14 +49,14 @@ IdMap(dataset, col.p, col.j, col.lik, id.recogn, nbchoix=NULL, nbsimul=500,
 
 \value{
 A list containing the following components:
-  \item{PCA}{the results from tthe PCA used to create the sensory space}
+  \item{PCA}{the results from the PCA used to create the sensory space}
   \item{idmap}{a list containing the results of the IdMap (\emph{data}), the weight for each consumer (\emph{j.weight})
   and the precision used.}
-  \item{ideal}{a list caining the estimtated profile of the ideal of reference (not available for the wIdMap) 
+  \item{ideal}{a list containing the estimated profile of the ideal of reference (not available for the wIdMap) 
   as well as the percentage of consumers concerned}
 }
 
-\references{Worch, T., Lê, S., Punter, P., & Pagès, J. (2012).
+\references{Worch, T., Le, S., Punter, P., Pages, J. (2012).
 Construction of an Ideal Map (IdMap) based on the ideal profiles obtained directly from consumers.
 \emph{Food Quality and Preference}, 26, 93-104.
 }
@@ -68,14 +68,15 @@ Construction of an Ideal Map (IdMap) based on the ideal profiles obtained direct
 \examples{
 \dontrun{
 data(perfume_ideal)
+
 #! For the IdMap
-res.IdMap <- IdMap(perfume_ideal, col.p=2, col.j=1, col.lik=ncol(perfume_ideal), 
-     id.recogn="id_", cons.eq=FALSE)
-plot.IdMap(res.IdMap, x=c(-7,10), y=c(-5,7), levels.contour=NULL, color=TRUE)
+res.IdMap <- IdMap(perfume_ideal, col.p=2, col.j=1, 
+   col.lik=ncol(perfume_ideal), id.recogn="id_")
+plot.IdMap(res.IdMap, xlim=c(-7,10), ylim=c(-5,7), levels.contour=NULL, color=TRUE)
 
 #! For the wIdMap
 res.wIdMap <- IdMap(perfume_ideal, col.p=2, col.j=1, col.lik=ncol(perfume_ideal), 
-     id.recogn="id_", cons.eq=TRUE)
+   id.recogn="id_", cons.eq=TRUE)
 }
 }
 

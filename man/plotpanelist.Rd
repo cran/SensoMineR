@@ -28,7 +28,7 @@ the panel. Products described by the panel are displayed as square, they are dis
 they are described by each panelist.
 }
 
-\author{François Husson}
+\author{Francois Husson}
 
 \examples{
 data(chocolates)

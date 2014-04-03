@@ -21,7 +21,7 @@ A data frame with 348 rows and 19 columns: 5 qualitative variables
 \usage{data(chocolates)}
 
 \source{
-Département de mathématiques appliquées, Agrocampus Rennes
+Applied mathematics department, AGROCAMPUS OUEST
 }
 
 \examples{

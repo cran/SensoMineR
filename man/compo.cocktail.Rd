@@ -17,7 +17,7 @@ A data frame with 16 rows and 4 columns: the composition of each cocktail is giv
 }
 
 \source{
-Département de mathématiques appliquées, Agrocampus Rennes
+Applied mathematics department, AGROCAMPUS OUEST
 }
 
 \examples{

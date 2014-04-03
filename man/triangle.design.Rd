@@ -31,7 +31,7 @@ Panelist should start by product "X", then "Y" and then by "Z".
 }
 
 
-\author{François Husson}
+\author{Francois Husson}
 
 \seealso{\code{\link{triangle.test}}, \code{\link{triangle.pair.test}}}
 

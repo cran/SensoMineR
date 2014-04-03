@@ -29,7 +29,7 @@ Returns a data frame with all the qualitative variables and only discriminating 
 }
 
 
-\author{François Husson}
+\author{Francois Husson}
 
 \examples{
 data(chocolates)

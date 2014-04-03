@@ -20,7 +20,7 @@ The columns are grouped by child.
 }
 
 \source{
-Département de mathématiques appliquées, AGROCAMPUS OUEST Centre de Rennes
+Applied mathematics department, AGROCAMPUS OUEST
 }
 
 \examples{

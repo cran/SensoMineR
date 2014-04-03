@@ -21,7 +21,7 @@ sensory descriptors.
 }
 
 \source{
-Département de mathématiques appliquées, Agrocampus Rennes
+DÃ©partement de mathÃ©matiques appliquÃ©es, Agrocampus Rennes
 }
 
 \examples{

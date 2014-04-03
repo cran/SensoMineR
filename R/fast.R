@@ -130,7 +130,7 @@ fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE
     for (i in 1:J) {
         texte[((I * (i - 1)) + 1):(I * i), 3] = paste(don[, i])
     }
-    restext = textual(texte, 3, 1, sep.word = sep.words)
+    restext = textual(texte, 3, 1, sep.word = sep.words, maj.in.min=TRUE)
     mod.suppr = paste("g", 1:99, sep = "")
     mod.suppr = intersect(colnames(restext$cont.table), mod.suppr)
     if (length(mod.suppr) != 0) {
@@ -182,7 +182,7 @@ fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE
 
     acm_call = list(X = acm$call$X, marge.col = acm$call$marge.col,
         marge.row = acm$call$marge.row, ncp = acm$call$ncp, quali = acm$call$quali,
-        mca = acm)
+        mca = acm,sep.words=sep.words)
     group_afm = list(coord = acm$var$eta2)
 
     res = list(eig = acm$eig, var = acm$var, ind = acm$ind, group = group_afm,

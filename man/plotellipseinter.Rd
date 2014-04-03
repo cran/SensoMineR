@@ -20,6 +20,6 @@ plotellipseinter(mat, alpha = 0.05, coord = c(1,2), nbgroup = 1,
   \item{title}{string corresponding to the title of the graph you draw (by default NULL and a title is chosen)}
 }
 
-\author{François Husson}
+\author{Francois Husson}
 
 \keyword{internal}
