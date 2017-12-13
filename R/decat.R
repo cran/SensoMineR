@@ -126,6 +126,6 @@ decat <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba 
   }
 
   if (length(select1) == 0) print("Warning: No variables are discriminant")
-  return(result)
   options(contrasts=old.contr)
+  return(result)
 }

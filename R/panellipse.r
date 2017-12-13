@@ -36,18 +36,18 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
      Xb = apply(tab.byjudge[,,echantillon[k,]],c(1,2),mean)
      correl[,,k] = cor(Xb)
      if (!mfa){
-       resAF <-PCA(cbind(tab.moy,Xb),quanti.sup=(ncol(tab.moy)+1):(2*ncol(tab.moy)),graph=FALSE,ncp=nbcoord,scale.unit=scale.unit)
+       resAF <-PCA(cbind(tab.moy,Xb),quanti.sup=(ncol(tab.moy)+1):(2*ncol(tab.moy)),graph=FALSE,ncp=nbcoord,scale.unit=scale.unit,axes=coord)
        res[k,,] = as.matrix(resAF$quanti.sup$coord)
      }
      if (mfa){
-       if (scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("s",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord)
-       if (!scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("c",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord)
+       if (scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("s",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord,axes=coord)
+       if (!scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("c",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord,axes=coord)
        res[k,,] = as.matrix(resAF$quanti.var.sup$cor)
      }
-     if (k==1){
-        dev.new(width=12,height=8)
-		plot(resAF,choix="var", invisible=c("quanti.sup","sup"),new.plot = FALSE)
-        legend("topleft",legend=colnames(tab.moy),fill=color[1:ncol(tab.moy)],cex=0.7)
+     if (k==1) {
+	   dev.new(width=12,height=8)
+	   plot(resAF,choix="var", invisible=c("quanti.sup","sup"),new.plot = FALSE,axes=coord)
+       legend("topleft",legend=colnames(tab.moy),fill=color[1:ncol(tab.moy)],cex=0.7)
      }
      points(res[k,,coord[1]],res[k,,coord[2]],col=color[1:ncol(tab.moy)],pch=15,cex=0.3)
   }

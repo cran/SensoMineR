@@ -1,7 +1,7 @@
-#représentation graphique des nappes catégorisées : fonction nappecatplot
+#representation graphique des nappes categorisees : fonction nappecatplot
 nappesortplot=function (donnee,first="nappe", numr = 2, numc = 2, lim = c(60, 40)) {
     nbjuge <- ncol(donnee)/3
-#Si pour chaque sujet d'abord la catégorisation  puis la nappe
+#Si pour chaque sujet d'abord la categorisation  puis la nappe
 if (first=="catego"){
   donnee2=donnee
   for (i in 1:nbjuge){
@@ -47,7 +47,7 @@ a=max(abs(max(donnee[numl,(3*(nb-1)+1)])-h),abs(h-min(donnee[numl,(3*(nb-1)+1)])
 b=max(abs(max(donnee[numl,(3*(nb-1)+2)])-k),abs(k-min(donnee[numl,(3*(nb-1)+2)])))+2.5
 
 x=seq(from=(-a+h),to=(a+h),by=0.01)
-#enlève le premier et dernier élément sinon quelques problèmes dans la racine carrée pour y
+#enleve le premier et dernier element sinon quelques problemes dans la racine carree pour y
 x=x[-c(1,length(x))]
 y=b*sqrt(1-((x-h)/a)^2)+k
 x2=rev(x)

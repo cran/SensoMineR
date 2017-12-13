@@ -7,7 +7,7 @@ aux<-rownames(dataset.signa)
 dataset.signa<-cbind.data.frame(aux, dataset.signa)#ajout de la colonne contenant les juges
 for(f in 1:ncol(dataset.signa)) dataset.signa[, f] <- as.factor(as.character(dataset.signa[, f]))
 col.j.signa = 1
-num.col.var.signa<-num.col.var.signa+1# +1 car on a ajouté la colonne des juges
+num.col.var.signa<-num.col.var.signa+1# +1 car on a ajoute la colonne des juges
 var.signa.test<-num.col.var.signa #on fera le test global (inertie) sur toutes les variables
 dataset <- as.data.frame(merge(dataset.id, dataset.signa, by.x = colnames(dataset.id)[col.j], by.y = colnames(dataset.signa)[col.j.signa]))
 num.col.var <- ncol(dataset.id) + num.col.var.signa-1
@@ -62,7 +62,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
         }
         res <- list()
         res$senso <- int.avg #fonction qui retourne l'average table
-        res$hedo <- as.data.frame(lik.j)#et les notes hédoniques
+        res$hedo <- as.data.frame(lik.j)#et les notes hedoniques
         if (rm.j) 
             juge.rm
         return(res)
@@ -140,7 +140,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
     int.data <- cbind(info, intensity)
     id.data <- cbind(info, ideal)
     data.cut <- forprefmap(dataset, col.p = col.p, col.j = col.j, 
-        id.recogn = id.recogn, col.lik = col.lik)#découpage du jdd en average table et notes hédoniques (liste)
+        id.recogn = id.recogn, col.lik = col.lik)#decoupage du jdd en average table et notes hedoniques (liste)
     int.p.avg <- scale(data.cut$senso, scale = F)
     int.j.avg <- averagetable(int.data, formul = paste("~", colnames(dataset)[col.j], 
         "+", colnames(dataset)[col.p]), firstvar = 3, method = "coeff")
@@ -175,7 +175,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
     colnames(id.j.avg.cor) <- colnames(int.p.avg)
     data.pcab <- rbind.data.frame(int.p.avg, id.j.avg.cor)
     res.pcab <- PCA(data.pcab, ind.sup = c((nbprod + 1):nrow(data.pcab)), 
-        graph = F, ncp = Inf)#acp pour projeter en supplémentaire les profils idéaux moyens de chaque juge
+        graph = F, ncp = Inf)#acp pour projeter en supplementaire les profils ideaux moyens de chaque juge
     plot.PCA(res.pcab, choix = "ind", cex = 0.8, label = "ind.sup", 
         new.plot = T, title = "Projection of the individual averaged ideal profiles")
     eig <- res.pca$eig
@@ -184,7 +184,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
     rownames(data.pca2) <- data.pca2[, 1]
     data.pca2 <- data.pca2[, -1]
     res.pca2 <- PCA(data.pca2, quanti.sup = (ncol(data.cut$senso) + 
-        1):ncol(data.pca2), graph = F)#acp pour projeter en supplémentaire les notes hédoniques de chaque juge
+        1):ncol(data.pca2), graph = F)#acp pour projeter en supplementaire les notes hedoniques de chaque juge
     plot.PCA(res.pca2, choix = "var", invisible = "var", label = "quanti.sup", 
         cex = 0.9, new.plot = T, title = "Projection of the individual hedonic scores")
     ideal.j.dim <- vector("list", nbjuge)
@@ -348,15 +348,15 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
         floor(min(res.pca$ind$coord[, coord[2]])))
     maxy <- max(max(res.ellipse[, 2 * (1:nbjuge)], na.rm = T), 
         ceiling(max(res.pca$ind$coord[, coord[2]])))
-    juge.mat <- vector("list", nbjuge)#liste contenant autant d'éléments que de juges
+    juge.mat <- vector("list", nbjuge)#liste contenant autant d'elements que de juges
     names(juge.mat) <- juge
     lim.minx <- floor(minx)#bornes pour le quadrillage de l'idmap
     lim.maxx <- ceiling(maxx)
     lim.miny <- floor(miny)
     lim.maxy <- ceiling(maxy)
     nbrow <- length(seq(lim.minx, lim.maxx, precision))#nombre de cases en abcsisse du quadrillage
-    nbcol <- length(seq(lim.miny, lim.maxy, precision))#nombre de cases en ordonnée du quadrillage
-    juge.tot <- matrix(0, nbcol, nbrow)#matrice aux dimensions du quadrillage de la carte idéale, en effet "~tracé en chiffres"
+    nbcol <- length(seq(lim.miny, lim.maxy, precision))#nombre de cases en ordonnee du quadrillage
+    juge.tot <- matrix(0, nbcol, nbrow)#matrice aux dimensions du quadrillage de la carte ideale, en effet "~trace en chiffres"
     rownames(juge.tot) <- round(seq(lim.miny, lim.maxy, precision), 
         1)
     colnames(juge.tot) <- round(seq(lim.minx, lim.maxx, precision), 
@@ -408,19 +408,19 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
         }
        
        
-            cons.wgt[1, j] <- 1#poids: tous les individus sont pris en compte dans le tracé de la carte globale
+            cons.wgt[1, j] <- 1#poids: tous les individus sont pris en compte dans le trace de la carte globale
         
-        juge.mat[[j]] <- juge.mat[[j]] * cons.wgt[1, j]#pondération
+        juge.mat[[j]] <- juge.mat[[j]] * cons.wgt[1, j]#ponderation
 		juge.tot = juge.tot+ juge.mat[[j]]#matrice pour tracer le fond de carte (idmap globale sur tous les individus)
 		
-		juge.tot.list<-vector("list",length(num.col.var)) #liste stockant les différents juge.tot pour chaque modalite de toutes les variables dans le cas où les cartes"partielles" sont tracée avec la méthode ellipse 
+		juge.tot.list<-vector("list",length(num.col.var)) #liste stockant les differents juge.tot pour chaque modalite de toutes les variables dans le cas ou les cartes"partielles" sont tracee avec la methode ellipse 
     }
     juge.tot.rn <- paste("Y_", rownames(juge.tot), sep = "")
     juge.tot.cn <- paste("X_", colnames(juge.tot), sep = "")
     rownames(juge.tot) <- juge.tot.rn
     colnames(juge.tot) <- juge.tot.cn
     juge.tot <- 100 * round(juge.tot/sum(cons.wgt[1, ]), 3)
-#remplissage de juge.tot.list : on ne somme que les indiv appartenenant à la modalité	
+#remplissage de juge.tot.list : on ne somme que les indiv appartenenant a la modalite	
 			# for(v in 1:length(num.col.var))#boucle sur les variables
 		# {
 			# for(m in 1:nlevels(dataset[,num.col.var[v]]))#boucle sur les modalites
@@ -431,7 +431,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
 			# somme = 0
 			# for (j in 1:nbjuge){#boucle sur les juges
 			# if(dataset[nbprod*j,num.col.var[v]] == levels(dataset[,num.col.var[v]])[m]){
-			# juge.tot.list[[v]][[m]] = juge.tot.list[[v]][[m]] + juge.mat[[j]]#le juge "participe" à la construction de juge.tot de la modalite ssi il la possede
+			# juge.tot.list[[v]][[m]] = juge.tot.list[[v]][[m]] + juge.mat[[j]]#le juge "participe" a la construction de juge.tot de la modalite ssi il la possede
 			# somme=somme+1#compteur de nb de juges ayant la modalite
 			# }			
 			# }
@@ -441,7 +441,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
 		# }
 	
     f1 <- seq(lim.minx, lim.maxx, precision)#x : quadrillage des abscisses de l'idmap
-    f2 <- seq(lim.miny, lim.maxy, precision)#y : quadrillage des ordonnées de l'idmap
+    f2 <- seq(lim.miny, lim.maxy, precision)#y : quadrillage des ordonnees de l'idmap
     if (!is.null(levels.contour)) {
         if (min(levels.contour) < 0 || max(levels.contour) > 
             100 || length(levels.contour) < 2) {
@@ -461,7 +461,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
        
     
    
-    if (color) {#si couleur zone d'idéal par modalités tracées avec la méthode ellipse sur fond de carte de l'idmap global
+    if (color) {#si couleur zone d'ideal par modalites tracees avec la methode ellipse sur fond de carte de l'idmap global
          titrecolor <- "Ideal Mapping"
 		image(f1, f2, t(juge.tot), asp = 1,col = terrain.colors(200), 
             xlab = paste("Dim ", coord[1], "(", round(res.pca$eig[coord[1], 
@@ -476,7 +476,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
             text(res.pca$ind$coord[i, coord[1]], res.pca$ind$coord[i, 
                 coord[2]], rownames(res.pca$ind$coord)[i], pos = 4, 
                 offset = 0.2, cex = 0.7)
-		}#fin de tracé idmap globale en couleur
+		}#fin de trace idmap globale en couleur
 		# coul<-0
 		# modalite<-list()
 		# for(v in 1:length(num.col.var))
@@ -484,7 +484,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
 			# for(m in 1:nlevels(dataset[,num.col.var[v]]))
 			# {
 			# coul<-coul+1
-			# contour(f1, f2, t(juge.tot.list[[v]][[m]]),levels=max( t(juge.tot.list[[v]][[m]])),add=TRUE,col=coul, lwd = 3) #tracé des contours de la zone d'ideal max de chaque modalite
+			# contour(f1, f2, t(juge.tot.list[[v]][[m]]),levels=max( t(juge.tot.list[[v]][[m]])),add=TRUE,col=coul, lwd = 3) #trace des contours de la zone d'ideal max de chaque modalite
 			# effectif<- table(dataset.signa[,colnames(dataset)[num.col.var[v]]] == levels(dataset[,num.col.var[v]])[m])[2]
 			# modalite[[coul]]<-paste(levels(dataset[,num.col.var[v]])[m], "(", effectif, ")")
 			# }
@@ -520,11 +520,11 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
     # }
 	# if (densite)############################################################### trace ac densite pr les modalites
 	# {debut du if densite
-##		require(KernSmooth)#package contenant la fonction bkde2D pour estimer la densité
+##		require(KernSmooth)#package contenant la fonction bkde2D pour estimer la densite
 		coul<-1
 		modalite<-list()
-		listpointsvrai<-vector("list",length(num.col.var.signa))#liste contenant les coordonnées sur le 1er plan factoriel des idéaux de toutes les variables/toutes les modalités
-		listpointssimu<-vector("list",length(num.col.var.signa))#idem pour les idéaux simulés (affectation aléatoire des individus aux modalités)
+		listpointsvrai<-vector("list",length(num.col.var.signa))#liste contenant les coordonnees sur le 1er plan factoriel des ideaux de toutes les variables/toutes les modalites
+		listpointssimu<-vector("list",length(num.col.var.signa))#idem pour les ideaux simules (affectation aleatoire des individus aux modalites)
 		cont=1
 	    coord.ideaux = res.pca$ind.sup$coord #en ligne les indiv, en col les coord de leur ideal par pdt sur l'espace produit
 		nom.juge<-rep(0,nrow(coord.ideaux))
@@ -532,28 +532,28 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
 		for (i in 1:nrow(coord.ideaux)) coord.ideaux[i,1]<-strsplit(rownames(coord.ideaux),"_")[[i]][2]#remplissage de la colonne par le nom du juge
 		for(v in num.col.var.signa)#boucle sur les variables
 		{
-			for(m in 1:nlevels(dataset.signa[,v]))#boucle sur les modalités
+			for(m in 1:nlevels(dataset.signa[,v]))#boucle sur les modalites
 			{
 			coul<-coul+1
 			lignes<-which(dataset.signa[,v]== levels(dataset.signa[,v])[m])#numero des lignes prenant la modalite m pour la variable v
-			jugemod<-dataset.signa[lignes,col.j.signa]#dataframe avec les juges ayant la modalité m
+			jugemod<-dataset.signa[lignes,col.j.signa]#dataframe avec les juges ayant la modalite m
 			larecup<-list()
-			for (i in 1:length(jugemod)) larecup[[i]]<-which(coord.ideaux[,"nom.juge"]== jugemod[i]) #recupération des lignes correspondant aux juges ayant la modalite m
+			for (i in 1:length(jugemod)) larecup[[i]]<-which(coord.ideaux[,"nom.juge"]== jugemod[i]) #recuperation des lignes correspondant aux juges ayant la modalite m
 			larecup<-unlist(larecup)
-			coord.ideaux.moda<-as.data.frame(coord.ideaux[larecup,c(2,3)])#coordonnées des idéaux SUR DIM1 ET DIM2 des juges ayant la modalité m
+			coord.ideaux.moda<-as.data.frame(coord.ideaux[larecup,c(2,3)])#coordonnees des ideaux SUR DIM1 ET DIM2 des juges ayant la modalite m
 			effectif<- table(dataset.signa[,v] == levels(dataset.signa[,v])[m])[2]#effectif de la modalite m
-			est<-bkde2D(coord.ideaux.moda, gridsize = c(100, 100), bandwidth=c(0.5, 0.5))#estimation de la densite, idée envisagée : largeur de bande = f(effectif)
+			est<-bkde2D(coord.ideaux.moda, gridsize = c(100, 100), bandwidth=c(0.5, 0.5))#estimation de la densite, idee envisagee : largeur de bande = f(effectif)
 			# contour(est$x1, est$x2, est$fhat, add=TRUE, levels=max(est$fhat),col=coul, lwd = 3)
 			# modalite[[coul-1]]<-paste(levels(dataset.signa[,v])[m], "(", effectif, ")")
 			#recuperation des coord du max
 			est$fhat = as.data.frame(est$fhat)
-			rownames(est$fhat) = est$x2#ordonnée
+			rownames(est$fhat) = est$x2#ordonnee
 			colnames(est$fhat) = est$x1#abscisse
-			mat.pos.maxI = which(est$fhat == max(est$fhat), arr.ind = TRUE)#abscisse et ordonnée de la position du maximum de densité donc de l'idéal
-			abs.maxI = as.numeric(colnames(est$fhat)[mat.pos.maxI[,2]])#abs des points de densité max
-			ord.maxI = as.numeric(rownames(est$fhat)[mat.pos.maxI[,1]])#ord des points de densité max
+			mat.pos.maxI = which(est$fhat == max(est$fhat), arr.ind = TRUE)#abscisse et ordonnee de la position du maximum de densite donc de l'ideal
+			abs.maxI = as.numeric(colnames(est$fhat)[mat.pos.maxI[,2]])#abs des points de densite max
+			ord.maxI = as.numeric(rownames(est$fhat)[mat.pos.maxI[,1]])#ord des points de densite max
 			# points(abs.maxI, ord.maxI, pch = 17, col = coul)
-			listpointsvrai[[cont]][[m]] = cbind(abs.maxI, ord.maxI)#coordonnées de l'ideal de la var v, modalite m
+			listpointsvrai[[cont]][[m]] = cbind(abs.maxI, ord.maxI)#coordonnees de l'ideal de la var v, modalite m
 			names(listpointsvrai)[cont] = colnames(dataset.signa)[v]
 			names(listpointsvrai[[cont]])[m] = levels(dataset.signa[,v])[m]
 			}
@@ -565,16 +565,16 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
 		
 
 ###simulations sans remise, en respectant l'effectif des classes
-listpointssimu<-vector("list",length(num.col.var.signa))#idem que liste point vrai mais contient un niveau supplémentaire pour les simulation
+listpointssimu<-vector("list",length(num.col.var.signa))#idem que liste point vrai mais contient un niveau supplementaire pour les simulation
 contb=1
 for(v in num.col.var.signa){#boucle sur les variables
 	for(s in 1:simusigni){#boucle sur les simulations
 		dataset.signa.simu<-dataset.signa
 		pointssimu = list()
-		for(m in 1:nlevels(dataset.signa.simu[,v])){#boucle sur les modalités
-			aenlever<-list()#liste qui contiendra les num des lignes à enlever car les juges ont déjà été affecté à une modalité de v
+		for(m in 1:nlevels(dataset.signa.simu[,v])){#boucle sur les modalites
+			aenlever<-list()#liste qui contiendra les num des lignes a enlever car les juges ont deja ete affecte a une modalite de v
 			nblignes<-length(which(dataset.signa[,v]== levels(dataset.signa[,v])[m]))#nb de personnes ayant la modalite m pour la variable v
-			jugemodsim<-sample(dataset.signa.simu[,col.j.signa],nblignes)#tirage aléatoire de nblignes juges:lignes tirées, les juges sont affectés à la modalité m
+			jugemodsim<-sample(dataset.signa.simu[,col.j.signa],nblignes)#tirage aleatoire de nblignes juges:lignes tirees, les juges sont affectes a la modalite m
 			larecupsim<-list()
 			for (i in 1:length(jugemodsim)){ 
 			 larecupsim[[i]]<-which(coord.ideaux[,"nom.juge"]== jugemodsim[i])
@@ -589,20 +589,20 @@ for(v in num.col.var.signa){#boucle sur les variables
 			rownames(est$fhat) = est$x2
 			colnames(est$fhat) = est$x1
 			mat.pos.max = which(est$fhat == max(est$fhat), arr.ind = TRUE)#matrice avec 2 colonnes : numero de lignes et num de colonnes de toutes le cases contenant le max
-			abs.max = as.numeric(colnames(est$fhat)[mat.pos.max[,2]])#abs des points de densité max
-			ord.max = as.numeric(rownames(est$fhat)[mat.pos.max[,1]])#ord des points de densité max
+			abs.max = as.numeric(colnames(est$fhat)[mat.pos.max[,2]])#abs des points de densite max
+			ord.max = as.numeric(rownames(est$fhat)[mat.pos.max[,1]])#ord des points de densite max
 			abs.moy = mean(abs.max)
 			ord.moy = mean(ord.max)
-			pointssimu[[m]] = cbind(abs.moy, ord.moy) #liste stockant les resultats de la simu : cad coordonnées des modalités
-			listpointssimu[[contb]][[s]] = pointssimu #liste dans laquelle on accumule les résultats de toutes les simulations. Liste à 3 niveaux : la variable, la simulation, et toutes les moda correspondant a la simulation
+			pointssimu[[m]] = cbind(abs.moy, ord.moy) #liste stockant les resultats de la simu : cad coordonnees des modalites
+			listpointssimu[[contb]][[s]] = pointssimu #liste dans laquelle on accumule les resultats de toutes les simulations. Liste a 3 niveaux : la variable, la simulation, et toutes les moda correspondant a la simulation
 			# names(pointssimu)[s] = paste(s,"_", colnames(dataset.signa.simu)[v],"_",levels(dataset.signa.simu[,v])[m])
-			dataset.signa.simu = dataset.signa.simu[-aoter,] #on enleve les juges affectés à la modalité m du dataframe pour refaire la prochaine affectation(pour la meme simulation, meme variable)
+			dataset.signa.simu = dataset.signa.simu[-aoter,] #on enleve les juges affectes a la modalite m du dataframe pour refaire la prochaine affectation(pour la meme simulation, meme variable)
 			}
 		}
 	contb = contb+1
 	}
 
-###########TEST GLOBAL (calcul d'inertie entre les modalités d'une même variable)ET TEST PAR PAIRES (calcul de distances entre les modalités 2 à 2 d'une variable)
+###########TEST GLOBAL (calcul d'inertie entre les modalites d'une meme variable)ET TEST PAR PAIRES (calcul de distances entre les modalites 2 a 2 d'une variable)
 cv=1
 resultat.test = list()
 inertie.obs<-as.data.frame(rep(0,length(var.signa.test)))
@@ -619,18 +619,18 @@ for(v in var.signa.test)
 		poids = list()
 		for (m in 1:nlevels(dataset.signa.simu[,v]))
 		{
-			X[[m]] = listpointsvrai[[cv]][[m]][1]#abscisse de l'idéal de la modalite m
-			Y[[m]] = listpointsvrai[[cv]][[m]][2]#ordonnée de l'idéal de la modalite m
-			poids[[m]] = (table(dataset.signa[,v] == levels(dataset.signa[,v])[m])[2])/nbjuge#pourcentage d'individus ayant la modalité m
+			X[[m]] = listpointsvrai[[cv]][[m]][1]#abscisse de l'ideal de la modalite m
+			Y[[m]] = listpointsvrai[[cv]][[m]][2]#ordonnee de l'ideal de la modalite m
+			poids[[m]] = (table(dataset.signa[,v] == levels(dataset.signa[,v])[m])[2])/nbjuge#pourcentage d'individus ayant la modalite m
 		}
-		X=do.call(rbind,X)#vecteur contenant les abscisses de l'idéal de toutes les modalités
-		Y=do.call(rbind,Y)#idem ordonnées
+		X=do.call(rbind,X)#vecteur contenant les abscisses de l'ideal de toutes les modalites
+		Y=do.call(rbind,Y)#idem ordonnees
 		poids=do.call(rbind,poids)#idem poids
 		rownames(inertie.obs)[cv]<-colnames(dataset.signa)[v]
 		colnames(inertie.obs) = "inertie.obs"
-		mX = sum(poids*X)#pondération
+		mX = sum(poids*X)#ponderation
 		mY = sum(poids*Y)
-		inertie.obs[cv,1]<-sum(poids*(X-mX)^2)+ sum(poids*(Y-mY)^2)#calcul de l'inertie observée
+		inertie.obs[cv,1]<-sum(poids*(X-mX)^2)+ sum(poids*(Y-mY)^2)#calcul de l'inertie observee
 		##calcul de inertie intra variables pour chaque simulation
 		vectinertiesimu<-rep(0,simusigni)
 		for(s in 1:simusigni)
@@ -646,7 +646,7 @@ for(v in var.signa.test)
 				Y.simu = do.call(rbind, Y.simu)
 				mX.simu = sum(poids*X.simu)
 				mY.simu = sum(poids*Y.simu)
-				vectinertiesimu[s]<-sum(poids*(X.simu-mX.simu)^2)+ sum(poids*(Y.simu-mY.simu)^2)#vecteur contenant les simmusigni(500) inerties simulées
+				vectinertiesimu[s]<-sum(poids*(X.simu-mX.simu)^2)+ sum(poids*(Y.simu-mY.simu)^2)#vecteur contenant les simmusigni(500) inerties simulees
 			}
 		inertie.critique[cv,1]<-quantile(vectinertiesimu, probs = conf.level)
 		rownames(inertie.critique)[cv]<-colnames(dataset.signa)[v]
@@ -654,7 +654,7 @@ for(v in var.signa.test)
 		inertie.pvalue[cv,1]<-sum(vectinertiesimu>inertie.obs[cv,1])/simusigni
 		rownames(inertie.pvalue)[cv]<-colnames(dataset.signa)[v]
 		colnames(inertie.pvalue) = "p-value"
-		#tracé de l'idmap si test global sur inertie intra var significatif
+		#trace de l'idmap si test global sur inertie intra var significatif
 		if(inertie.obs[cv,1]>inertie.critique[cv,1])
 		{
 		dev.new()
@@ -689,7 +689,7 @@ for(v in var.signa.test)
 
 		
 	##test par paires de modalites intra variable(distance)
-	for(colo in 1:ncol(paires))#pour la paire de modalité correspondant à la 1ere colonne de toutes les combinaisons possibles (rangées dans paires)
+	for(colo in 1:ncol(paires))#pour la paire de modalite correspondant a la 1ere colonne de toutes les combinaisons possibles (rangees dans paires)
 		{
 		resultat.paires[colo,1] = paste(colnames(dataset.signa)[v],"_", levels(dataset.signa[,v])[paires[1,colo]], ":",colnames(dataset.signa)[v],"_", levels(dataset.signa[,v])[paires[2,colo]])
 		vectdsimu = rep(0,simusigni)
@@ -697,7 +697,7 @@ for(v in var.signa.test)
 			{
 			vectdsimu[s] = dist(rbind(listpointssimu[[cv]][[s]][[paires[1,colo]]], listpointssimu[[cv]][[s]][[paires[2,colo]]]))
 			}
-		Dc<-quantile(vectdsimu, probs = conf.level)#H1: la dist est superieure au cas où elle est due au hasard
+		Dc<-quantile(vectdsimu, probs = conf.level)#H1: la dist est superieure au cas ou elle est due au hasard
 		Dobs<-dist(rbind(listpointsvrai[[cv]][[paires[1,colo]]], listpointsvrai[[cv]][[paires[2,colo]]]))
 		resultat.paires[colo,2] = Dc
 		resultat.paires[colo,3] = Dobs
@@ -740,11 +740,11 @@ for(v in var.signa.test)
     res$idmap$precision <- precision
     res$ideal$profiles <- id.profile
     res$ideal$pct.conso <- maxval
-	# res$exdensiteinertieH0<-vectinertiesimu #exemple permettant de tracer la densité de l'inertie sous H0 (cas de la derniere variable)
-	# res$coord.ideaux<-res.pca$ind.sup.coord#peut être enlevée car contenue dans res$PCA, mais au moins y a pas a chercher les coordonnées des p idéaux de tous les juges (si p produits) qui sont en ind supp
+	# res$exdensiteinertieH0<-vectinertiesimu #exemple permettant de tracer la densite de l'inertie sous H0 (cas de la derniere variable)
+	# res$coord.ideaux<-res.pca$ind.sup.coord#peut etre enlevee car contenue dans res$PCA, mais au moins y a pas a chercher les coordonnees des p ideaux de tous les juges (si p produits) qui sont en ind supp
 	if(color == "FALSE") {
 	  res$test.paires<-resultat.test#ne se fait que si on a choisi l'option color=false, si color = true, test.paires n'existe pas
-	  res$coordobs<-listpointsvrai#coorddonnées des idéaux observés
+	  res$coordobs<-listpointsvrai#coorddonnees des ideaux observes
 	  res$test.global<-cbind.data.frame(inertie.obs, inertie.critique, inertie.pvalue)
     }
 	class(res) <- c("IdMap", "list")

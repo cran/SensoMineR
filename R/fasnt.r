@@ -4,7 +4,7 @@ don=data.frame(don)
 I=nrow(don)
 J=ncol(don)/3
 
-#Si pour chaque sujet d'abord la catégorisation  puis la nappe
+#Si pour chaque sujet d'abord la categorisation  puis la nappe
 don_input=don
 if (first=="catego"){
 don2=don
@@ -154,7 +154,7 @@ plot(coord.actif, xlab = lab.x, ylab = lab.y,xlim = c(0, 1), ylim = c(0, 1), pch
 points(coord.actif[, 1], coord.actif[, 2], col = color[2],pch = 17)
 text(coord.actif[, 1], y = coord.actif[, 2],labels = rownames(coord.actif), pos = 3, col = color[2])
 
-#graph des méthodes
+#graph des methodes
 coord.actif <- afmh$group$coord[[1]][, axes]
 gp=rep(c("1","2"),(length(coord.actif[,1])/2))
 dev.new()
@@ -172,7 +172,7 @@ boot (don,method="sortnapping", level.conf = 1-alpha,nbsim=B,ncp=ncp.boot)}
 
 
 #Indicateurs du napping
-#Récupérer que les nappes
+#Recuperer que les nappes
 nappe_c=data.frame(matrix(NA,I,2*J))
 for (i in 1:J){
 nappe_c[,(2*(i-1)+1)]=don[,(3*(i-1)+1)]
@@ -258,7 +258,7 @@ return(list(resultat,res.pca))}
 res1_nappe=res.nappe(nappe_c)
 res2_nappe=res.nappe2(nappe_c)
 
-#Indicateurs de la catégorisation
+#Indicateurs de la categorisation
 catego_c=data.frame(matrix(NA,I,J))
 for (i in 1:J){
 catego_c[,i]=don[,(3*i)]
@@ -300,7 +300,7 @@ texte[((I*(i-1))+1):(I*i),3]=paste(catego_c[,i])}
 
 restext=textual(texte,3,1,sep.word=sep.word)
 
-#Suppression des modalité g1, ..., g99 (attention tout est mis en minuscule avce textual)
+#Suppression des modalite g1, ..., g99 (attention tout est mis en minuscule avce textual)
 mod.suppr=paste("g",1:99,sep="")
 mod.suppr=intersect(colnames(restext$cont.table),mod.suppr)
 if (length(mod.suppr)!=0){
@@ -310,7 +310,7 @@ num.mod.suppr2=which(rownames(restext$nb.words)%in%mod.suppr)
 restext$nb.words=restext$nb.words[-num.mod.suppr2,] }
 
 
-#Nombre de mots différents
+#Nombre de mots differents
 nb_mot_diff=nrow(restext$nb.words)
 cat("Number of different words : ",nb_mot_diff,"\n")
 
@@ -334,7 +334,7 @@ if (graph){
 dev.new()
 plot(nb_mots2,main="Number of words per group")}
 
-#Seuil minimum à mettre en paramètre...
+#Seuil minimum a mettre en parametre...
 freq_min=which(apply(restext$cont.table,2,sum)<=word.min)
 if (length(freq_min)!=0){
 restext$cont.table=restext$cont.table[,-freq_min]}

@@ -6,7 +6,7 @@
 Construction of an optimal design balanced for first order of carry-over effect.
 }
 \usage{
-optimaldesign(nbPanelist, nbProd, nbProdByPanelist, seed=NULL)
+optimaldesign(nbPanelist, nbProd, nbProdByPanelist=nbProd, seed=NULL)
 }
 
 \arguments{

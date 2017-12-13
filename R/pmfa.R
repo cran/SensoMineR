@@ -1,7 +1,7 @@
 pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
     graph.ind = TRUE, graph.mfa = TRUE, lim = c(60, 40), coord = c(1, 2), cex = 0.8)
 {
-    procrustes <- function(amat, target, orthogonal = F, translate = F,
+    procrustes <- function(amat, target, orthogonal = FALSE, translate = FALSE,
         magnify = FALSE) {
         for (i in nrow(amat):1) {
             if (any(is.na(amat)[i, ]) | any(is.na(target)[i,
@@ -110,13 +110,13 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
         }
     }
     if (do.mfa&graph.mfa){
-      plot(res.afm,choix="var",habillage="var",axes=coord,new.plot=TRUE)
+      plot(res.afm,choix="var",axes=coord,new.plot=TRUE)
       if (!is.null(matrice.illu)){
-        plot(res.afm,choix="var",invisible="sup",habillage="var",axes=coord,new.plot=TRUE)
-        plot(res.afm,choix="var",invisible="actif",axes=coord,new.plot=TRUE)
+        plot(res.afm,choix="var",invisible="quanti.sup",axes=coord,new.plot=TRUE)
+        plot(res.afm,choix="var",invisible="quanti",axes=coord,new.plot=TRUE)
       }
       plot(res.afm,choix="ind",partial="all",habillage="group",axes=coord,new.plot=TRUE)
-      plot(res.afm,choix="ind",axes=coord,new.plot=TRUE)
+      plot(res.afm,choix="ind",habillage="none",axes=coord,new.plot=TRUE)
       plot(res.afm,choix="group",axes=coord,new.plot=TRUE)
     }
     dimnames(res) <- list(colnames(matrice)[(1:(ncol(matrice)/2)) * 2], "RV coeff")

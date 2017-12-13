@@ -56,9 +56,9 @@ hdil <- function(X) {
 
 
 hweight <- function (X, H, type = rep("s", length(H[[1]]))) {
-    #Je crée un Hq dans la cas où il y a des qualitatives
+    #Je cree un Hq dans la cas ou il y a des qualitatives
     Hq=H
-    #initialisation de la pondération 
+    #initialisation de la ponderation 
     niv1 = MFA(X, group = H[[1]], type = type, graph = FALSE)
     cw <- niv1$call$col.w
     Hq[[1]] = niv1$call$group.mod
@@ -98,7 +98,7 @@ hweight <- function (X, H, type = rep("s", length(H[[1]]))) {
  if (length(hierar)==0) hierar=nvar
  if (!is.list(hierar)) hierar = list(hierar,rep(1,length(hierar)))
  for (group in 1:nbpanel){
-#    aux <- search.desc(donnee[[group]],level=level.search.desc,col.j=col.j,col.p=col.p,firstvar=firstvar) # pas de sélection car sinon la hiérarchie est à revoir
+#    aux <- search.desc(donnee[[group]],level=level.search.desc,col.j=col.j,col.p=col.p,firstvar=firstvar) # pas de selection car sinon la hierarchie est a revoir
     aux = scalebypanelist(donnee[[group]],center=centerbypanelist,scale=scalebypanelist,col.j=col.j,col.p=col.p,firstvar=firstvar)
     nbjuge=c(nbjuge,nrow(aux)/nbprod-1)
     numligne=c(numligne,nrow(aux)-nbprod)
@@ -127,7 +127,7 @@ for (j in 1:length(hierar)){
 poids = hweight(aamoy,hierar)
 
 for (group in 1:nbpanel){
-#    aux <- search.desc(donnee[[group]],level=level.search.desc,col.j=col.j,col.p=col.p,firstvar=firstvar) # pas de sélection car sinon la hiérarchie est à revoir
+#    aux <- search.desc(donnee[[group]],level=level.search.desc,col.j=col.j,col.p=col.p,firstvar=firstvar) # pas de selection car sinon la hierarchie est a revoir
     aux = scalebypanelist(donnee[[group]],center=centerbypanelist,scale=scalebypanelist,col.j=col.j,col.p=col.p,firstvar=firstvar)
     tab=aux[1:nbprod,-(1:2)]
     moy <- matrix(apply(tab,2,mean),nrow=nrow(tab),ncol=ncol(tab),byrow=TRUE)

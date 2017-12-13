@@ -26,7 +26,7 @@ print.fast=function (x, file = NULL, sep = ";", ...)
     res[15, ] <- c("$reord", "reordered data set")
     res[16, ] <- c("$cooccur", "cooccurrence matrix")
     res[17, ] <- c("$cramer", "Cramer's coefficient between consumers")
-    res[18, ] <- c("$textuel", "Characterization of products by the words")
+    res[18, ] <- c("$textual", "Characterization of products by the words")
     print(res[1:18, ])
     if (!is.null(file)) {
         write.infile(res.catego, file = file, sep = sep)

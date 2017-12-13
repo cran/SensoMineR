@@ -15,7 +15,7 @@ There are 3 files corresponding to the composition of the cocktails; the sensory
 - For the sensory description: each cocktail was evaluated by 12 panelists according to 13
 sensory descriptors (only the average of each cocktail are given).
 - For the hedonic data: each cocktail was evaluated on a structured scale from 0 to 10, 
-by 100 consumers, according to their liking (0) or disliking (10).
+by 100 consumers, according to their disliking (0) or liking (10).
 }
 
 \usage{data(cocktail)}
@@ -26,7 +26,7 @@ There are three data frames:
 - senso.cocktail: a data frame with 16 rows and 13 columns: each cocktail was evaluated by 12 panelists according to 13
 sensory descriptors;\cr
 hedo.cocktail: a data frame with 16 rows and 100 columns: each cocktail was evaluated on a structured scale from 0 to 10, 
-by 100 consumers, according to their liking (0) or disliking (10).
+by 100 consumers, according to their disliking (0) or liking (10).
 }
 
 \source{

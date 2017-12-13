@@ -11,7 +11,7 @@ don[,i]=as.factor(don[,i])}
 if (is.null(name.group)) 
 name.group <- paste("Sj", 1:length(group), sep = ".")
 
-########################################Graphiques préliminaires
+########################################Graphiques preliminaires
 if (graph){
 
 #Nombre de niveaux par sujet
@@ -57,13 +57,13 @@ dev.new()
 plot(aggdb,main="Number of objects per group for the last levels")
 
 }
-########################################Fin graphiques préliminaires
+########################################Fin graphiques preliminaires
 
 #AFM
 afm=MFA(don,group=group,type=rep("n",J),name.group=name.group,graph=F,ncp=ncp)
 
 
-##################rapport de corrélation##################################
+##################rapport de correlation##################################
 eta2 <- function(x, gpe) {
 vartot <- function(x) {
 res <- sum((x - mean(x))^2)
@@ -77,7 +77,7 @@ res <- varinter(x, gpe)/vartot(x)
 return(res)}
 ###########################################################################
 
-#calcul pour chaque dimension du rapport de corrélation
+#calcul pour chaque dimension du rapport de correlation
 coord.niv=matrix(0,ncol(don),ncp)
 rownames(coord.niv)=colnames(don)
 colnames(coord.niv)=colnames(afm$ind$coord)

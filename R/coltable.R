@@ -1,7 +1,7 @@
-"coltable" <-function(matrice,col.mat=matrice,nbrow=nrow(matrice),nbcol=ncol(matrice),level.lower=0.05,col.lower="mistyrose",level.upper=1.96,col.upper="lightblue",cex=0,nbdec=4,main.title=NULL,level.lower2=-1e10,col.lower2="red",level.upper2=1e10,col.upper2="blue",novalue=FALSE) {
+coltable <-function(matrice,col.mat=matrice,nbrow=nrow(matrice),nbcol=ncol(matrice),level.lower=0.05,col.lower="mistyrose",level.upper=1.96,col.upper="lightblue",cex=0,nbdec=4,main.title=NULL,level.lower2=-1e10,col.lower2="red",level.upper2=1e10,col.upper2="blue",novalue=FALSE) {
 
 ################################################################
-"fill" <- function(matrice,col.mat=matrice,nbrow,nbcol,pol,level.lower,col.lower="mistyrose",level.upper,col.upper="lightblue",main.title=NULL,level.lower2,col.lower2,level.upper2,col.upper2){
+fill <- function(matrice,col.mat=matrice,nbrow,nbcol,pol,level.lower,col.lower="mistyrose",level.upper,col.upper="lightblue",main.title=NULL,level.lower2,col.lower2,level.upper2,col.upper2){
 
 #cadre
 dim1 <- dim(matrice)[1] 
@@ -39,26 +39,27 @@ if (!novalue){
 ################################################################
 
 ################################################################
-"police" <- function(matrice,nbrow,nbcol,nbdec) {
+police <- function(matrice,nbrow,nbcol,nbdec) {
 dev.new()
+    def.par <- par(no.readonly = TRUE)
     par(mar=c(0,0,2,0))
-    plot.new() ; title(main=main.title);
+    plot.new(); title(main=main.title);
     a <- c(rownames(matrice),colnames(matrice))
     nb=NULL
     for (i in 1:nbdec) nb <- paste(nb,"0",sep="")
     nb <- paste(nb,"0.e-00")
     a <- c(a,nb)
     b <- min(nbcol,15)
-    return((round((1/(b+1))/max(strwidth(a)),2)*100-5)/100)
+    return(list(size=(round((1/(b+1))/max(strwidth(a)),2)*100-5)/100,def.par=def.par))
 }
 ################################################################
 
 if (sum(dim(matrice)==dim(col.mat))!=2) stop("The matrices matrice and col.mat should have the same dimensions")
 if (level.lower2 > level.lower) stop("level.lower2 should be less than level.lower")
 if (level.upper2 < level.upper) stop("level.upper2 should be greater than level.upper")
-matrice <- signif(matrice,nbdec)
+if (is.numeric(matrice)) matrice <- signif(matrice,nbdec)
 matrice=cbind.data.frame(rownames(matrice),matrice)
-col.mat <- signif(col.mat,nbdec)
+if (is.numeric(col.mat)) col.mat <- signif(col.mat,nbdec)
 col.mat=cbind.data.frame(rownames(col.mat),col.mat)
 colnames(matrice)[1]=" "
 dim1 <- nrow(matrice)
@@ -77,13 +78,18 @@ if (dim2%/%nbcol==dim2/nbcol) {
         A.col <- data.frame(col.mat[(i*nbrow+1):((i+1)*nbrow),1])
         B.col <- col.mat[(i*nbrow+1):((i+1)*nbrow),(1+j*nbcol+1):(1+(j+1)*nbcol)]
         B.col <- cbind(A.col,B.col)
-        if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
-        else{
+        if (size==0) {
+		  pol <- police(matrice,nbrow,nbcol,nbdec)
+		  size <- pol$size
+		  def.par <- pol$def.par
+		}  else{
           dev.new()
+          def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
-          plot.new() ; title(main=main.title);
+          plot.new(); title(main=main.title);
         }
         fill(B,B.col,nbrow,nbcol,size,level.lower,col.lower,level.upper,col.upper,main.title=main.title,level.lower2,col.lower2,level.upper2,col.upper2)
+		par(def.par)
     }
     if ((dim1%/%nbrow)*nbrow != dim1){
       A<-data.frame(matrice[(dim1%/%nbrow*nbrow+1):dim1,1])
@@ -94,14 +100,18 @@ if (dim2%/%nbcol==dim2/nbcol) {
       A.col<-data.frame(col.mat[(dim1%/%nbrow*nbrow+1):dim1,1])
       B.col<-data.frame(col.mat[(dim1%/%nbrow*nbrow+1):dim1,(1+j*nbcol+1):(1+(j+1)*nbcol)])
       B.col<-cbind(A.col,B.col)
-        if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
-        else{
+        if (size==0) {
+		  pol <- police(matrice,nbrow,nbcol,nbdec)
+		  size <- pol$size
+		  def.par <- pol$def.par
+		}  else{
          dev.new()
+         def.par <- par(no.readonly = TRUE)
          par(mar=c(0,0,2,0))
-          plot.new() ; title(main=main.title);
+         plot.new(); title(main=main.title);
         }
       fill(B,B.col,nbrow,nbcol,size,level.lower,col.lower,level.upper,col.upper,main.title=main.title,level.lower2,col.lower2,level.upper2,col.upper2)
-
+      par(def.par)
     }
   }
 }
@@ -115,13 +125,18 @@ else {
         A.col<-data.frame(col.mat[(i*nbrow+1):((i+1)*nbrow),1])
         B.col<-col.mat[(i*nbrow+1):((i+1)*nbrow),(1+j*nbcol+1):(1+(j+1)*nbcol)]
         B.col<-cbind(A.col,B.col)
-        if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
-        else{
+        if (size==0) {
+		  pol <- police(matrice,nbrow,nbcol,nbdec)
+		  size <- pol$size
+		  def.par <- pol$def.par
+		}  else{
           dev.new()
+          def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
-          plot.new() ; title(main=main.title);
+          plot.new(); title(main=main.title);
         }
         fill(B,B.col,nbrow,nbcol,size,level.lower,col.lower,level.upper,col.upper,main.title=main.title,level.lower2,col.lower2,level.upper2,col.upper2)
+       par(def.par)
       }
       if ((dim1%/%nbrow)*nbrow != dim1){
         A<-data.frame(matrice[(dim1%/%nbrow*nbrow+1):dim1,1])
@@ -131,13 +146,18 @@ else {
         A.col<-data.frame(col.mat[(dim1%/%nbrow*nbrow+1):dim1,1])
         B.col<-col.mat[(dim1%/%nbrow*nbrow+1):dim1,(1+j*nbcol+1):(1+(j+1)*nbcol)]
         B.col<-cbind(A.col,B.col)
-        if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
-        else{
+        if (size==0) {
+		  pol <- police(matrice,nbrow,nbcol,nbdec)
+		  size <- pol$size
+		  def.par <- pol$def.par
+		}  else{
           dev.new()
+          def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
-          plot.new() ; title(main=main.title);
+          plot.new(); title(main=main.title);
         }
         fill(B,B.col,nbrow,nbcol,size,level.lower,col.lower,level.upper,col.upper,main.title=main.title,level.lower2,col.lower2,level.upper2,col.upper2)
+        par(def.par)
       }
     }
     for (i in 0:(dim1%/%nbrow-1)){#pour les blocs d'individus entiers les variables qui manquent
@@ -151,13 +171,18 @@ else {
       B.col<-col.mat[(i*nbrow+1):((i+1)*nbrow),(1+dim2%/%nbcol*nbcol):dim2+1]
       if (is.null(dim(B)))    B.col<-data.frame(B.col)
       B.col<-cbind(A.col,B.col)
-        if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
-        else{
+        if (size==0) {
+		  pol <- police(matrice,nbrow,nbcol,nbdec)
+		  size <- pol$size
+		  def.par <- pol$def.par
+		}  else{
           dev.new()
+          def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
-          plot.new() ; title(main=main.title);
+          plot.new(); title(main=main.title);
         }
       fill(B,B.col,nbrow,nbcol,size,level.lower,col.lower,level.upper,col.upper,main.title=main.title,level.lower2,col.lower2,level.upper2,col.upper2)
+      par(def.par)
     }
     if ((dim1%/%nbrow)*nbrow != dim1){
       A<-data.frame(matrice[(dim1%/%nbrow*nbrow+1):dim1,1]) #les individus qui manquent et les variables qui manquent
@@ -171,13 +196,19 @@ else {
       if (is.null(dim(B)))    B.col<-data.frame(B.col)
       names(B.col)=names(matrice)[(1+dim2%/%nbcol*nbcol):dim2+1]
       B.col<-cbind(A.col,B.col)
-        if (size==0) size <- police(matrice,nbrow,nbcol,nbdec)
-        else{
+        if (size==0) {
+		  pol <- police(matrice,nbrow,nbcol,nbdec)
+		  size <- pol$size
+		  def.par <- pol$def.par
+		}  else{
           dev.new()
+          def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
-          plot.new() ; title(main=main.title);
+          plot.new(); title(main=main.title)
         }
       fill(B,B.col,nbrow,nbcol,size,level.lower,col.lower,level.upper,col.upper,main.title=main.title,level.lower2,col.lower2,level.upper2,col.upper2)
-    }
+      par(def.par)
+}
   }
+  par(def.par)
 }

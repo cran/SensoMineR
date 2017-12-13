@@ -43,7 +43,7 @@ cm.colors2=function (n, alpha = 1) {
 	  +matrix(rep(apply(MatH,2,mean,na.rm=T),each=nrow(MatH)),ncol=ncol(MatH))-matrix(rep(mean(MatH,na.rm=TRUE),ncol(MatH)*nrow(MatH)),ncol=ncol(MatH)))[missing]
 	}
     matrice <- cbind(row.names(MatH), Mat[rownames(MatH),],MatH)
-    classif <- cluster::agnes(dist(t(MatH)),method="ward")
+    classif <- cluster::agnes(dist(t(scale(MatH,scale=FALSE))),method="ward")
 if(graph.tree){
     dev.new()
     plot(classif,main="Cluster Dendrogram",xlab="Panelists",which.plots=2)
