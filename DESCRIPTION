@@ -1,6 +1,6 @@
 Package: SensoMineR
-Version: 1.23
-Date: 2017-12-12
+Version: 1.25
+Date: 2020-03-09
 Title: Sensory Data Analysis
 Author: Francois Husson, Sebastien Le, Marine Cadoret
 Maintainer: Francois Husson <husson@agrocampus-ouest.fr>
@@ -11,6 +11,6 @@ License: GPL (>= 2)
 URL: http://sensominer.free.fr
 Encoding: latin1
 NeedsCompilation: no
-Packaged: 2017-12-13 08:31:00 UTC; husson
+Packaged: 2020-03-10 15:35:41 UTC; husson
 Repository: CRAN
-Date/Publication: 2017-12-13 08:51:01 UTC
+Date/Publication: 2020-03-10 16:10:06 UTC

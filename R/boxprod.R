@@ -14,7 +14,7 @@ for (m in 0:mult) {
 boxplot(donnee[,nb+firstvar-1]~donnee[,col.p],col="orchid3",main = names(donnee[nb+firstvar-1]),boxfill= "light gray",outpch = 21:25, outlty = 2,bg = "pink",lwd = 0.5, medcol = "dark blue", medcex = 1, medpch=15)
                               } 
                    }
-if (m < mult) dev.new()
+if (m < mult & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
           }  #for (m in 0:mult) {
 
                                   }

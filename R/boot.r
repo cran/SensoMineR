@@ -126,7 +126,7 @@ if (orthogonal) {
 
 #  res.pca=PCA(jdd,ind.sup=(nrow(X)+1):nrow(jdd),ncp=ncp,scale.unit=FALSE,graph=FALSE)
 
-  if (new.plot) dev.new()
+  if (new.plot & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
 #  truc=cbind.data.frame(res.pca$ind.sup$coord,rep(rownames(X),nbsim))
   truc=cbind.data.frame(jdd[-(1:nrow(X)),],rep(rownames(X),nbsim))
   simul=list()

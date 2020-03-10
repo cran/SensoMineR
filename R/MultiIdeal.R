@@ -176,8 +176,8 @@ MultiIdeal <- function(dataset,col.p,col.j,id.recogn,level.search.desc=0.2,corre
     maxx <- max(max(coord.ellipse.a.tracer[,1+2*(0:(nbj-1))],na.rm=T),max(res.pca$ind$coord[,1]))
     miny <- min(min(coord.ellipse.a.tracer[,2*(1:nbj)],na.rm=T),min(res.pca$ind$coord[,2]))
     maxy <- max(max(coord.ellipse.a.tracer[,2*(1:nbj)],na.rm=T),max(res.pca$ind$coord[,2]))
-    dev.new()
-    plot(res.pca,choix="ind",invisible="ind.sup",xlim=c(minx,maxx),ylim=c(miny,maxy),title="Single vs. Multiple Ideal",axes=coord)
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
+    plot(res.pca,choix="ind",invisible="ind.sup",xlim=c(minx,maxx),ylim=c(miny,maxy),title="Single vs. Multiple Ideal",axes=coord, graph.type = "classic")
     text(matP[,1],matP[,2],matP[,ncol(matP)],cex=0.7,pos=4,offset=0.2,col="blue3")
     for (p in 1:nbprod) {
         points(matP[p,1],matP[p,2],cex=1,col="blue3",pch=20)

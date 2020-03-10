@@ -14,7 +14,7 @@ nappeplot <- function (donnee, numr = 2, numc = 2, color = "blue", lim = c(60, 4
         text(donnee[, (2 * (nb - 1) + 1):(2 * nb)], label = rownames(donnee), col = color, cex = 0.8, pos = 4, offset = 0.2)
       }
     }
-    if (m < mult) dev.new()
+    if ((m < mult)& (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
   }
   par(las = 0)
   par(mfrow = c(1, 1))

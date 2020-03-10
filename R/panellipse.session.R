@@ -47,7 +47,7 @@ nbjuge <- length(levels(donnee[,col.j]))
   dimnames(mat$byproduct)=list(paste(colnames(donnee)[col.s],1:nbseance,sep=" "),paste(colnames(donnee)[col.s],1:nbseance,sep=" "),labprod)
 
   aa <- matrix(0,ncol(donnee)-firstvar+1,2)
-  res.average=averagetable(don,formul=as.formula(paste("~",colnames(don)[2])),firstvar=3)
+  res.average=averagetable(don,formul=as.formula(paste(paste("~",colnames(don)[2]), collapse = " ")),firstvar=3)
   for (j in 1:(ncol(donnee)-firstvar+1)) aa[j,] <- as.matrix(PCA(res.average[,(ncol(donnee)-firstvar+1)*(0:(nbseance-1))+j],graph=FALSE)$eig[1,1:2])
   rownames(aa) <- colnames(donnee[,firstvar:ncol(donnee)])
   colnames(aa) <- c("eig1","Reproductibility")

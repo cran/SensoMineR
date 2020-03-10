@@ -19,7 +19,7 @@
   if (is.null(group)){
     res.af <- PCA(moy.aux[,-c(1,2)],ind.sup = (nbprod+1):nrow(moy.aux), scale.unit = scale.unit, ncp = nbcoord,graph=FALSE)
     axe$moyen <- data.frame(rbind(res.af$ind$coord,res.af$ind.sup$coord),as.factor(moy.aux[,2]),as.factor(moy.aux[,1]))
-    plot(res.af,choix="var",axes=coord)
+    print(plot(res.af,choix="var",axes=coord))
   }
   else {
     if (scale.unit) res.af <- MFA(moy.aux[,-c(1,2)],ind.sup = (nbprod+1):nrow(moy.aux), group = group, name.group = name.group, type = rep("s",length(group)), ncp = nbcoord,graph=FALSE)
@@ -28,11 +28,10 @@
     axe$partiel <- data.frame(rbind(t(matrix(t(as.matrix(res.af$ind$coord.partiel)),nrow=nbcoord*length(group),byrow=FALSE)),t(matrix(t(as.matrix(res.af$ind.sup$coord.partiel)),nrow=nbcoord*length(group),byrow=FALSE))),as.factor(moy.aux[,2]),as.factor(moy.aux[,1]))
     dimnames(axe$partiel)[2][[1]][(dim(axe$partiel)[2]-1):dim(axe$partiel)[2]] <- c("Product","Panelist")
     for (i in 1:length(group)) dimnames(axe$partiel)[2][[1]][((i-1)*nbcoord+1):(i*nbcoord)]<-paste("Dim", 1:nbcoord, sep = "",name.group[i])
-    plot(res.af,choix="var",habillage="group",axes=coord)
+    print(plot(res.af,choix="var",habillage="group",axes=coord))
   }
-  plot(res.af,choix="ind",invisible="ind.sup",axes=coord)
-  dev.new()
-	plot(res.af,choix="var",axes=coord)
+  if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
+  print(plot(res.af,choix="ind",invisible="ind.sup",axes=coord))
   dimnames(axe$moyen)[2][[1]]<-c (paste("Dim", 1:nbcoord, sep = ""),"Product","Panelist")
   axe$eig = res.af$eig
   return(axe)

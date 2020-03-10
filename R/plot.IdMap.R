@@ -52,7 +52,7 @@ plot.IdMap <- function(x,xlim,ylim,levels.contour=NULL,color=FALSE,inverse=FALSE
     }
     if (length(pos.y2)==0 || is.null(pos.y2))
         stop(paste("Not convenient 'y2' definition. Moreover, 'y2' should be a multiplicator of ",res$idmap$precision,".",sep=""))
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     res2 <- res$idmap$data[pos.y1:pos.y2,pos.x1:pos.x2]
     f1 <- seq(x1,x2,res$idmap$precision)
     f2 <- seq(y1,y2,res$idmap$precision)

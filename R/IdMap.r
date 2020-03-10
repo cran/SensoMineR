@@ -144,14 +144,14 @@ procrustes <- function(amat, target, orthogonal = FALSE, translate = FALSE, magn
     colnames(id.j.avg.cor) <- colnames(int.p.avg)
     data.pcab <- rbind.data.frame(int.p.avg,id.j.avg.cor)
     res.pcab <- PCA(data.pcab,ind.sup=c((nbprod+1):nrow(data.pcab)),graph=F,ncp=Inf)
-    plot.PCA(res.pcab,choix="ind",cex=0.8,label="ind.sup",new.plot=T,title="Projection of the individual averaged ideal profiles",axes=coord)
+    print(plot.PCA(res.pcab,choix="ind",cex=0.8,label="ind.sup",new.plot=T,title="Projection of the individual averaged ideal profiles",axes=coord))
     eig <- res.pca$eig
 
     data.pca2 <- merge(data.cut$senso,data.cut$hedo,all=T,by=0,sort=F)
     rownames(data.pca2) <- data.pca2[,1]
     data.pca2 <- data.pca2[,-1]
     res.pca2 <- PCA(data.pca2,quanti.sup=(ncol(data.cut$senso)+1):ncol(data.pca2),graph=F)
-    plot.PCA(res.pca2,choix="var",invisible="var",label="quanti.sup",cex=0.9,new.plot=T,title="Projection of the individual hedonic scores",axes=coord)
+    print(plot.PCA(res.pca2,choix="var",invisible="var",label="quanti.sup",cex=0.9,new.plot=T,title="Projection of the individual hedonic scores",axes=coord))
 #    layout(matrix(1:2,1,2))                                                                            
 #    plot.PCA(res.pca,choix="ind",label="none",new.plot=T)
 #    plot.PCA(res.pca2,choix="var",invisible="var",label="none",new.plot=T)
@@ -201,7 +201,7 @@ procrustes <- function(amat, target, orthogonal = FALSE, translate = FALSE, magn
 plotellipse2 <- function(mat,alpha=0.05,coord=c(1,2),eig,cex=1,color=NULL){
     res <- plotellipseinter2(mat,alpha=alpha,coord=coord,nbgroup=1,moy=T,eig=eig,color=color,cex=cex)
     if (length(mat$partiel) != 0) {
-        dev.new()
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
         nbgroup=length(levels(mat$partiel$simul[,ncol(mat$partiel$simul)]))/length(levels(mat$moy$simul[,ncol(mat$moy$simul)]))
         plotellipseinter2(mat,alpha=alpha,coord=coord,nbgroup=nbgroup,moy=F,eig=eig,color=color,cex=cex)
     }
@@ -272,7 +272,7 @@ plotellipseinter2 <- function(mat,alpha=0.05,coord=c(1,2),nbgroup=1,moy=TRUE,eig
 }
 ################################################################################
 
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     res.ellipse <- round(plotellipse2(res.simul,alpha=0.05,coord=coord,eig=res.pca$eig,cex=1,color=NULL),1)
     minx <- min(min(res.ellipse[,1+2*(0:(nbjuge-1))],na.rm=T),floor(min(res.pca$ind$coord[,coord[1]])))
     maxx <- max(max(res.ellipse[,1+2*(0:(nbjuge-1))],na.rm=T),ceiling(max(res.pca$ind$coord[,coord[1]])))
@@ -357,7 +357,7 @@ plotellipseinter2 <- function(mat,alpha=0.05,coord=c(1,2),nbgroup=1,moy=TRUE,eig
     }
     if (is.null(levels.contour))
         levels.contour <- seq(10,5*floor(max(juge.tot)/5),5)
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     if (cons.eq){
         titre <- "Weighted Ideal Mapping"
     } else {

@@ -45,7 +45,7 @@ cm.colors2=function (n, alpha = 1) {
     matrice <- cbind(row.names(MatH), Mat[rownames(MatH),],MatH)
     classif <- cluster::agnes(dist(t(scale(MatH,scale=FALSE))),method="ward")
 if(graph.tree){
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     plot(classif,main="Cluster Dendrogram",xlab="Panelists",which.plots=2)
 }
     if (nb.clusters==0){
@@ -62,7 +62,7 @@ if(graph.tree){
     ab=cor(t(mat),matrice[,2:3],use="pairwise.complete.obs")
     aa=cor(matrice[,4:ncol(matrice)],matrice[,2:3],use="pairwise.complete.obs")
 if(graph.corr){
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     plot(0,0,xlab=paste("Dim",coord[1]),ylab=paste("Dim",coord[2]),xlim=c(-1,1),ylim=c(-1,1),col="white",asp=1,main="Correlation circle")
     x.cercle <- seq(-1, 1, by = 0.01)
     y.cercle <- sqrt(1 - x.cercle^2)
@@ -135,7 +135,7 @@ if(graph.corr){
     depasse <- round(depasse/nbconso * 100)
     dimnames(depasse) <- list(as.character(f1), as.character(f2))
 if(graph.carto){
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     col = cm.colors2(100)
     if (is.null(main)) main = "Preference mapping"
     image(f1, f2, depasse, col = col, xlab=paste("Dim",coord[1]), ylab=paste("Dim",coord[2]), main = main, font.main = font,

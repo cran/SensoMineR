@@ -2,9 +2,9 @@
 
 \alias{JAR}
 
-\title{Free choice profiling}
+\title{JAR}
 
-\description{Free choice profiling with confidence ellipses}
+\description{Just About Right}
 
 \usage{
 JAR(x, col.p, col.j, col.pref, jarlevel="jar")

@@ -7,7 +7,7 @@ if (length(color)==0) color = c("black","red","green3","blue",
   "darkturquoise","darkviolet", "lightgray","lightsalmon","lightyellow", "maroon")
  plotellipseinter(mat,alpha=alpha,coord=coord,nbgroup=1,moy=TRUE,eig=eig,color=color,cex=cex,title=title)
 if (length(mat$partiel)!=0) {
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
   nbgroup=length(levels(mat$partiel$simul[,ncol(mat$partiel$simul)])) / length(levels(mat$moy$simul[,ncol(mat$moy$simul)]))
   plotellipseinter(mat,alpha=alpha,coord=coord,nbgroup=nbgroup,moy=FALSE,eig=eig,color=color,cex=cex,title=title)
 }

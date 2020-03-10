@@ -176,8 +176,8 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
     data.pcab <- rbind.data.frame(int.p.avg, id.j.avg.cor)
     res.pcab <- PCA(data.pcab, ind.sup = c((nbprod + 1):nrow(data.pcab)), 
         graph = F, ncp = Inf)#acp pour projeter en supplementaire les profils ideaux moyens de chaque juge
-    plot.PCA(res.pcab, choix = "ind", cex = 0.8, label = "ind.sup", 
-        new.plot = T, title = "Projection of the individual averaged ideal profiles")
+    print(plot.PCA(res.pcab, choix = "ind", cex = 0.8, label = "ind.sup", 
+        new.plot = T, title = "Projection of the individual averaged ideal profiles"))
     eig <- res.pca$eig
     data.pca2 <- merge(data.cut$senso, data.cut$hedo, all = T, 
         by = 0, sort = F)
@@ -185,8 +185,8 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
     data.pca2 <- data.pca2[, -1]
     res.pca2 <- PCA(data.pca2, quanti.sup = (ncol(data.cut$senso) + 
         1):ncol(data.pca2), graph = F)#acp pour projeter en supplementaire les notes hedoniques de chaque juge
-    plot.PCA(res.pca2, choix = "var", invisible = "var", label = "quanti.sup", 
-        cex = 0.9, new.plot = T, title = "Projection of the individual hedonic scores")
+    print(plot.PCA(res.pca2, choix = "var", invisible = "var", label = "quanti.sup", 
+        cex = 0.9, new.plot = T, title = "Projection of the individual hedonic scores"))
     ideal.j.dim <- vector("list", nbjuge)
     names(ideal.j.dim) <- juge
     l = 0
@@ -236,7 +236,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
         res <- plotellipseinter2(mat, alpha = alpha, coord = coord, 
             nbgroup = 1, moy = T, eig = eig, color = color, cex = cex)
         if (length(mat$partiel) != 0) {
-            dev.new()
+            if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
             nbgroup = length(levels(mat$partiel$simul[, ncol(mat$partiel$simul)]))/length(levels(mat$moy$simul[, 
                 ncol(mat$moy$simul)]))
             plotellipseinter2(mat, alpha = alpha, coord = coord, 
@@ -336,7 +336,7 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
         y <- loc[2] + y
         return(rbind(cbind(x1, y), cbind(rev(x2), rev(y))))
     }
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     res.ellipse <- round(plotellipse2(res.simul, alpha = 0.05, 
         coord = coord, eig = res.pca$eig, cex = 1, color = NULL), 
         1)
@@ -456,10 +456,6 @@ num.col.var <- ncol(dataset.id) + num.col.var.signa-1
     if (is.null(levels.contour)) 
         levels.contour <- seq(10, 5 * floor(max(juge.tot)/5), 
             5)
-    # dev.new()
-    
-       
-    
    
     if (color) {#si couleur zone d'ideal par modalites tracees avec la methode ellipse sur fond de carte de l'idmap global
          titrecolor <- "Ideal Mapping"
@@ -657,7 +653,7 @@ for(v in var.signa.test)
 		#trace de l'idmap si test global sur inertie intra var significatif
 		if(inertie.obs[cv,1]>inertie.critique[cv,1])
 		{
-		dev.new()
+		if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     
         titre <- "Ideal Mapping"
 			#####################trace du fond de carte

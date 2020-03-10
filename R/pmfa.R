@@ -94,7 +94,7 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
                 
                
             if (j != 1)
-            dev.new()
+            if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
             plot(rbind(tourne, mean.conf, nappe), type = "n",
                 xlab = paste("Dim", coord[1]), ylab = paste("Dim",
                   coord[2]), asp = 1, main = colnames(matrice)[2 *
@@ -110,14 +110,14 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
         }
     }
     if (do.mfa&graph.mfa){
-      plot(res.afm,choix="var",axes=coord,new.plot=TRUE)
+      print(plot(res.afm,choix="var",axes=coord,new.plot=TRUE))
       if (!is.null(matrice.illu)){
-        plot(res.afm,choix="var",invisible="quanti.sup",axes=coord,new.plot=TRUE)
-        plot(res.afm,choix="var",invisible="quanti",axes=coord,new.plot=TRUE)
+        print(plot(res.afm,choix="var",invisible="quanti.sup",axes=coord,new.plot=TRUE))
+        print(plot(res.afm,choix="var",invisible="quanti",axes=coord,new.plot=TRUE))
       }
-      plot(res.afm,choix="ind",partial="all",habillage="group",axes=coord,new.plot=TRUE)
-      plot(res.afm,choix="ind",habillage="none",axes=coord,new.plot=TRUE)
-      plot(res.afm,choix="group",axes=coord,new.plot=TRUE)
+      print(plot(res.afm,choix="ind",partial="all",habillage="group",axes=coord,new.plot=TRUE))
+      print(plot(res.afm,choix="ind",habillage="none",axes=coord,new.plot=TRUE))
+      print(plot(res.afm,choix="group",axes=coord,new.plot=TRUE))
     }
     dimnames(res) <- list(colnames(matrice)[(1:(ncol(matrice)/2)) * 2], "RV coeff")
     return(res)

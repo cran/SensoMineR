@@ -63,17 +63,17 @@ senso.consist <- function(dataset,col.p,col.j,col.lik,id.recogn,consist="both",s
         data3 <- merge(id.avg,lik.info,all=T,by=0,sort=F)
         rownames(data3) <- data3[,1]
         data3 <- data3[,-1]
-        res.pca1 <- PCA(data1,scale.unit=scale.unit,ncp=ncp,graph=F)
-        res.pca2 <- PCA(data2,ind.sup=(nrow(data1)+1):nrow(data2),scale.unit=scale.unit,ncp=ncp,graph=F)
-        res.pca3 <- PCA(data3,quanti.sup=(ncol(data1)+1):ncol(data3),scale.unit=scale.unit,ncp=ncp,graph=F)
-        dev.new()
+        res.pca1 <- PCA(data1,scale.unit=scale.unit,ncp=ncp,graph=FALSE)
+        res.pca2 <- PCA(data2,ind.sup=(nrow(data1)+1):nrow(data2),scale.unit=scale.unit,ncp=ncp,graph=FALSE)
+        res.pca3 <- PCA(data3,quanti.sup=(ncol(data1)+1):ncol(data3),scale.unit=scale.unit,ncp=ncp,graph=FALSE)
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
         layout(matrix(1:2,1,2))
-        plot.PCA(res.pca1,choix="ind",cex=0.8,axes=axes,new.plot=F)
-        plot.PCA(res.pca1,choix="var",cex=0.8,axes=axes,new.plot=F)
-        dev.new()
+        plot.PCA(res.pca1,choix="ind",cex=0.8,axes=axes,new.plot=FALSE,graph.type="classic")
+        plot.PCA(res.pca1,choix="var",cex=0.8,axes=axes,new.plot=FALSE,graph.type="classic")
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
         layout(matrix(1:2,1,2))
-        plot.PCA(res.pca2,choix="ind",cex=0.8,label="ind.sup",axes=axes,new.plot=F)
-        plot.PCA(res.pca3,choix="var",cex=0.8,label="quanti.sup",axes=axes,new.plot=F)
+        plot.PCA(res.pca2,choix="ind",cex=0.8,label="ind.sup",axes=axes,new.plot=FALSE,graph.type="classic")
+        plot.PCA(res.pca3,choix="var",cex=0.8,label="quanti.sup",axes=axes,new.plot=FALSE,graph.type="classic")
         correl <- cor(res.pca2$ind.sup$coord,res.pca3$quanti.sup$coord)
         rownames(correl) <- paste(rownames(correl),"_ideal.senso",sep="")
         colnames(correl) <- paste(colnames(correl),"_ideal.hedo",sep="")
@@ -116,7 +116,7 @@ senso.consist <- function(dataset,col.p,col.j,col.lik,id.recogn,consist="both",s
         oo <- order(juge.cor.res[,1],decreasing=T)
         juge.cor.res <- juge.cor.res[oo,]
         if (graph){
-            dev.new()
+            if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
             plot(density(na.omit(juge.cor.res[,1])),main=paste("Relationship between Ideal, Intensity and Liking data","\n","Distribution of cor(ideal,cor(intensity,liking)) for the different ",juge.name,sep=""),xlab="Individual correlation coefficient r(z,r(y,h))")
         }
         res$conso$driver.lik <- magicsort(round(perclik.cor.res,3))
@@ -386,7 +386,7 @@ hedo.consist <- function(dataset,col.p,col.j,col.lik,id.recogn,family.model="PCR
                         effets=1
                         formul <- paste(colnames(data.pcr)[ncol(data.pcr)],"~1",sep="")
                     }
-                    res.pcr <- aov(as.formula(formul),data=data.pcr)
+                    res.pcr <- aov(as.formula(paste(formul, collapse = " ")),data=data.pcr)
                     if (sim==1){
                         if (effets[1]==1){
                             analyse.r2[j,1]=NA
@@ -458,7 +458,7 @@ hedo.consist <- function(dataset,col.p,col.j,col.lik,id.recogn,family.model="PCR
             }
         }
     }
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     plot(analyse.r2,hedo.idm.cr,type="n",xlim=c(0,1),xlab="Rsquare",ylab="Standardized liking scores associated to the ideals",main="Standardized liking potential of the ideal products")
     for (j in 1:nbjuge)
         if (!is.na(hedo.idm.cr[j,1]))
@@ -481,7 +481,7 @@ hedo.consist <- function(dataset,col.p,col.j,col.lik,id.recogn,family.model="PCR
         if (nb.na==nbprod)
             compte.j[j,1]=NA
     }
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     hist(compte.j,breaks=seq(0,nbprod,1),xlab="# Potential liking (ideal product) > liking score (actual product)",main=paste("Number of products with","\n","liking potential (ideal) > liking scores (actual product)",sep=""))
     if (res.sim.tf){
         p.val <- matrix(0,nbjuge,1)
@@ -497,7 +497,7 @@ hedo.consist <- function(dataset,col.p,col.j,col.lik,id.recogn,family.model="PCR
                 }
         p.val <- p.val/(nbsim-1)
         if (graph){
-            dev.new()
+            if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
             layout(matrix(1:6,2,3))
             for (j in 1:nbjuge){
                 if (!is.na(hedo.idm[j,1])){
@@ -507,12 +507,12 @@ hedo.consist <- function(dataset,col.p,col.j,col.lik,id.recogn,family.model="PCR
                     plot(c(1:5),c(1:5),type="n",xlim=c(0,max(liking)+3),xlab="Ideal liking score",main=juge[j])
                 }
                 if (ceiling(j/6)==floor(j/6) && !j==nbjuge){
-                    dev.new()
+                    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
                     layout(matrix(1:6,2,3))
                 }
             }
         }
-        dev.new()
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
         layout(matrix(1:2,1,2))
         plot(density(na.omit(p.val)),xlim=c(0,1),xlab="P-value",main=paste("Distribution of the individual p-values (",family.model,")",sep=""))
         abline(v=0.05,col="green3")
@@ -522,7 +522,7 @@ hedo.consist <- function(dataset,col.p,col.j,col.lik,id.recogn,family.model="PCR
         hist(p.val,breaks=seq(0,1,0.025),xlab="P-value",main=paste("Distribution of the individual p-values (",family.model,")",sep=""))
         abline(v=0.05,col="green3")
         abline(v=0.1,col="blue3")
-        dev.new()
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
         hedo.idm.plot <- as.matrix(hedo.idm[,1])
         for (j in 1:nbjuge)
             if (!is.na(hedo.idm[j,1]))
@@ -542,7 +542,7 @@ hedo.consist <- function(dataset,col.p,col.j,col.lik,id.recogn,family.model="PCR
 #        if (family.model=="Danzart" || family.model=="PCR"){
             sum.reg <- 100*apply(res.reg,2,sum)/nbjuge
             sum.sim <- 100*apply(res.sim,2,sum)/((nbsim-1)*nbjuge)
-            dev.new()
+            if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
             layout(matrix(1:2,1,2))
             x.pos <- barplot(sum.reg,ylim=c(0,100),ylab="Significanace of the effect",axes=F,axisnames=F,main=paste("Model (",family.model,")",sep=""))
             abline(h=mean(sum.sim),col="red3")

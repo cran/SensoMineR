@@ -97,7 +97,7 @@ cartoconsumer <- function(res,data.pref,nb.clust=0,seuil=0.8,consol=TRUE,ncp=5,s
 	global=global+dessous
 
   if (graph.carto){
-   	dev.new()
+   	if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 	  image(f1, f2, depasse, col =c("white",col), xlab=paste("Dim",coord[1]), ylab=paste("Dim",coord[2]), main = "Preference mapping",zlim=c(min(global),max(global)))
 
 	  image(f1, f2, dessous, col = col2,add = TRUE,zlim=c(min(global),max(global)))

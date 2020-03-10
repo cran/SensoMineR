@@ -9,8 +9,9 @@ search.desc<- function (matrice, col.j, col.p, firstvar, lastvar = ncol(matrice)
     for (i in 1:(firstvar - 1)) matrice[, i] <- as.factor(matrice[, i])
     tab.F <- matrix(0, (lastvar - firstvar + 1), 1)
     for (i in firstvar:lastvar) {
-        if (!is.null(col.j))  aux <- round(summary(aov(as.formula(paste(lab[i], "~", lab[col.p], "+", lab[col.j])), data = matrice, na.action = na.exclude))[[1]],10)
-        else aux <- round(summary(aov(as.formula(paste(lab[i], "~", lab[col.p] )), data = matrice, na.action = na.exclude))[[1]],10)
+        if (!is.null(col.j))  aux <- round(summary(aov(as.formula(as.formula(paste(paste(lab[i], "~", lab[col.p], "+", lab[col.j]), collapse = " "))), data = matrice, na.action = na.exclude))[[1]],10)
+        # if (!is.null(col.j))  aux <- round(summary(aov(as.formula(paste(lab[i], "~", lab[col.p], "+", lab[col.j])), data = matrice, na.action = na.exclude))[[1]],10)
+        else aux <- round(summary(aov(as.formula(paste(paste(lab[i], "~", lab[col.p] ), collapse=" ")), data = matrice, na.action = na.exclude))[[1]],10)
         tab.F[i - firstvar + 1] <- pf(aux[1, 4], aux[1, 1], aux[(dim(aux)[[1]]), 1], lower.tail = FALSE)
     }
     dimnames(tab.F) <- list(nomdescripteur, NULL)

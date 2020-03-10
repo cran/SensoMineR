@@ -40,12 +40,12 @@ if (!novalue){
 
 ################################################################
 police <- function(matrice,nbrow,nbcol,nbdec) {
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     def.par <- par(no.readonly = TRUE)
     par(mar=c(0,0,2,0))
     plot.new(); title(main=main.title);
     a <- c(rownames(matrice),colnames(matrice))
-    nb=NULL
+    nb <- NULL
     for (i in 1:nbdec) nb <- paste(nb,"0",sep="")
     nb <- paste(nb,"0.e-00")
     a <- c(a,nb)
@@ -83,7 +83,7 @@ if (dim2%/%nbcol==dim2/nbcol) {
 		  size <- pol$size
 		  def.par <- pol$def.par
 		}  else{
-          dev.new()
+          if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
           def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
           plot.new(); title(main=main.title);
@@ -105,7 +105,7 @@ if (dim2%/%nbcol==dim2/nbcol) {
 		  size <- pol$size
 		  def.par <- pol$def.par
 		}  else{
-         dev.new()
+         if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
          def.par <- par(no.readonly = TRUE)
          par(mar=c(0,0,2,0))
          plot.new(); title(main=main.title);
@@ -130,7 +130,7 @@ else {
 		  size <- pol$size
 		  def.par <- pol$def.par
 		}  else{
-          dev.new()
+          if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
           def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
           plot.new(); title(main=main.title);
@@ -151,7 +151,7 @@ else {
 		  size <- pol$size
 		  def.par <- pol$def.par
 		}  else{
-          dev.new()
+          if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
           def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
           plot.new(); title(main=main.title);
@@ -176,7 +176,7 @@ else {
 		  size <- pol$size
 		  def.par <- pol$def.par
 		}  else{
-          dev.new()
+          if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
           def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
           plot.new(); title(main=main.title);
@@ -201,7 +201,7 @@ else {
 		  size <- pol$size
 		  def.par <- pol$def.par
 		}  else{
-          dev.new()
+          if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
           def.par <- par(no.readonly = TRUE)
           par(mar=c(0,0,2,0))
           plot.new(); title(main=main.title)

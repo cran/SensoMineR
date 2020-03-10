@@ -28,7 +28,7 @@ plot.WordCountAna<-function(x,axes=c(1,2),choix="prod",lab=TRUE,color=NULL,pch=N
 	}
 	lab.x<-paste("Dim ",axes[1]," (",signif(res.WCA$mfact$eig[axes[1],2],4)," %)",sep="")
 	lab.y<-paste("Dim ",axes[2]," (",signif(res.WCA$mfact$eig[axes[2],2],4)," %)",sep="")
-    	if (new.plot) dev.new()
+    if (new.plot & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
 	if (is.null(xlim)) {
             xmin<-xmax<-0
             xmin<-min(xmin,coord[,1])

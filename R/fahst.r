@@ -24,7 +24,7 @@ lev1=rep(NA,J)
 for (i in 1:J){
 lev1[i]=length(levels(don[,niv1[i]]))}
 lev1b=as.factor(lev1)
-dev.new()  
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()  
 plot(lev1b,main="Number of groups formed from first levels")
 
 #Nombre de groupes au dernier niveau de chaque sujet
@@ -33,7 +33,7 @@ levd=rep(NA,J)
 for (i in 1:J){
 levd[i]=length(levels(don[,nivd[i]]))}
 levdb=as.factor(levd)
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(levdb,main="Number of groups formed from last levels")
 
 #Nombre d'objets par groupe au niveau 1 de chaque sujet
@@ -43,7 +43,7 @@ for (i in 1:(J*max(lev1))){
 agg1[i]=nbp1[[i]][2]}
 agg1b=na.omit(agg1)
 agg1b=as.factor(agg1b)
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(agg1b,main="Number of objects per group for the first levels")
 
 #Nombre d'objets par groupe au dernier niveau de chaque sujet
@@ -53,7 +53,7 @@ for (i in 1:(J*max(levd))){
 aggd[i]=nbpd[[i]][2]}
 aggdb=na.omit(aggd)
 aggdb=as.factor(aggdb)
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(aggdb,main="Number of objects per group for the last levels")
 
 }
@@ -87,19 +87,19 @@ coord.niv[i,]=apply(afm$ind$coord,2,eta2,don[,i])}
 ########################################Graphiques de l'AFM
 if (graph){
 #Graph des individus
-plot.MFA(afm,choix="ind",invisible="quali",axes=axes,new.plot=TRUE)
+print(plot.MFA(afm,choix="ind",invisible="quali",axes=axes,new.plot=TRUE))
 #Graph des mots
-plot.MFA(afm,choix="ind",invisible="ind",axes=axes,new.plot=TRUE)
+print(plot.MFA(afm,choix="ind",invisible="ind",axes=axes,new.plot=TRUE))
 #Graph des individus et des mots
-plot.MFA(afm,choix="ind",axes=axes,new.plot=TRUE)
+print(plot.MFA(afm,choix="ind",axes=axes,new.plot=TRUE))
 #Graph des groupes au niveau des sujets
-plot.MFA(afm,choix="group",axes=axes,new.plot=TRUE)
+print(plot.MFA(afm,choix="group",axes=axes,new.plot=TRUE))
 #Graph des niveaux
-dev.new(width = 8, height = 8)
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new(width = 8, height = 8)
 plot(coord.niv[,axes], xlab = paste("Dim ", axes[1], " (", signif(afm$eig[axes[1],2], 4), "%)", sep = ""), ylab = paste("Dim ", axes[2], " (", signif(afm$eig[axes[2],2], 4), "%)", sep = ""), xlim = c(0,1), ylim = c(0, 1), pch = 17, main = "Levels representation")
 text(coord.niv[, axes[1]], y = coord.niv[, axes[2]], labels = rownames(coord.niv),pos = 3)
 #Graph des niveaux et trajectoires
-dev.new(width = 8, height = 8)
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new(width = 8, height = 8)
 plot(coord.niv[,axes], xlab = paste("Dim ", axes[1], " (", signif(afm$eig[axes[1],2], 4), "%)", sep = ""), ylab = paste("Dim ", axes[2], " (", signif(afm$eig[axes[2],2], 4), "%)", sep = ""), xlim = c(0,1), ylim = c(0, 1), pch = 17, main = "Levels representation and trajectories")
 text(coord.niv[, axes[1]], y = coord.niv[, axes[2]], labels = rownames(coord.niv),pos = 3)
 subj=0 

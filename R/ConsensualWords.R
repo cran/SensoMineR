@@ -1,5 +1,4 @@
-ConsensualWords <- function (res.fast, nbtimes = 3, nbsimul = 500, proba = 0.05, graph = TRUE, axes = c(1,2))
-{
+ConsensualWords <- function (res.fast, nbtimes = 3, nbsimul = 500, proba = 0.05, graph = TRUE, axes = c(1,2)){
 	if (nbtimes < 2) stop("nbtimes should be superior or equal to 2")
 	ncp <- res.fast$call$ncp
 	if (ncp < 2)     stop("ncp should be superior or equal to 2")
@@ -55,7 +54,7 @@ ConsensualWords <- function (res.fast, nbtimes = 3, nbsimul = 500, proba = 0.05,
 
 	if (graph) {
      res.fast$acm$var$coord <- centroids[Mots.consensuels,]
-	 plot(res.fast$acm,axes=axes,title="Sorting task with consensual words",new.plot=TRUE)
+	 print(plot(res.fast$acm,axes=axes,title="Sorting task with consensual words",new.plot=TRUE))
 	}
 
 	return(list(Centroids = centroids[filtrer,], Within.inertia = within.inertia[filtrer,], Results.Bootstrap = mot.con, Consensual.words = Mots.consensuels[order(Mots.consensuels)]))

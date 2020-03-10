@@ -75,7 +75,7 @@ ymin <- min(afmh$ind$coord[, axes[2]])
 ymax <- max(afmh$ind$coord[, axes[2]])
 x <- c(xmin, xmax) * 1.1
 y <- c(ymin, ymax) * 1.1
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(0, 0, xlab = lab.x, ylab = lab.y, xlim = x,ylim = y, col = "white",main="Individuals factor map", asp = 1)
 abline(v = 0, lty = 2)
 abline(h = 0, lty = 2)
@@ -89,7 +89,7 @@ ymin <- min(afmh$ind$coord[, axes[2]],afmh$quali.var$coord[, axes[2]])
 ymax <- max(afmh$ind$coord[, axes[2]],afmh$quali.var$coord[, axes[2]])
 x <- c(xmin, xmax) * 1.1
 y <- c(ymin, ymax) * 1.1
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(0, 0, xlab = lab.x, ylab = lab.y, xlim = x,ylim = y, col = "white",main="Individuals factor map", asp = 1)
 abline(v = 0, lty = 2)
 abline(h = 0, lty = 2)
@@ -107,7 +107,7 @@ ymin <- min(afmh$ind$coord[, axes[2]],inter[, axes[2]])
 ymax <- max(afmh$ind$coord[, axes[2]],inter[, axes[2]])
 x <- c(xmin, xmax) * 1.1
 y <- c(ymin, ymax) * 1.1
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(0, 0, xlab = lab.x, ylab = lab.y, xlim = x,ylim = y, col = "white",main="Individuals factor map", asp = 1)
 abline(v = 0, lty = 2)
 abline(h = 0, lty = 2)
@@ -122,7 +122,7 @@ for (i in 1:nrow(afmh$partial[[2]]))
 }
 
 #Graph des variables quanti
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(0, 0, xlab = lab.x, ylab = lab.y,xlim = c(-1.1, 1.1), ylim = c(-1.1, 1.1),main="Correlation circle", col = "white",asp = 1)
 x.cercle <- seq(-1, 1, by = 0.01)
 y.cercle <- sqrt(1 - x.cercle^2)
@@ -149,7 +149,7 @@ for (v in 1:nrow(coord.var)) {
 
 #graph des sujets
 coord.actif <- afmh$group$coord[[2]][, axes]
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(coord.actif, xlab = lab.x, ylab = lab.y,xlim = c(0, 1), ylim = c(0, 1), pch = 17, col = color[2], main = "Subjects representation", asp = 1)
 points(coord.actif[, 1], coord.actif[, 2], col = color[2],pch = 17)
 text(coord.actif[, 1], y = coord.actif[, 2],labels = rownames(coord.actif), pos = 3, col = color[2])
@@ -157,7 +157,7 @@ text(coord.actif[, 1], y = coord.actif[, 2],labels = rownames(coord.actif), pos 
 #graph des methodes
 coord.actif <- afmh$group$coord[[1]][, axes]
 gp=rep(c("1","2"),(length(coord.actif[,1])/2))
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(coord.actif, xlab = lab.x, ylab = lab.y,xlim = c(0, 1), ylim = c(0, 1), pch = 17, col = color[2],main = "Method's representation", asp = 1)
 points(coord.actif[, 1], coord.actif[, 2], col = gp,pch = 17)
 text(coord.actif[, 1], y = coord.actif[, 2],labels = rownames(coord.actif), pos = 3, col = gp)
@@ -280,13 +280,13 @@ agg[i]=nbp[[i]][2]}
 agg2=na.omit(agg)
 agg2=as.factor(agg2)
 if (graph){
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(agg2,main="Number of products per group",xlab=c("Number of products"),ylab=c("Frequency"))}
 
 #Nombre de groupes
 lev2=as.factor(lev)
 if (graph){
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(lev2,main="Number of groups provided during sorting task",xlab=c("Number of groups"),ylab=c("Frequency"))}
 
 
@@ -331,7 +331,7 @@ nb_mots[i]=length(mots_split[[i]])}}
 nb_mots2=as.factor(nb_mots)
 
 if (graph){
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 plot(nb_mots2,main="Number of words per group")}
 
 #Seuil minimum a mettre en parametre...

@@ -46,23 +46,17 @@ k=mean(donnee[numl,(3*(nb-1)+2)])
 a=max(abs(max(donnee[numl,(3*(nb-1)+1)])-h),abs(h-min(donnee[numl,(3*(nb-1)+1)])))+2.5
 b=max(abs(max(donnee[numl,(3*(nb-1)+2)])-k),abs(k-min(donnee[numl,(3*(nb-1)+2)])))+2.5
 
-x=seq(from=(-a+h),to=(a+h),by=0.01)
+x <- seq(from=(-a+h),to=(a+h),by=0.01)
 #enleve le premier et dernier element sinon quelques problemes dans la racine carree pour y
-x=x[-c(1,length(x))]
-y=b*sqrt(1-((x-h)/a)^2)+k
-x2=rev(x)
-y2=-b*sqrt(1-((x2-h)/a)^2)+k
-
-
-
-#lines(x,y,col=i)
-#lines(x2,y2,col=i)
+x <- x[-c(1,length(x))]
+y <- b*sqrt(1-((x-h)/a)^2)+k
+x2 <- rev(x)
+y2 <- -b*sqrt(1-((x2-h)/a)^2)+k
 }
 
 }
         }
-        if (m < mult)
-            dev.new()
+        if ((m < mult) & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
     }
     par(las = 0)
 }

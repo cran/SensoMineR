@@ -1,5 +1,5 @@
 barrow<-function(donnee,numr = 2,numc = 2,numchar=8,color="lightblue",title=NULL) {
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 nbprod <- dim(donnee)[1]
 
 mult <- nbprod %/% (numr*numc)
@@ -22,7 +22,7 @@ for (m in 0:mult) {
         }
       barplot(donnee[nb,],width=1,col=color,ylim=c(min(0,min(donnee,na.rm=TRUE)),max(donnee,na.rm=TRUE)),border="black",main=main,sub=subtitle,cex.names=0.8,names.arg=substr(colnames(donnee),1,numchar))
     }}
-if (m < mult) dev.new()
+if (m < mult & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
           }
 par(las=0)
 }

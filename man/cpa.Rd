@@ -67,7 +67,7 @@ data(cocktail)
 res.cpa = cpa(cbind(compo.cocktail, senso.cocktail), hedo.cocktail)
 ## If you prefer a graph in black and white and with 3 clusters
 res.cpa = cpa(cbind(compo.cocktail, senso.cocktail), hedo.cocktail, 
-    name.panelist = TRUE, col = gray((50:1)/50), nb.clusters = 3)
+    col = gray((50:1)/50), nb.clusters = 3)
 }
 }
 \keyword{multivariate}

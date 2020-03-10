@@ -4,15 +4,15 @@ if ((method!="coeff")&(method!="mean")) stop(paste("The method",method,"is unkno
 
 for (j in 1:(firstvar-1))  donnee[,j] <- as.factor(donnee[,j])
 
-formul = as.formula(formul)
+formul = as.formula(paste(formul, collapse = " "))
 lab.sauv <- lab <- colnames(donnee)
 for (i in 1:length(lab)) lab[i] = chartr("(), ?;/:'!$=+\n;{}<>[]-","......................", lab[i])
 colnames(donnee) = lab
 equation <- as.character(formul)
-Terms=attr(terms(as.formula(equation)),"term.labels")
+Terms=attr(terms(as.formula(paste(equation, collapse = " "))),"term.labels")
 equation = paste("~",Terms[1])
 if (length(Terms) > 1) for (i in 2:length(Terms)) equation <- paste(equation,"+",Terms[i])
-equation <- as.character(as.formula(equation))
+equation <- as.character(as.formula(paste(equation, collapse = " ")))
 
 dim.donnee <- ncol(donnee)
 for (i in 1:dim.donnee) {
@@ -36,7 +36,8 @@ old.contr = options()$contrasts
 if (method =="coeff"){
   options(contrasts=c("contr.sum", "contr.sum"))
   for (varendo in firstvar:lastvar) {
-    formule <- as.formula(paste(lab[varendo],"~",equation[2]))
+    # formule <- as.formula(paste(lab[varendo],"~",equation[2]))
+    formule <- as.formula(paste(paste(lab[varendo],"~",equation[2]), collapse = " "))
     if (length(subset)!=0) aa=tapply(donnee[subset,varendo],donnee[subset,col.p],mean,na.rm=TRUE)
     if (length(subset)==0) aa=tapply(donnee[,varendo],donnee[,col.p],mean,na.rm=TRUE)
     if (!any(is.na(aa))) {

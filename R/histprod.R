@@ -28,6 +28,6 @@ lines(step, dnorm(step, mean(donnee[,nb+firstvar-1], na.rm = TRUE),sd(donnee[,nb
 lines(density(donnee[,nb+firstvar-1], na.rm = TRUE,adjust=adjust), lwd = 1,col="red")
                               } 
                    }
-if (m < mult) dev.new()
+if ((m < mult)& (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
           }  #for (m in 0:mult) {
                                   }

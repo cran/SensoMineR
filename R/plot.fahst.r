@@ -86,8 +86,7 @@ plot.fahst=function (x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, in
     else sub.titre <- "Hierarchical Sorting Task factor map"
     if (is.na(test.invisible[1]) | is.na(test.invisible[2]) |
         is.na(test.invisible[4]) | is.na(test.invisible[5])) {
-        if (new.plot)
-            dev.new(width = 8, height = 8)
+        if (new.plot & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new(width = 8, height = 8)
         plot(0, 0, main = titre, xlab = paste("Dim ", axes[1],
             " (", signif(res.fahst$eig[axes[1], 2], 4), "%)", sep = ""),
             ylab = paste("Dim ", axes[2], " (", signif(res.fahst$eig[axes[2],
@@ -122,8 +121,7 @@ plot.fahst=function (x,choix="ind", axes = c(1, 2), xlim = NULL, ylim = NULL, in
 
 group=nrow(res.fahst$group$coord)
     if (choix == "group") {
-        if (new.plot)
-            dev.new(width = 8, height = 8)
+        if (new.plot & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new(width = 8, height = 8)
         if (is.null(title))
             title <- "Subjects representation"
         else sub.title <- "Subjects representation"
@@ -143,8 +141,7 @@ group=nrow(res.fahst$group$coord)
 
 
 if (choix == "level") {
-        if (new.plot)
-            dev.new(width = 8, height = 8)
+        if (new.plot & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new(width = 8, height = 8)
         if (is.null(title))
             title <- "Levels representation"
         else sub.title <- "Levels representation"

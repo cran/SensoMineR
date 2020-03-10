@@ -45,8 +45,8 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
        res[k,,] = as.matrix(resAF$quanti.var.sup$cor)
      }
      if (k==1) {
-	   dev.new(width=12,height=8)
-	   plot(resAF,choix="var", invisible=c("quanti.sup","sup"),new.plot = FALSE,axes=coord)
+	   if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new(width=12,height=8)
+	   plot(resAF,choix="var", invisible=c("quanti.sup","sup"),new.plot = FALSE,axes=coord,graph.type = "classic")
        legend("topleft",legend=colnames(tab.moy),fill=color[1:ncol(tab.moy)],cex=0.7)
      }
      points(res[k,,coord[1]],res[k,,coord[2]],col=color[1:ncol(tab.moy)],pch=15,cex=0.3)
@@ -125,13 +125,13 @@ if (length(group)>1) {
   dimnames(mat2)=list(c(paste("Group",1:length(group),sep=" ")),c(paste("Group",1:length(group),sep=" ")),labprod)
 }
 
-  if (variability.variable==FALSE) dev.new()
-	plotpanelist(axe$moyen,coord=coord,eig=signif(axe$eig,4),color=color,name=name.panelist,cex=cex)
+  if ((variability.variable==FALSE) & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
+  plotpanelist(axe$moyen,coord=coord,eig=signif(axe$eig,4),color=color,name=name.panelist,cex=cex)
   long.group <- length(group)
   if (long.group==0) long.group <- 1
   simul <- simulation(axe,nbgroup=long.group,nbchoix=nbchoix,nbsimul=nbsimul)
   if (variability.variable) auxil <- variab.variable(don.interesting,simul$sample,mfa=(!is.null(group)),coord=coord,scale.unit=scale.unit,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,color=color)
-dev.new()
+  if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
   plotellipse(simul,alpha=alpha,coord=coord,eig=signif(axe$eig,4),color=color,cex=cex)  
   res <- list()
   res$eig= axe[[length(names(axe))]]

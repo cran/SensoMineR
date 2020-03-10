@@ -5,7 +5,7 @@ if (length(color)==0) color = c("black","red","green3","blue",
   "lightblue","darkkhaki", "darkmagenta","darkolivegreen","lightcyan", "darkorange",
   "darkorchid","darkred","darksalmon","darkseagreen","darkslateblue","darkslategray","darkslategrey",
   "darkturquoise","darkviolet", "lightgray","lightsalmon","lightyellow", "maroon")
-mat=cbind.data.frame(mat[,coord],mat[,(ncol(mat)-1):ncol(mat)])
+mat <- cbind.data.frame(mat[,coord],mat[,(ncol(mat)-1):ncol(mat)])
 nbprod <- length(levels(mat[,ncol(mat)-1]))
 lab <- mat[1:nbprod,ncol(mat)-1]
 nbjuge <-  length(levels(mat[,ncol(mat)]))-1

@@ -64,8 +64,8 @@ colplot<-function(mat, k=0,coord, z, level=41, col = terrain.colors(level+level%
     auxil = cbind.data.frame(A,as.factor(c(clusters,rep(1,nrow(mat)+ncol(senso)))))
     colnames(auxil)[ncol(A)+1]="cluster"
     hedo.pca <- PCA(auxil,quali.sup=ncol(A)+1,ind.sup=(nbjuge+1):nrow(A),scale.unit=scale.unit,graph=FALSE,ncp = min(nbjuge-1,ncol(A)))
-    plot(hedo.pca,choix="ind",axes=coord,cex=0.7,habillage=ncol(A)+1)
-    plot(hedo.pca,choix="var",axes=coord)
+    print(plot(hedo.pca,choix="ind",axes=coord,cex=0.7,habillage=ncol(A)+1))
+    print(plot(hedo.pca,choix="var",axes=coord))
     TA <- t(A)
     coef <- matrix(NA,nbjuge+nb.clusters,nbdesc)
     for (d in 1:nbdesc) {
@@ -76,7 +76,7 @@ colplot<-function(mat, k=0,coord, z, level=41, col = terrain.colors(level+level%
     colnames(coef) <- colnames(senso)
     B <- cbind.data.frame(rbind.data.frame(hedo.pca$ind$coord,hedo.pca$ind.sup$coord[1:nb.clusters,]),coef)
     for (d in 1:nbdesc) {
-dev.new()
+if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
       par(mar = c(4.2,4.1,3.5,2))
       colplot(as.matrix(B), k=nb.clusters,coord, (nrow(hedo)+d),col=col, xlab=paste("Dim",coord[1]," (",signif(hedo.pca$eig[coord[1],2],4),"%)",sep=""), ylab=paste("Dim",coord[2]," (",signif(hedo.pca$eig[coord[2],2],4),"%)",sep=""))
       points(hedo.pca$ind.sup$coord[nb.clusters+d,coord[1]],hedo.pca$ind.sup$coord[nb.clusters+d,coord[2]],col="red",pch=15,cex=0.8)

@@ -43,7 +43,7 @@ for (m in 0:mult) {
   legend("topleft", legend = paste(colnames(donnee)[col.j],levels(donnee[, col.j]), sep = " "),
                text.col = 1:length(levels(donnee[, col.j])),cex = 0.8, bg = "white")     
     }
-if (m < mult) dev.new()
+if ((m < mult) & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
 }
 moyenne <- list()
 moyenne$col.p <- moy

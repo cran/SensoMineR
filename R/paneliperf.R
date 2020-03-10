@@ -3,7 +3,7 @@
 old.contr = options()$contrasts
 options(contrasts=c("contr.sum", "contr.sum"))
   for (j in 1 :(firstvar-1))  donnee[,j] <- as.factor(donnee[,j])
-  formul.j = as.formula(formul.j)
+  formul.j = as.formula(paste(formul.j, collapse = " "))
   lab.sauv <- lab <- colnames(donnee)
   for (i in 1:length(lab)) lab[i]=gsub(" ",".",lab[i])
   colnames(donnee) = lab
@@ -12,10 +12,10 @@ options(contrasts=c("contr.sum", "contr.sum"))
 
   dim.donnee <- ncol(donnee)
 
-  Terms=attr(terms(as.formula(equation)),"term.labels")
+  Terms=attr(terms(as.formula(paste(equation, collapse = " "))),"term.labels")
   equation = paste("~",Terms[1])
   if (length(Terms) > 1) for (i in 2:length(Terms)) equation <- paste(equation,"+",Terms[i])
-  equation <- as.character(as.formula(equation))
+  equation <- as.character(as.formula(paste(equation, collapse = " ")))
   
   for (i in 1:dim.donnee) {
     if (gsub(" ","",strsplit(equation,split="+",fixed=TRUE)[[2]][1])==lab[i]) col.p <- i
@@ -25,25 +25,7 @@ options(contrasts=c("contr.sum", "contr.sum"))
   for (j in 1:length(lab.j)){
     for (varendo in firstvar:lastvar) {
       formule <- paste(lab[varendo],"~",equation[2])
-##      formule <- paste(lab[varendo],"~ C(")
-##      aux2 <- equation[2]
-##      aux3 <- strsplit(aux2,"+",fixed=TRUE)[[1]]
-##
-##      for (i in 1:length(aux3)) {
-##        if (any(grep("%",aux3[i]))) {
-##              formule <- paste(formule,strsplit(aux3[i],"%",fixed=TRUE)[[1]][1],",sum)%in%C(",strsplit(aux3[i],"%",fixed=TRUE)[[1]][3],",sum)")
-##        }
-##        else
-##        if (any(grep(":",aux3[i]))) {
-##           formule <- paste(formule,strsplit(aux3[i],":",fixed=TRUE)[[1]][1],",sum) : C(",strsplit(aux3[i],":",fixed=TRUE)[[1]][2],",sum)")
-##        }
-##        else {
-##        formule <- paste(formule,aux3[i],",sum)")
-##        }
-##        if (i < length(aux3))  formule <- paste (formule, "+C(")
-##      }
-
-      formule <- as.formula(formule)
+      formule <- as.formula(paste(formule, collapse = " "))
       aux <- summary(aov( formule , data = donnee, subset=(donnee[,col.j]==levels(donnee[,col.j])[j]),na.action =na.omit))[[1]]
       prob[j,varendo-firstvar+1] <- aux[1,5]
       vtest[j,varendo-firstvar+1] <- -qnorm(aux[1,5]/2)
@@ -68,10 +50,10 @@ options(contrasts=c("contr.sum", "contr.sum"))
   aux.vtest= -qnorm(prob/2)
   colnames(aux.vtest)=paste(colnames(prob),".p",sep="")
   aux.graph = MFA(cbind.data.frame(aux.agree,aux.vtest),group=c(ncol(aux.agree),ncol(aux.vtest)),name.group=c("Agree","Prob"),graph=FALSE)
-  plot(aux.graph,choix = "ind",col.hab=rep("black",nrow(aux.graph$ind$coord)))
-  plot(aux.graph,choix="ind",partial="all",habillage="group")
-  plot(aux.graph,choix="var", habillage="group")
-  plot(aux.graph,choix="group")
+  print(plot(aux.graph,choix = "ind",col.hab=rep("black",nrow(aux.graph$ind$coord))))
+  print(plot(aux.graph,choix="ind",partial="all",habillage="group"))
+  print(plot(aux.graph,choix="var", habillage="group"))
+  print(plot(aux.graph,choix="group"))
  }
   paneliperf = list() 
   paneliperf$prob.ind = prob
@@ -87,8 +69,8 @@ options(contrasts=c("contr.sum", "contr.sum"))
     colnames(aux)=c(colnames(bb$p.value),"median(agree)","median(prob.ind)","stdev Res","R2")
     if (graph) {
       res.pca = PCA(aux,quanti.sup=(ncol(aux)-3):ncol(aux),graph=FALSE)
-      plot(res.pca,title="PCA on the P-values issued from the AOV model")
-      plot(res.pca,choix="var",title="PCA on the P-values issued from the AOV model")
+      print(plot(res.pca,title="PCA on the P-values issued from the AOV model"))
+      print(plot(res.pca,choix="var",title="PCA on the P-values issued from the AOV model"))
     }
     rownames(aux) <- rownames(bb$p.value) <- rownames(bb$variab) <- rownames(bb$res) <- lab.sauv[firstvar:lastvar]
     paneliperf$complete = aux

@@ -9,10 +9,10 @@ fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE
     }
     acm = MCA(don, graph = FALSE, ncp = ncp)
     if (graph) {
-        plot.MCA(acm, choix = "ind", invisible = "var", axes = axes,new.plot=TRUE)
-        plot.MCA(acm, choix = "ind", invisible = "ind", axes = axes,new.plot=TRUE)
-        plot.MCA(acm, choix = "ind", axes = axes,new.plot=TRUE)
-        plot.MCA(acm, choix = "var", axes = axes,new.plot=TRUE)
+        print(plot.MCA(acm, choix = "ind", invisible = "var", axes = axes,new.plot=TRUE))
+        print(plot.MCA(acm, choix = "ind", invisible = "ind", axes = axes,new.plot=TRUE))
+        print(plot.MCA(acm, choix = "ind", axes = axes,new.plot=TRUE))
+        print(plot.MCA(acm, choix = "var", axes = axes,new.plot=TRUE))
     }
     X = 0.05
     tab = as.matrix(acm$var$v.test)
@@ -34,7 +34,7 @@ fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE
     res$var$contrib = acm$var$contrib[mod_kept, ]
     res$var$v.test = acm$var$v.test[mod_kept, ]
     if (graph) {
-        plot.MCA(res, choix = "ind", invisible = "ind", axes = axes,new.plot=TRUE)
+        print(plot.MCA(res, choix = "ind", invisible = "ind", axes = axes,new.plot=TRUE))
     }
     lev = rep(NA, J)
     for (i in 1:J) {
@@ -42,7 +42,7 @@ fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE
     }
     lev2 = as.factor(lev)
     if (graph) {
-        dev.new()
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
         plot(lev2, main = "Number of groups formed from sorting tasks")
     }
     nb_prod_grp = rep(NA, sum(lev))
@@ -53,7 +53,7 @@ fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE
     }
     nb_prod_grp2 = as.factor(nb_prod_grp)
     if (graph) {
-        dev.new()
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
         plot(nb_prod_grp2, main = "Number of products per group")
     }
     tdc = tab.disjonctif(don)
@@ -119,8 +119,7 @@ fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE
     
     if (graph) {
     #ellipses
-    res.boot <- boot(don,method="sorting",ncp=ncp.boot,nbsim=B,level.conf=1-alpha,
-    axes=axes)
+    res.boot <- boot(don,method="sorting",ncp=ncp.boot,nbsim=B,level.conf=1-alpha, axes=axes)
     }
 
     texte = matrix(NA, (I * J), 3)
@@ -162,7 +161,7 @@ fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE
     }
     nb_mots2 = as.factor(nb_mots)
     if (graph) {
-        dev.new()
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
         plot(nb_mots2, main = "Number of words per group")
     }
     freq_min = which(apply(restext$cont.table, 2, sum) <= word.min)
@@ -170,12 +169,11 @@ fast <- function (don, alpha = 0.05, sep.words = " ", word.min = 5, graph = TRUE
         restext$cont.table = restext$cont.table[, -freq_min]
     }
     if (graph) {
-        dev.new()
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
         compt.words=as.table(restext$nb.words[(min(20,nrow(restext$nb.words))):1,1])
         coordonnees = barplot(compt.words,las = 2, horiz = TRUE, names.arg=FALSE, main ="Occurrences of the most used words",
         sub="Number of products characterized by the words")
         text(x = 1, y = coordonnees, labels = rownames(restext$nb.words)[(min(20,nrow(restext$nb.words))):1], adj = 0)
-
     }
 
     caract_prod = descfreq(restext$cont.table)

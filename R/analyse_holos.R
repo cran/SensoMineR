@@ -69,7 +69,7 @@ analyse_holos <- function(data, method, axes = c(1, 2), graph = TRUE, export.res
  }
   plot.FA <- function(res, type, axes, cex) {
 
-    dev.new()
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
     if (class(res)[[1]] == "MCA") {
         coord.group <- res$var$eta2[, axes]
         coord.ind <- res$ind$coord[, axes]
@@ -147,12 +147,11 @@ analyse_holos <- function(data, method, axes = c(1, 2), graph = TRUE, export.res
      	dev.off()
     }
     if (graph) {
-			dev.new()
-      dev.new()
+			if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 			print(plot.subj)
-			dev.new()
+			if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 			print(plot.stim)
-			dev.new()
+			if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 			print(plot.desc)
     }
     return(res.mca)
@@ -182,12 +181,11 @@ analyse_holos <- function(data, method, axes = c(1, 2), graph = TRUE, export.res
 			  dev.off()
      }
      if (graph) {
-				dev.new()
-        dev.new()
+        if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 				print(plot.subj)
-				dev.new()
+				if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 				print(plot.stim)
-				dev.new()
+				if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 				print(plot.desc)
       }
       return(res.hmfa)
@@ -209,10 +207,9 @@ analyse_holos <- function(data, method, axes = c(1, 2), graph = TRUE, export.res
      	dev.off()
 		}
     if (graph) {
-      dev.new()
-			dev.new()
+      if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 			print(plot.subj)
-			dev.new()
+			if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
 			print(plot.stim)
     }
     if (export.res == TRUE) {
@@ -231,7 +228,7 @@ analyse_holos <- function(data, method, axes = c(1, 2), graph = TRUE, export.res
            res.step <- MFA(nap.cbind, group = group.traj, type = type.traj, ncp = Inf, name.group = namegroup, axes = axes, num.group.sup = num.group.sup.traj, graph = FALSE)
            name_file <- paste("CP_","S", i, ".pdf",sep="")
            pdf(paste(getwd(), name.folder.res, "Cognitive processes", name_file, sep="/"))
-           plot.MFA(res.step, choix = "group", habillage = "group", palette = palette(c(rep("transparent", (ncol(nap.panel)/2) + 1), rep("blue", ncol(digit.ind)/2))), axes = axes, title=paste("Cognitive process - S", i, sep=""))
+           plot.MFA(res.step, choix = "group", habillage = "group", palette = palette(c(rep("transparent", (ncol(nap.panel)/2) + 1), rep("blue", ncol(digit.ind)/2))), axes = axes, title=paste("Cognitive process - S", i, sep=""),graph.type="classic")
            coord.Step <- res.step$group$coord.sup[, axes]
            lines(coord.Step, col="blue")
            dev.off()

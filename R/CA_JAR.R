@@ -13,6 +13,6 @@ CA_JAR <- function(x, col.p, col.j, col.pref, jarlevel="jar"){
   rownames(Frequency)=unlist(lapply(x[,c(ind.jar,col.pref)],levels))
   colnames(Frequency)=levels(x[,col.p])
   res <- CA(Frequency,row.sup=(sum(modtot[-length(modtot)])+1):sum(modtot), graph = FALSE)
-  plot(res, cex=0.8, col.row=rep(3:(1+length(modtot)),modtot[-length(modtot)]),col.row.sup=rep("black",modtot[length(modtot)]),title="CA on the table product x jar variables")
+  print(plot(res, cex=0.8, col.row=rep(3:(1+length(modtot)),modtot[-length(modtot)]),col.row.sup=rep("black",modtot[length(modtot)]),title="CA on the table product x jar variables"))
   return(list(Frequency=Frequency,res.CA=res))
 }

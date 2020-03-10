@@ -78,8 +78,7 @@ if (choix=="ind"){
     else sub.titre <- "Sorted Napping Task factor map"
     if (is.na(test.invisible[1]) | is.na(test.invisible[2]) |
         is.na(test.invisible[4]) | is.na(test.invisible[5])) {
-        if (new.plot)
-            dev.new(width = 8, height = 8)
+        if (new.plot & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new(width = 8, height = 8)
         plot(0, 0, main = titre, xlab = paste("Dim ", axes[1],
             " (", signif(res.fasnt$eig[axes[1], 2], 4), "%)", sep = ""),
             ylab = paste("Dim ", axes[2], " (", signif(res.fasnt$eig[axes[2],
@@ -115,8 +114,7 @@ if (choix=="ind"){
 group=nrow(res.fasnt$group$coord[[2]])
 
 if (choix == "group") {
-        if (new.plot)
-            dev.new(width = 8, height = 8)
+        if (new.plot & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new(width = 8, height = 8)
         if (is.null(title))
             title <- "Subjects representation"
         else sub.title <- "Subjects representation"
@@ -135,8 +133,7 @@ if (choix == "group") {
 }
 
 if (choix == "coord") {
-        if (new.plot)
-        dev.new(width = 8, height = 8)
+        if (new.plot & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new(width = 8, height = 8)
         if (is.null(title))
             title <- "Napping data representation"
         else sub.title <- "Napping representation"
@@ -173,8 +170,7 @@ if (choix == "coord") {
 
 
 if (choix=="partial"){
-        if (new.plot)
-        dev.new(width = 8, height = 8)
+        if (new.plot & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new(width = 8, height = 8)
         if (is.null(title))
             title <- "Partial representations"
         else sub.title <- "Partial representations"

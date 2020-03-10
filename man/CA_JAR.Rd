@@ -29,8 +29,8 @@ Draw a CA graph with the preference data as supplementary qualitative variables,
 \examples{
 \dontrun{
 data(JAR)
-res <- CA_JAR(JAR)
-plot.CA(res,invisible="row",cex=0.8)
+res <- CA_JAR(x = JAR, col.p = 13, col.j = 1, col.pref = 2, jarlevel = "jar")
+plot.CA(res$res.CA, invisible = "row", cex = 0.8)
  }
 }
 

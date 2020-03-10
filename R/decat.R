@@ -1,20 +1,25 @@
 decat <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba = 0.05,graph=TRUE, col.lower = "mistyrose", col.upper = "lightblue", nbrow = NULL, nbcol = NULL, random = TRUE){
 
+    old.par <- par(no.readonly = TRUE) 
+
     old.contr = options()$contrasts
     options(contrasts=c("contr.sum", "contr.sum"))
     for (j in 1 :(firstvar-1)) donnee[,j] <- as.factor(donnee[,j])
     level.lower = -qnorm(proba/2)
-    formul = as.formula(formul)
+    # formul = as.formula(formul)
+    formul = as.formula(paste(formul, collapse = " "))
     lab.sauv <- lab <- colnames(donnee)
     for (i in 1:length(lab)) lab[i]=gsub(" ",".",lab[i])
     colnames(donnee) = lab
 
     equation <- as.character(formul)
 
-  Terms=attr(terms(as.formula(equation)),"term.labels")
+  # Terms=attr(terms(as.formula(equation)),"term.labels")
+  Terms=attr(terms(as.formula(paste(equation, collapse = " "))),"term.labels")
   equation = paste("~",Terms[1])
   if (length(Terms) > 1) for (i in 2:length(Terms)) equation <- paste(equation,"+",Terms[i])
-  equation <- as.character(as.formula(equation))
+#  equation <- as.character(as.formula(equation))
+  equation <- as.character(as.formula(paste(equation, collapse = " ")))
 
     dim.donnee <- dim(donnee)[2]
 
@@ -34,7 +39,8 @@ decat <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba 
     lab2 <- labels(don.aux)[[2]]
   for (varendo in firstvar:lastvar) {
     formule <- paste(lab[varendo],"~",equation[2])
-    formule <- as.formula(formule)
+    # formule <- as.formula(formule)
+    formule <- as.formula(paste(formule, collapse = " "))
     res <- summary(aov( formule , data = donnee, na.action =na.exclude))[[1]]
 
     nrow.facteur=nrow(res)
@@ -88,8 +94,7 @@ decat <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba 
   if (graph){
     par(las=3)
     barplot(tabF[order(tabF[,2]),2],ylim=c(0,1),names.arg=rownames(tabF[order(tabF[,2]),]),ylab="P-value",main="P-value associated with the F-test of the product effet for each descriptor",cex.main=0.9,cex.names=0.8)
-    par(las=0)
-
+    par(old.par)
   }
  
   result = list() 
@@ -118,8 +123,8 @@ decat <- function(donnee,formul,firstvar,lastvar=length(colnames(donnee)),proba 
         aux.sort = as.matrix(result$adjmean[names(sort(result$tabT[,1])),])
         aux.col = as.matrix(result$tabT[names(sort(result$tabT[,1])),])
       }
-    }  
-    coltable(aux.sort, aux.col, col.lower = col.lower,
+    }
+	coltable(aux.sort, aux.col, col.lower = col.lower,
         col.upper = col.upper, level.lower = qnorm(proba/2),
         level.upper = -qnorm(proba/2), nbrow = nbrow, nbcol = nbcol,
         main.title = "Ajusted mean")
