@@ -1,4 +1,4 @@
-"panellipse" <- function(donnee,col.p,col.j,firstvar,lastvar=ncol(donnee),alpha=0.05,coord=c(1,2),scale.unit=TRUE,nbsimul=500,nbchoix=NULL,group=NULL,name.group=NULL,level.search.desc=0.2,centerbypanelist=TRUE,scalebypanelist=FALSE,name.panelist=FALSE,variability.variable=TRUE,cex=1,color=NULL){
+"panellipse" <- function(donnee,col.p,col.j,firstvar,lastvar=ncol(donnee),alpha=0.05,coord=c(1,2),scale.unit=TRUE,nbsimul=300,nbchoix=NULL,group=NULL,name.group=NULL,level.search.desc=0.2,centerbypanelist=TRUE,scalebypanelist=FALSE,name.panelist=FALSE,variability.variable=TRUE,cex=1,color=NULL,graph.type=c("ggplot","classic")){
 
 hotelling <- function(d1,d2,n1=nrow(d1),n2=nrow(d2)){
     k <- ncol(d1)
@@ -13,7 +13,7 @@ hotelling <- function(d1,d2,n1=nrow(d1),n2=nrow(d2)){
     return(pf(f,k,n1+n2-k-1,lower.tail=FALSE))
 }
 
-variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit=TRUE,centerbypanelist=TRUE,scalebypanelist=TRUE,color=color){
+variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit=TRUE,centerbypanelist=TRUE,scalebypanelist=TRUE,color=color,graph.type="ggplot"){
 
   for (j in 1 :2)  donnee[,j] <- as.factor(donnee[,j])
   nbjuge <- length(levels(donnee[,1]))
@@ -32,24 +32,39 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
   for (j in 1:nbjuge) tab.byjudge[,,j] <- as.matrix(tab[(j*nbprod+1):((j+1)*nbprod),-(1:2)])
   correl = array(NA,dim=c(nbdesc,nbdesc,nbsimul))
   res = array(NA,dim=c(nbsimul,ncol(tab.moy),nbcoord))
-  for (k in 1:nbsimul){
+  res2 = array(NA,dim=c(nbsimul,ncol(tab.moy),nbcoord))
+  if (!mfa) resAF <-PCA(tab.moy,graph=FALSE,ncp=nbcoord,scale.unit=scale.unit,axes=coord)
+  if (mfa & scale.unit) resAF <- MFA(tab.moy,group=group,type=rep("s",length(group)),graph=FALSE,ncp=nbcoord,axes=coord)
+  if (mfa & !scale.unit) resAF <- MFA(tab.moy,group=group,type=rep("c",length(group)),graph=FALSE,ncp=nbcoord,axes=coord)
+    for (k in 1:nbsimul){
      Xb = apply(tab.byjudge[,,echantillon[k,]],c(1,2),mean)
      correl[,,k] = cor(Xb)
-     if (!mfa){
-       resAF <-PCA(cbind(tab.moy,Xb),quanti.sup=(ncol(tab.moy)+1):(2*ncol(tab.moy)),graph=FALSE,ncp=nbcoord,scale.unit=scale.unit,axes=coord)
-       res[k,,] = as.matrix(resAF$quanti.sup$coord)
-     }
-     if (mfa){
-       if (scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("s",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord,axes=coord)
-       if (!scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("c",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord,axes=coord)
-       res[k,,] = as.matrix(resAF$quanti.var.sup$cor)
-     }
-     if (k==1) {
-	   if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new(width=12,height=8)
-	   plot(resAF,choix="var", invisible=c("quanti.sup","sup"),new.plot = FALSE,axes=coord,graph.type = "classic")
-       legend("topleft",legend=colnames(tab.moy),fill=color[1:ncol(tab.moy)],cex=0.7)
-     }
-     points(res[k,,coord[1]],res[k,,coord[2]],col=color[1:ncol(tab.moy)],pch=15,cex=0.3)
+     res[k,,] <- cor(Xb,resAF$ind$coord[,coord])
+     # if (!mfa){
+       # resAF <-PCA(cbind(tab.moy,Xb),quanti.sup=(ncol(tab.moy)+1):(2*ncol(tab.moy)),graph=FALSE,ncp=nbcoord,scale.unit=scale.unit,axes=coord)
+       # res[k,,] <- as.matrix(resAF$quanti.sup$coord)
+     # }
+     # if (mfa){
+     #   if (scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("s",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord,axes=coord)
+     #   if (!scale.unit) resAF <- MFA(cbind(tab.moy,Xb),group=c(group,group),type=rep("c",2*length(group)),num.group.sup=(length(group)+1):(2*length(group)),graph=FALSE,ncp=nbcoord,axes=coord)
+     #   res[k,,] = as.matrix(resAF$quanti.var.sup$cor)
+     # }
+    if (graph.type=="classic"){
+      if (k==1) {
+ 	      if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
+ 	      plot(resAF,choix="var", invisible=c("quanti.sup","sup"),new.plot = FALSE,axes=coord,graph.type = "classic")
+        legend("topleft",legend=colnames(tab.moy),fill=color[1:ncol(tab.moy)],cex=0.7)
+      }
+      points(res[k,,coord[1]],res[k,,coord[2]],col=color[1:ncol(tab.moy)],pch=15,cex=0.3)
+    }
+  }
+  if (graph.type=="ggplot"){
+    if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
+    x <- y <- NULL  ## just to avoid the note no binding ...
+    gg_graph <- plot(resAF,choix="var",invisible="quanti.sup", axes=coord, hab="none")
+    dta <- cbind.data.frame(x=as.vector(res[,,coord[1]]),y=as.vector(res[,,coord[2]]),var=rep(colnames(tab.moy),each=nbsimul))
+    gg_graph <- gg_graph + geom_point(data=dta,aes(x=x,y=y,col=var),alpha=0.2,pch=15,cex=0.4)+guides(color = guide_legend(title=NULL,override.aes = list(size = 2,alpha=1)))
+    print(gg_graph)
   }
 
   mini=maxi=matrix(0,ncol(tab.moy),ncol(tab.moy))
@@ -63,6 +78,7 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
   res$moy <- cor(tab.moy)
   res$mini <- mini
   res$maxi <- maxi
+  if (graph.type=="ggplot") res$plotVarVariab <- gg_graph
   return(res)
 }
 
@@ -71,7 +87,7 @@ variab.variable <- function(donnee,echantillon,mfa=FALSE,coord=c(1,2),scale.unit
     "lightblue","darkkhaki", "darkmagenta","darkolivegreen","lightcyan", "darkorange",
     "darkorchid","darkred","darksalmon","darkseagreen","darkslateblue","darkslategray","darkslategrey",
     "darkturquoise","darkviolet", "lightgray","lightsalmon","lightyellow", "maroon")
-
+  graph.type <- match.arg(graph.type[1],c("ggplot","classic"))
   don.interesting <- search.desc(donnee,col.j=col.j,col.p=col.p,firstvar=firstvar,lastvar=lastvar,level=level.search.desc)
   don.interesting <- don.interesting[,c(col.j,col.p,firstvar:ncol(don.interesting))]
 if (!is.null(group)){
@@ -80,7 +96,7 @@ if (!is.null(group)){
   group.old = group
   group = group.aux
 }
-  axe <- construct.axes(don.interesting,group=group,name.group=name.group,coord=coord,scale.unit=scale.unit,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist)
+  axe <- construct.axes(don.interesting,group=group,name.group=name.group,coord=coord,scale.unit=scale.unit,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,graph.type=graph.type)
   labprod = axe$moyen[axe$moyen[,ncol(axe$moyen)]==0,ncol(axe$moyen)-1]
   nbprod = length(labprod)
   nbjuge = nlevels(as.factor(don.interesting[,1]))
@@ -124,22 +140,30 @@ if (length(group)>1) {
   }
   dimnames(mat2)=list(c(paste("Group",1:length(group),sep=" ")),c(paste("Group",1:length(group),sep=" ")),labprod)
 }
-
-  if ((variability.variable==FALSE) & (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
-  plotpanelist(axe$moyen,coord=coord,eig=signif(axe$eig,4),color=color,name=name.panelist,cex=cex)
+  plotPan <- plotpanelist(axe$moyen,coord=coord,eig=signif(axe$eig,4),color=color,name=name.panelist,cex=cex,graph.type=graph.type)
   long.group <- length(group)
   if (long.group==0) long.group <- 1
   simul <- simulation(axe,nbgroup=long.group,nbchoix=nbchoix,nbsimul=nbsimul)
-  if (variability.variable) auxil <- variab.variable(don.interesting,simul$sample,mfa=(!is.null(group)),coord=coord,scale.unit=scale.unit,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,color=color)
-  if (!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY"))) dev.new()
-  plotellipse(simul,alpha=alpha,coord=coord,eig=signif(axe$eig,4),color=color,cex=cex)  
+  if (variability.variable) auxil <- variab.variable(don.interesting,simul$sample,mfa=(!is.null(group)),coord=coord,scale.unit=scale.unit,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,color=color,graph.type=graph.type)
+  if ((!nzchar(Sys.getenv("RSTUDIO_USER_IDENTITY")))) dev.new()
+  auxplotell <- plotellipse(simul,alpha=alpha,coord=coord,eig=signif(axe$eig,4),color=color,cex=cex,graph.type=graph.type)
   res <- list()
-  res$eig= axe[[length(names(axe))]]
+  res$eig <- axe[[length(names(axe))]]
   res$coordinates= axe[-length(names(axe))]
   if (nbchoix!=1){
     if (length(group)<2) res$hotelling=mat
     if (length(group)>1) res$hotelling=list(bygroup=mat,byproduct=mat2)
   }
-  if (variability.variable) res$correl <- auxil
+  res$graph$plotInd <- axe$plotInd
+  res$graph$plotVar <- axe$plotVar
+  res$graph$plotIndEll <- auxplotell$plotIndEll
+  res$graph$plotIndEllPar <- auxplotell$plotIndEllPar
+  res$graph$plotPan <- plotPan
+  if (variability.variable){
+    res$correl$moy <- auxil$moy
+    res$correl$mini <- auxil$mini
+    res$correl$maxi <- auxil$maxi
+    res$graph$plotVarVariab <- auxil$plotVarVariab
+  }
   return(res)
 }

@@ -8,7 +8,8 @@ Displays panelists' sensory profiles onto the products' space
 }
 
 \usage{
-plotpanelist(mat, coord = c(1,2), name = FALSE, eig, cex = 1, color = NULL)
+plotpanelist(mat, coord = c(1,2), name = FALSE, eig, cex = 1, color = NULL, 
+  graph.type = c("ggplot","classic"))
 }
 
 \arguments{
@@ -20,6 +21,7 @@ plotpanelist(mat, coord = c(1,2), name = FALSE, eig, cex = 1, color = NULL)
   \item{eig}{a matrix with the component of the factor analysis (in row) and the eigenvalues, the inertia and the cumulative inertia for each component. Typically, the \code{eig} output of the \code{construct.axes} function}
   \item{cex}{cf. function \code{\link{par}} in the \pkg{graphics} package}
   \item{color}{a vector with the colors used; by default there are 35 colors defined}
+  \item{graph.type}{a character that gives the type of graph used: "ggplot" or "classic"}
 }
 
 \value{

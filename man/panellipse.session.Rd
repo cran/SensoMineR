@@ -12,7 +12,8 @@ panellipse.session(donnee, col.p, col.j, col.s, firstvar,
     scale.unit = TRUE, nbsimul = 500, nbchoix = NULL, 
     level.search.desc = 0.2,  centerbypanelist = TRUE, 
     scalebypanelist = FALSE, name.panelist = FALSE,
-    variability.variable = FALSE, cex = 1, color= NULL)
+    variability.variable = FALSE, cex = 1, color= NULL,
+	graph.type = c("ggplot","classic"))
 }
 
 \arguments{
@@ -38,6 +39,7 @@ panellipse.session(donnee, col.p, col.j, col.s, firstvar,
   between descriptors are calculated}
   \item{cex}{cf. function \code{\link{par}} in the \pkg{graphics} package}
   \item{color}{a vector with the colors used; by default there are 35 colors defined}
+  \item{graph.type}{a character that gives the type of graph used: "ggplot" or "classic"}
 }
 
 

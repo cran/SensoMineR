@@ -7,7 +7,7 @@
 
 \usage{
 plotellipse(mat, alpha = 0.05, coord = c(1,2), eig, cex = 1, 
-    color = NULL, title = NULL)
+    color = NULL, title = NULL, graph.type = c("ggplot","classic"))
 }
 
 \arguments{
@@ -18,6 +18,7 @@ plotellipse(mat, alpha = 0.05, coord = c(1,2), eig, cex = 1,
   \item{cex}{cf. function \code{\link{par}} in the \pkg{graphics} package}
   \item{color}{a vector with the colors used; by default there are 35 colors defined}
   \item{title}{string corresponding to the title of the graph you draw (by default NULL and a title is chosen)}
+  \item{graph.type}{a character that gives the type of graph used: "ggplot" or "classic"}
 }
 \author{Francois Husson}
 

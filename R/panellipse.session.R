@@ -1,4 +1,4 @@
-"panellipse.session" <- function(donnee,col.p,col.j,col.s,firstvar,lastvar=ncol(donnee),alpha=0.05,coord=c(1,2),scale.unit=TRUE,nbsimul=500,nbchoix=NULL,level.search.desc=0.2,centerbypanelist=TRUE,scalebypanelist=FALSE,name.panelist=FALSE,variability.variable=FALSE,cex=1,color=NULL){
+"panellipse.session" <- function(donnee,col.p,col.j,col.s,firstvar,lastvar=ncol(donnee),alpha=0.05,coord=c(1,2),scale.unit=TRUE,nbsimul=500,nbchoix=NULL,level.search.desc=0.2,centerbypanelist=TRUE,scalebypanelist=FALSE,name.panelist=FALSE,variability.variable=FALSE,cex=1,color=NULL,graph.type=c("ggplot","classic")){
 
 hotelling <- function(d1,d2,n1=nrow(d1),n2=nrow(d2)){
     k <- ncol(d1)
@@ -18,6 +18,7 @@ if (length(color)==0) color = c("black","red","green3","blue",
   "lightblue","darkkhaki", "darkmagenta","darkolivegreen","lightcyan", "darkorange",
   "darkorchid","darkred","darksalmon","darkseagreen","darkslateblue","darkslategray","darkslategrey",
   "darkturquoise","darkviolet", "lightgray","lightsalmon","lightyellow", "maroon")
+graph.type <- match.arg(graph.type[1],c("ggplot","classic"))
 for (j in 1:(firstvar-1)) donnee[,j]=as.factor(donnee[,j])
 labseance=levels(as.factor(donnee[,col.s]))
 nbseance <- length(labseance)
@@ -39,8 +40,8 @@ nbjuge <- length(levels(donnee[,col.j]))
   for (seance in 1:nbseance)  don <- cbind.data.frame(don,data.frame(donnee[donnee[,col.s]==labseance[seance],firstvar:ncol(donnee)],row.names=paste(donnee[donnee[,col.s]==labseance[seance],col.p],donnee[donnee[,col.s]==labseance[seance],col.j],sep=".")))
   colnames(don) <- colnames(donnee)[c(col.j,col.p,rep(firstvar:ncol(donnee),nbseance))]
   colnames(don) <- paste(colnames(don),c("","",rep(paste(".S",1:nbseance,sep=""),rep(ncol(donnee)-firstvar+1,nbseance))),sep="")
-  bb=panellipse(don,group=c(rep(ncol(donnee)-firstvar+1,nbseance)),name.group=c(paste("S",1:nbseance,sep="")),col.j=1,col.p=2,firstvar=3,alpha=alpha,coord=coord,scale.unit=scale.unit,nbsimul=nbsimul,nbchoix=nbchoix,level.search.desc=1,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,name.panelist=name.panelist,variability.variable=variability.variable,cex=cex,color=color)
-  legend("bottomleft",legend=paste(colnames(donnee)[col.s],1:nbseance,sep=" "),lty=1:nbseance,cex=0.8,bg="white")
+  bb <- panellipse(don,group=c(rep(ncol(donnee)-firstvar+1,nbseance)),name.group=c(paste("S",1:nbseance,sep="")),col.j=1,col.p=2,firstvar=3,alpha=alpha,coord=coord,scale.unit=scale.unit,nbsimul=nbsimul,nbchoix=nbchoix,level.search.desc=1,centerbypanelist=centerbypanelist,scalebypanelist=scalebypanelist,name.panelist=name.panelist,variability.variable=variability.variable,cex=cex,color=color,graph.type=graph.type)
+  if (graph.type=="classic") legend("bottomleft",legend=paste(colnames(donnee)[col.s],1:nbseance,sep=" "),lty=1:nbseance,cex=0.8,bg="white")
 
   mat = list(bysession=bb$hotelling$bygroup,byproduct=bb$hotelling$byproduct)
   dimnames(mat$bysession)=list(labprod,labprod,c(paste(colnames(donnee)[col.s],1:nbseance,sep=" "),"global"))

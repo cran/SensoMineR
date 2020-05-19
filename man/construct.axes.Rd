@@ -15,7 +15,7 @@ Produces graphs of products and descriptors from the output of PCA or MFA.
 \usage{
 construct.axes(matrice, coord = c(1,2), scale.unit = TRUE, group = NULL,
       name.group = NULL, centerbypanelist = FALSE, scalebypanelist = FALSE,
-      method = "coeff")
+      method = "coeff", graph.type = c("ggplot","classic"))
 }
 
 \arguments{
@@ -29,6 +29,7 @@ construct.axes(matrice, coord = c(1,2), scale.unit = TRUE, group = NULL,
   \item{scalebypanelist}{scale the data by panelist before the construction of the axes}
   \item{method}{the method to replace the missing values: "average" or "coeff" 
   (coefficients of the \emph{product} variable in the anova model)}
+  \item{graph.type}{a character that gives the type of graph used: "ggplot" or "classic"}
 }
 
 \details{
