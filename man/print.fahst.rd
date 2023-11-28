@@ -19,7 +19,7 @@ Print Factorial Approach for Hierarchical Sorting Task data (FAHST) results.
   \item{\dots}{further arguments passed to or from other methods}
 }
 
-\author{Marine Cadoret, S\'ebastien L\^e \email{sebastien.le@agrocampus-ouest.fr}}
+\author{Marine Cadoret, Sebastien Le \email{sebastien.le@institut-agro.fr}}
 
 \seealso{ \code{\link{fahst}}}
 

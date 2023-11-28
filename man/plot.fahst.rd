@@ -42,7 +42,7 @@ Plot the graphs for Factorial Approach for Hierarchical Sorting Task data (FAHST
 Returns the products factor map, the categories factor map, the levels factor map and the consumers factor map.
 }
 
-\author{Marine Cadoret, S\'ebastien L\^e \email{sebastien.le@agrocampus-ouest.fr}}
+\author{Marine Cadoret, Sebastien Le \email{sebastien.le@institut-agro.fr}}
 
 \seealso{ \code{\link{fahst}}}
 

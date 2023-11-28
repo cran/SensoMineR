@@ -21,7 +21,7 @@ The data used here refer to a specific experiment, where children were asked to 
 Returns as many graphs as there are consumers, each graph represents hierarchical sorting provided by a consumer}
 
 
-\author{Marine Cadoret, S\'ebastien L\^e \email{sebastien.le@agrocampus-ouest.fr}}
+\author{Marine Cadoret, Sebastien Le \email{sebastien.le@institut-agro.fr}}
 
 \seealso{\code{\link{fahst}}}
 \examples{

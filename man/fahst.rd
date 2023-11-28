@@ -33,10 +33,10 @@ A list containing the following elements:
 }
 
 \references{
-Cadoret, M., L\^e, S., Pag\`es, J. (2010) \emph{A new approach for analyzing hierarchical sorting task data}. Sensometrics conference. Rotterdam, the Netherlands\cr
+Cadoret, M., Le, S., Pages, J. (2010) \emph{A new approach for analyzing hierarchical sorting task data}. Sensometrics conference. Rotterdam, the Netherlands\cr
 }
 
-\author{Marine Cadoret, S\'ebastien L\^e \email{sebastien.le@agrocampus-ouest.fr}}
+\author{Marine Cadoret, Sebastien Le \email{sebastien.le@institut-agro.fr}}
 
 \examples{
 \dontrun{

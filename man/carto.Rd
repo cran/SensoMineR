@@ -62,7 +62,7 @@ finding out a consumer optimal product, its sensory profile and the key sensory 
 }
 
 \author{
-Francois Husson \email{husson@agrocampus-ouest.fr} \cr
+Francois Husson \email{francois.husson@institut-agro.fr} \cr
 Sebastien Le \email{Sebastien.Le@agrocampus-ouest.fr}
 }
 

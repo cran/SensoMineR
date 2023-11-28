@@ -40,7 +40,7 @@ Kostov, B., Becue-Bertaut, M. and Husson, F. (2012). Multiple Factor Analysis fo
 Kostov, B., Becue-Bertaut, M., Husson, F., Pages, J., Cadoret, M., Torrens, J. and Urpi, P. (2012). A tool for detecting words with consensual meaning in verbalization tasks. 11th Sensometrics Conference, July 10-13, 2012, Rennes, France.
 }
 
-\author{Belchin Kostov \email{badriyan@clinic.ub.es}, Francois Husson \email{husson@agrocampus-ouest.fr}, Monica Becue-Bertaut}
+\author{Belchin Kostov \email{badriyan@clinic.ub.es}, Francois Husson \email{francois.husson@institut-agro.fr}, Monica Becue-Bertaut}
 
 \seealso{ \code{\link{textual}}, \code{\link{MFA}}, \code{\link{plot.WordCountAna}}}
 

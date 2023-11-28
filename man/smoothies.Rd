@@ -20,7 +20,7 @@ The columns are grouped by consumer.
 }
 
 \source{
-Applied mathematics department, AGROCAMPUS OUEST
+Applied mathematics department, Institut Agro
 }
 
 \examples{

@@ -44,7 +44,7 @@ Plot the graphs for Factorial Approach for Sorting Napping Task data (FASNT).
 Returns the products factor map, the categories factor map, the coordinates factor map and the consumers factor map.
 }
 
-\author{Marine Cadoret, S\'ebastien L\^e \email{sebastien.le@agrocampus-ouest.fr}}
+\author{Marine Cadoret, Sebastien Le \email{sebastien.le@institut-agro.fr}}
 
 \seealso{ \code{\link{fasnt}}}
 

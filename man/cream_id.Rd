@@ -21,7 +21,7 @@ A data frame made of 86*9=774 rows and 2 qualitative variables (panelist and pro
 
 \usage{data(cream_id)}
 
-\source{Agrocampus Ouest, Melodie Sanchez, Sarah Sanchez
+\source{Institut Agro, Melodie Sanchez, Sarah Sanchez
 }
 
 \examples{

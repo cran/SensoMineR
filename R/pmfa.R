@@ -119,6 +119,6 @@ pmfa<-function (matrice, matrice.illu = NULL, mean.conf = NULL, dilat = TRUE,
       print(plot(res.afm,choix="ind",habillage="none",axes=coord,new.plot=TRUE))
       print(plot(res.afm,choix="group",axes=coord,new.plot=TRUE))
     }
-    dimnames(res) <- list(colnames(matrice)[(1:(ncol(matrice)/2)) * 2], "RV coeff")
+    res <- list(RV = colnames(matrice)[(1:(ncol(matrice)/2)) * 2], "RV coeff", MFA=res.afm)
     return(res)
 }

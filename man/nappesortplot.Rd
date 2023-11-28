@@ -25,9 +25,9 @@ Returns as many graphs as there are consumers, each graph represents products
 positioned by a given consumer on a tablecloth and colored according to the categorization
 }
 \references{
-Pag\`es, J., L\^e, S., Cadoret, M. (2010) \emph{The Sorted Napping: a new holistic approach in sensory evaluation}. Journal of Sensory Studies\cr
+Pages, J., Le, S., Cadoret, M. (2010) \emph{The Sorted Napping: a new holistic approach in sensory evaluation}. Journal of Sensory Studies\cr
 }
-\author{Marine Cadoret, S\'ebastien L\^e \email{sebastien.le@agrocampus-ouest.fr}}
+\author{Marine Cadoret, Sebastien Le \email{sebastien.le@institut-agro.fr}}
 
 \seealso{\code{\link{fasnt}}}
 \examples{

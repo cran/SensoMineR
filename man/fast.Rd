@@ -41,12 +41,12 @@ A list containing the following elements:
 }
 
 \references{
-Cadoret, M., L\^e, S., Pag\`es, J. (2008) \emph{A novel Factorial Approach for analysing Sorting Task data}. 9th Sensometrics meeting. St Catharines, Canada\cr
-Cadoret, M., L\^e, S., Pag\`es, J. (2009) \emph{A Factorial Approach for Sorting Task data (FAST)}. Food Quality and Preference.  20. pp. 410-417\cr
-Cadoret, M., L\^e, S., Pag\`es, J. (2009) \emph{Missing values in categorization}. Applied Stochastic Models and Data Analysis (ASMDA). Vilnius, Lithuania\cr
+Cadoret, M., Le, S., Pages, J. (2008) \emph{A novel Factorial Approach for analysing Sorting Task data}. 9th Sensometrics meeting. St Catharines, Canada\cr
+Cadoret, M., Le, S., Pages, J. (2009) \emph{A Factorial Approach for Sorting Task data (FAST)}. Food Quality and Preference.  20. pp. 410-417\cr
+Cadoret, M., Le, S., Pages, J. (2009) \emph{Missing values in categorization}. Applied Stochastic Models and Data Analysis (ASMDA). Vilnius, Lithuania\cr
 }
 
-\author{Marine Cadoret, S\'ebastien L\^e \email{sebastien.le@agrocampus-ouest.fr}}
+\author{Marine Cadoret, Sebastien Le \email{sebastien.le@institut-agro.fr}}
 
 \examples{
 \dontrun{

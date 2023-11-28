@@ -32,7 +32,7 @@ There are three data frames:
 \usage{data(chocolates)}
 
 \source{
-Applied mathematics department, AGROCAMPUS OUEST
+Applied mathematics department, Institut Agro
 }
 
 \examples{

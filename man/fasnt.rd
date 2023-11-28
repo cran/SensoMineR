@@ -39,11 +39,11 @@ A list containing the following elements:
 }
 
 \references{
-Pag\`es, J., L\^e, S., Cadoret, M. (2010) \emph{The Sorted Napping: a new holistic approach in sensory evaluation}. Journal of Sensory Studies\cr
-Cadoret, M., L\^e, S., Pag\`es, J. (2009) \emph{Combining the best of two worlds, the "sorted napping"}. SPISE. Ho Chi Minh City, Vietnam\cr
+Pag\`es, J., Le, S., Cadoret, M. (2010) \emph{The Sorted Napping: a new holistic approach in sensory evaluation}. Journal of Sensory Studies\cr
+Cadoret, M., Le, S., Pages, J. (2009) \emph{Combining the best of two worlds, the "sorted napping"}. SPISE. Ho Chi Minh City, Vietnam\cr
 }
 
-\author{Marine Cadoret, S\'ebastien L\^e \email{sebastien.le@agrocampus-ouest.fr}}
+\author{Marine Cadoret, Sebastien Le \email{sebastien.le@institut-agro.fr}}
 
 \examples{
 \dontrun{

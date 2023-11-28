@@ -20,7 +20,7 @@ They were asked to describe each wine using their own word list.
 }
 
 \source{
-Applied mathematics department, AGROCAMPUS OUEST
+Applied mathematics department, Institut Agro
 }
 
 \examples{

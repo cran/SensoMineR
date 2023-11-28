@@ -18,7 +18,7 @@ A data frame with 12 rows (the number of perfumes) and 30 columns (the number of
 }
 
 \source{
-Applied Mathematics Department, AGROCAMPUS OUEST Centre de Rennes
+Applied Mathematics Department, Institut Agro Centre de Rennes
 }
 
 \examples{

@@ -69,7 +69,7 @@ Construction of an Ideal Map (IdMap) based on the ideal profiles obtained direct
 \emph{Food Quality and Preference}, 26, 93-104.
 }
 
-\author{Melodie Sanchez, Sarah Sanchez, husson@agrocampus-ouest.fr}
+\author{Melodie Sanchez, Sarah Sanchez, francois.husson@institut-agro.fr}
 
 \seealso{ \code{\link{IdMap}}}
 

@@ -57,7 +57,7 @@ S. Le, F. Husson, J. Pages (2005). Another look at sensory data: how to "have yo
 }
 
 \author{
-F Husson \email{husson@agrocampus-ouest.fr} \cr
+F Husson \email{francois.husson@institut-agro.fr} \cr
 S Le 
 }
 
